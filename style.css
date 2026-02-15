@@ -1,0 +1,772 @@
+/* --- VARIABLES Y BASES --- */
+:root {
+  --color-pink: #d92180;
+  --color-purple: #6831e5;
+  --color-cyan: #28a7e7;
+  --color-white: #ffffff;
+  --bg-dark: #1c1c1e;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 20px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Rajdhani', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Esto centra todo el contenido */
+  min-height: 100vh;
+}
+
+/* --- HEADER --- */
+header {
+  width: 100%;
+  background: linear-gradient(90deg, var(--color-pink), var(--color-purple), var(--color-cyan));
+  display: flex;
+  justify-content: center;
+}
+
+.header-container {
+  width: 90%;
+  max-width: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  gap: 1.5rem;
+}
+
+.logo {
+  max-width: 180px;
+  transition: all 0.5s ease;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+  animation: logoFloat 4s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* --- PLAYING NOW (VERSIÓN DEFINITIVA) --- */
+.playing-now-header {
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  overflow: hidden;
+  flex: 0 1 450px; 
+  min-width: 300px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.status-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  align-items: center; /* ESTO ARREGLA EL DESCENTRADO */
+  gap: 1rem;
+  backdrop-filter: blur(5px);
+  min-height: 60px; 
+}
+
+.status-label {
+  display: block;
+  font-size: 0.7rem; /* Tamaño original */
+  color: var(--color-cyan);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.status-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0; 
+}
+
+.avatar-small {
+  width: 52px;
+  height: 52px;
+  border-radius: 5px;
+  border: 2px solid var(--color-cyan);
+  object-fit: cover;
+  display: block;
+}
+
+.live-indicator {
+  height: 12px; width: 12px;
+  background-color: #66c14c;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -3px; right: -3px;
+  border: 2px solid #000;
+  box-shadow: 0 0 5px #66c14c;
+  animation: blink 2s infinite;
+}
+
+/* IMPORTANTE: Añade estas dos reglas para el texto */
+.status-text {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.game-title {
+  margin: 0;
+  font-size: 1rem;
+  color: white;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 280px;
+}
+
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* --- NAV & DROPDOWN --- */
+.integrated-nav {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
+  background: rgba(28, 28, 30, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.8rem 0;
+  gap: 0.5rem;
+}
+
+.integrated-nav a {
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 0.3rem 0.8rem;
+  transition: 0.3s;
+}
+
+.integrated-nav a:hover, .dropdown:hover .dropbtn {
+  color: var(--color-cyan);
+  text-shadow: 0 0 10px var(--color-cyan);
+}
+
+.dropdown { position: relative; }
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: #1a1a1e;
+  min-width: 200px;
+  border: 1px solid var(--color-purple);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+  z-index: 10000;
+}
+
+.dropdown-content a { display: block; text-align: left; padding: 12px; }
+/* ---.dropdown-content a:hover { background: var(--color-purple); } --- */
+.dropdown:hover .dropdown-content { display: block; }
+
+/* --- VIDEO HERO --- */
+.video-hero {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-video {
+  position: absolute;
+  min-width: 100%; min-height: 100%;
+  object-fit: cover;
+}
+
+.video-overlay {
+  position: absolute;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  z-index: 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+	  text-align: center;
+  letter-spacing: 5px;
+  margin-bottom: 10px;
+  color: var(--color-white);
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  color: #ccc;
+    text-align: center;
+}
+
+/* --- MAIN CONTENT --- */
+main {
+  width: 90%;
+  max-width: 900px; /* Esto evita que el sitio se vea "alargado" o infinito hacia los lados */
+  padding: 2rem 0;
+  text-align: center;
+}
+
+/* --- CAPSULAS (De reviews.js) --- */
+/* --- CÁPSULAS MODERNAS (IMAGEN DE FONDO) --- */
+.capsula {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #2a2a2e;
+    border: 1px solid #444;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    min-height: 250px;
+    width: 100%;
+    max-width: 1000px; /* Ajusta según tu diseño */
+}
+
+/* El Outline Morado que pediste */
+.capsula:hover {
+    border-color: var(--color-purple);
+    box-shadow: 0 0 25px rgba(104, 49, 229, 0.6);
+    transform: translateY(-5px);
+}
+
+/* Contenedor de la imagen de fondo */
+.capsula-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.capsula-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6; /* Un poco de opacidad para que no mate el texto */
+    transition: transform 0.8s ease;
+    /* El desvanecimiento: de negro sólido a la izquierda a transparente */
+    mask-image: linear-gradient(to down, black 20%, transparent 80%);
+    -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 80%);
+}
+
+.capsula:hover .capsula-bg img {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* Contenido sobre la imagen */
+.capsula-content {
+    position: relative;
+    z-index: 2; /* Por encima de la imagen */
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(to right, rgba(28, 28, 30, 0.9) 30%, transparent 100%);
+    text-align: left;
+}
+
+.capsula-content h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--color-white);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    text-align: left;
+}
+
+.capsula-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: var(--color-cyan);
+    margin: 8px 0;
+    font-weight: bold;
+}
+
+.capsula-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.capsula-tags span {
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--color-white);
+    border: 1px solid var(--color-purple);
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.capsula-text {
+    max-width: 60%; /* Limitamos el texto para que no tape toda la imagen */
+    line-height: 1.5;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,1);
+}
+
+.capsula-buttons {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.btn-cap-gaming {
+    display: inline-block;
+    padding: 10px 25px;
+    background: var(--color-purple);
+    color: white !important;
+    border: 1px solid var(--color-cyan);
+    border-radius: 6px;
+    text-decoration: none !important;
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(104, 49, 229, 0.3);
+    margin-top: 15px; /* Espacio para que no pegue con el texto */
+}
+
+.btn-cap-gaming:hover {
+    background: var(--color-cyan);
+    color: black !important;
+    transform: translateY(-2px);
+}
+
+/* --- PAGINACIÓN --- */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 2rem 0;
+}
+
+.pagination button {
+  background: var(--color-purple);
+  border: none;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.pagination button:hover {
+  background: var(--color-cyan);
+  transform: translateY(-2px);
+}
+
+/* --- YOUTUBE GRID --- */
+.youtube-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.video-card {
+  background: #2a2a2e;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 3px solid var(--color-purple);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.video-card:hover {
+  transform: translateY(-8px);
+  border-bottom: 3px solid var(--color-cyan);
+}
+
+.video-card img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.video-card:hover img {
+  transform: scale(1.05);
+}
+
+.video-card h4 {
+  padding: 1.2rem 1rem 0.5rem 1rem;
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-white);
+  text-align: left;
+  line-height: 1.3;
+  height: 2.6rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* --- EL NUEVO BOTÓN "WATCH VIDEO" --- */
+.video-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+  padding: 0.6rem;
+  background: rgba(104, 49, 229, 0.1); /* Morado muy suave de fondo */
+  color: var(--color-cyan) !important;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  border: 1px solid var(--color-purple);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  gap: 8px; /* Espacio para el icono */
+}
+
+.video-link:hover {
+  background: var(--color-cyan);
+  color: #000 !important;
+  box-shadow: 0 0 15px var(--color-cyan);
+  border-color: var(--color-cyan);
+  transform: scale(1.02);
+}
+
+/* Estilo para el icono (lo inyectaremos vía JS) */
+.play-icon {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+/* --- HIGHLIGHT SECTION (Keymailer & Followers) --- */
+.highlight-line {
+  font-size: 2.2rem;
+  margin: 0.5rem 0;
+  color: var(--color-cyan);
+  opacity: 1; /* Cambiado a 1 para que se vea siempre si el JS falla */
+}
+
+.follow-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0e2235;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 500px;
+  gap: 1.5rem;
+}
+
+.follow-box img { width: 100px; border-radius: 5px; }
+
+/* --- BACK TO TOP --- */
+#backToTop {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10000;
+  border: none; /* Sin bordes/outline */
+  background-color: var(--color-purple);
+  color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+#backToTop:hover {
+  background-color: var(--color-cyan);
+  transform: translateY(-5px);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .header-container { flex-direction: column; text-align: center; }
+  .playing-now-header { width: 100%; }
+  .capsula { flex-direction: column; }
+  .capsula img { width: 100%; height: 200px; }
+  .integrated-nav { flex-wrap: wrap; padding: 1rem; }
+  .nav-separator { display: none; }
+}
+
+/* --- CAMBIOS EN LOS TITULOS UNIFICANDO DISEÑO --- */
+
+/* --- TÍTULOS DE SECCIÓN EXCLUSIVOS --- */
+section > h2 {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 3rem; /* Tamaño equilibrado */
+  color: var(--color-purple);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin: 3rem 0 1rem 0; /* Espaciado arriba y abajo */
+  padding-bottom: 4px;
+  display: inline-block; /* La línea solo ocupa el ancho del texto */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Ajuste opcional: centrar títulos de sección si lo deseas */
+.highlight-section, .youtube-section {
+  text-align: center;
+}
+
+/* --- CURATOR HERO SECTION --- */
+.curator-hero {
+  position: relative;
+  width: 100vw; /* Ocupa todo el ancho de la pantalla */
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  min-height: 600px;
+  background-image: url('img/footfondo.jpg'); /* Pon aquí tu imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Efecto parallax opcional */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+.curator-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(rgba(28, 28, 30, 0.6), rgba(104, 49, 229, 0.4)); /* Degradado morado */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.curator-content {
+  text-align: center;
+  z-index: 5;
+  padding: 2rem;
+}
+
+/* Texto Gigante */
+.curator-content .highlight-line {
+  font-size: 3.5rem; /* Mucho más grande */
+  font-weight: 800;
+  margin: 10px 0;
+  text-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 15px var(--color-purple);
+  line-height: 1.1;
+}
+
+/* Tarjeta Integrada */
+.follow-box-integrated {
+  background: rgba(28, 28, 30, 0.9);
+  border: 2px solid var(--color-purple);
+  border-radius: 15px;
+  padding: 1.5rem 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 3rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease;
+}
+
+.follow-box-integrated:hover {
+  transform: scale(1.05);
+  border-color: var(--color-cyan);
+}
+
+.follow-box-integrated img {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+}
+
+.follow-info h3 {
+  font-size: 1.8rem;
+  margin: 0 0 10px 0;
+  color: white;
+}
+
+.steam-btn {
+  background: #66c14c;
+  color: black !important;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centra contenido */
+  gap: 10px; /* Espacio real entre icono y texto */
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.steam-btn svg {
+  flex-shrink: 0; /* Evita que el icono se haga pequeño */
+}
+
+.steam-btn:hover {
+  background: #85ef62;
+  box-shadow: 0 0 20px rgba(102, 193, 76, 0.4);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .curator-content .highlight-line { font-size: 2rem; }
+  .follow-box-integrated { flex-direction: column; text-align: center; padding: 1.5rem; }
+}
+
+/* Logos partners */
+.partners-section {
+  padding: 2rem 0;
+  text-align: center;
+  opacity: 0.8;
+}
+.partners-label {
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  color: var(--color-cyan);
+  margin-bottom: 1.5rem;
+}
+.partners-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  filter: grayscale(1) brightness(2); /* Los hace blancos para que no distraigan */
+  transition: 0.3s;
+}
+.partner-logo {
+  height: 40px; /* Ajusta según el logo */
+  width: auto;
+}
+.partners-grid:hover {
+  filter: grayscale(0) brightness(1); /* Toman color al pasar el mouse */
+}
+
+/* --- FULL REVIEWS STYLES --- */
+
+.full-review-content {
+    max-width: 1000px; /* Limita el ancho para que no se vea infinito */
+    margin: 2rem auto; /* Centra el bloque horizontalmente */
+    background: #121212; /* Color de fondo oscuro sólido o semitransparente */
+    border-radius: 15px;
+    border: 1px solid rgba(104, 49, 229, 0.3);
+    overflow: hidden; /* Evita que la imagen de arriba se salga de los bordes redondeados */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.review-body-text {
+    padding: 3rem; /* Da aire al texto para que no toque los bordes */
+    text-align: left; /* Alineación de lectura estándar */
+    line-height: 1.8; /* Mejora la legibilidad */
+}
+
+.back-link-container { max-width: 900px; margin: 2rem auto 1rem; }
+.back-link { color: var(--color-cyan); text-decoration: none; font-weight: bold; letter-spacing: 1px; transition: 0.3s; }
+.back-link:hover { color: var(--color-purple); text-shadow: 0 0 10px var(--color-purple); }
+
+.review-header-section {
+    height: 500px; background-size: cover; background-position: center;
+    position: relative; border-radius: 15px 15px 0 0;
+}
+
+.header-overlay {
+    position: absolute; bottom: 0; left: 0; width: 100%; padding: 3rem;
+    background: linear-gradient(transparent, rgba(18, 18, 18, 1));
+}
+
+.genre-tags span {
+    background: var(--color-purple); color: white; padding: 4px 12px;
+    border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-right: 8px;
+    text-transform: uppercase;
+}
+
+.review-meta { margin-top: 1rem; display: flex; gap: 20px; font-size: 0.9rem; color: #888; }
+
+/* Galería Cuadrada 1:1 */
+.gallery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 2rem 0;
+}
+.screenshot-thumb {
+    width: 180px;  /* Tamaño pequeño fijo */
+    height: 180px; /* Tamaño pequeño fijo */
+    overflow: hidden;
+    border-radius: 8px;
+    border: 2px solid #333;
+    transition: 0.3s;
+}
+.screenshot-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto hace que sea 1:1 sin deformar */
+}
+.screenshot-thumb:hover {
+    border-color: var(--color-cyan);
+    transform: scale(1.05);
+}
+
+/* Share Bar */
+.share-bar {
+    margin-top: 4rem; padding: 2rem; background: rgba(104, 49, 229, 0.1);
+    border-radius: 10px; display: flex; align-items: center; gap: 15px;
+}
+/* Share Button Fix */
+.share-btn {
+    cursor: pointer;
+    border: none;
+    padding: 8px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.x-btn { background: #000; color: white; border: 1px solid #333; }
+.fb-btn { background: #1877f2; color: white; }
+
+.keymailer-footer { margin-top: 2rem; border-top: 1px solid #333; padding-top: 1rem; }
+.km-tag { color: var(--color-cyan); margin-right: 15px; font-weight: bold; opacity: 0.7; }
+
+/* Asegurar que el video no se rompa */
+.video-container {
+    margin: 2rem 0;
+    border: 2px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+}
