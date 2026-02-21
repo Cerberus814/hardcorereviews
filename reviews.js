@@ -1,4 +1,5 @@
     const reviews = [
+        // Reseñas del 2026
 
         {
             img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3021100/header.jpg?t=1767952649",
@@ -9,7 +10,6 @@
             tags: "FMV, Dating Sim, Visual Novel",
             recommended: true
         },
-
                 {
         img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1635710/header.jpg?t=1756111871",
         title: "Bossfight Tactics",
@@ -59,7 +59,7 @@
 		date: "Jan 2, 2026",
     	tags: "JRPG, Turn Based, Adult",
         },
-
+// Reseñas del 2025
                 {
         img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4090730/14e094b79eb18e7e8f6333d0d7ce641550cab031/header.jpg?t=1766056839",
         title: "Sengodai",
@@ -572,6 +572,352 @@
         date: "Jan 7, 2025",
         tags: "Bullet Hell, Action, Shoot'Em Up",
             },
+// Reseñas del 2023
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2512430/header.jpg?t=1702338253",
+    title: "Void Survivors",
+    text: "Void Survivors, a fast-paced, action-packed pixel art roguelike inspired by Vampire Survivors and Enter the Gungeon, offers a plethora of epic unlockables and upgrades – the perfect time killer!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Sep 27, 2023",
+    tags: "Survivors-like, 2D, Pixelart",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2277110/header.jpg?t=1741765410",
+    title: "ArcRacer",
+    text: "ArcRacer is a brilliant racing title, drawing heavy inspiration from FZero and WipeOut. With stunning visuals, it offers a thrilling racing experience with challenging mechanics and a magnificent OST.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Sep 27, 2023",
+    tags: "Racing, Sci-Fi, Retro",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091390/header.jpg?t=1734204906",
+    title: "Demonizer",
+    text: "Demonizer is a beautiful anime-style vertical-scrolling Shmup that delivers a satisfying challenge through classic gameplay, epic boss fights, cool bullet patterns, and a truly fantastic soundtrack.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Sep 25, 2023",
+    tags: "Bullet Hell, Shoot'Em Up, Vertical-Scroller",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2248430/header.jpg?t=1752154065",
+    title: "Touhou Artificial Dream in Arcadia",
+    text: "Touhou Artificial Dream in Arcadia is a beautiful anime-style dungeon crawler set in the enchanting world of Touhou, heavily inspired by classics like SMT. Collect all the Youkai girls! Give it a try!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Sep 25, 2023",
+    tags: "Anime, Dungeon Crawler, Touhou",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2215270/e106a20917351e50f0b3aaf503ef8038cb420e28/header.jpg?t=1770947050",
+    title: "Army Troop",
+    text: "Army Troop is a game developed by a small indie team. It offers fast-paced WWII action with a good variety of maps and unlockables. I truly encourage the developer to continue polishing the game!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Sep 24, 2023",
+    tags: "FPS, MP",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1928320/header.jpg?t=1769568665",
+    title: "PopSlinger",
+    text: "It popped! It's a very juicy mix of an anime style beat em up, shooter-puzzle elements, funky beats and it's superb voice acting. The zany story and Ria's quirky love for danger add a humorous twist.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Sep 19, 2023",
+    tags: "Side-Scroller, Beat'Em Up, Cartoon",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1237970/header.jpg?t=1726160226",
+    title: "Titanfall® 2",
+    text: "Titanfall 2 has returned from the brink, healthier than ever. It offers thrilling FPS action, violence, high-speed gameplay, epic mecha battles, and stunning 2016 visuals. The community is rejoicing!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Sep 19, 2023",
+    tags: "FPS, Mechs, MP",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/893050/header.jpg?t=1752167994",
+    title: "Hasbro's BATTLESHIP",
+    text: "The classic naval battle game Online, The best and most fun mode is Commanders, each commander has their unique design, ability and ship types. The game offers statistics and crossplay with mobile.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Sep 7, 2023",
+    tags: "Minigames, 2D, Tabletop",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1733620/header.jpg?t=1753514328",
+    title: "Cursed Pantsu",
+    text: "A small indie game that I surprisingly enjoyed a lot. It's a hack 'n slash fighting game with an anime aesthetic and platforming levels. I would really like to see more ambitious games from this dev.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Sep 7, 2023",
+    tags: "Beat'Em Up, Anime, Adult",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2346580/header.jpg?t=1691660197",
+    title: "Sentimental Death Loop",
+    text: "Sentimental Deathloop stands out as an excellent anime-style VN. Its captivating story and intriguing characters come to life through beautiful artwork and the superb voice acting, highly recommended!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Aug 11, 2023",
+    tags: "Anime, Visual Novel, Horror",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/664830/header.jpg?t=1700323566",
+    title: "Zombotron",
+    text: "Zombotron is another great indie hidden on steam. It delivers an action-packed Run n' Gun with old school vibes, featuring incredibly fun gameplay, cool physics, and interactive environments!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Jul 29, 2023",
+    tags: "Roguelike, 2D, Side-Scroller",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1432970/header.jpg?t=1616148066",
+    title: "ASSAULT SHELL",
+    text: "Assault Shell is a surprising delight! very challenging Bullet Hell that surpasses all my expectations, it features very fun bullet-cancelling and hyper shot mechanics, various game modes and ships!.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Jul 15, 2023",
+    tags: "Shoot'Em Up, Bullet Hell, Vertical-Scroller",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1179080/b5d0111d78b7c3b304387de2c55dabff139c667f/header.jpg?t=1767221500",
+    title: "FAITH: The Unholy Trinity",
+    text: "Faith is an amazing game with nostalgic old-school Atari aesthetics. It's captivating narrative, multiple endings and terrifying ambientation create a unique horror experience, highly recommended!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Jul 4, 2023",
+    tags: "Survival-Horror, Retro, Pixelart",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2228390/header.jpg?t=1730839256",
+    title: "Fairy Fencer F: Refrain Chord",
+    text: "Fairy Fencer Refrain Chord features a fresh and challenging tactical RPG experience while retaining the enchanting visuals and excellent music from its predecessor. Highly Recommended!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Jun 21, 2023",
+    tags: "Anime, JRPG, Idea Factory",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1391450/header.jpg?t=1732504376",
+    title: "Case 00: The Cannibal Boy",
+    text: "Case 00 features a gripping short visual novel with psychological horror elements. Its good narrative and disturbing plot twists keep you on edge. Highly recommended but Beware of the cannibal boy!.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Jun 20, 2023",
+    tags: "Anime, Horror, Visual Novel",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2271200/header.jpg?t=1771447095",
+    title: "Assault On Proxima",
+    text: "It's a promising sci-fi FPS. It features great visuals and offers a wide variety of game modes. It's already enjoyable, but it requires further polishing to provide a more satisfying experience.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Jun 8, 2023",
+    tags: "FSP, Sci-Fi",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1848450/header.jpg?t=1656873737",
+    title: "Nightmare of Decay",
+    text: "Nightmare of Decay is an amazing homage to the classic Biohazard game, It features an immersive very disturbing horror atmosphere with a unique retro aesthetic, fun, scary, highly recommended!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "May 19, 2023",
+    tags: "Survival-Horror,  FPS, Retro",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2027970/header.jpg?t=1727963120",
+    title: "Sole Saga",
+    text: "Sole Saga is a beautiful anime-style roguelite game inspired by Vampire Survivors, It features unique characters, new and exciting gameplay mechanics, and challenging bosses, highly",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/2027970?snr=1_5_9__402",
+    date: "Apr 28, 2023",
+    tags: "Roguelike, Survivors-like, 2D",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/638160/header.jpg?t=1732645826",
+    title: "Moero Chronicle",
+    text: "Moero Chronicles is an amazing Dungeon Crawler ported from the PS Vita, It features a beautiful anime-style with great character design, and its great story driven by a high quality visual novel.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Apr 24, 2023",
+    tags: "Anime, Dungeon Crawler, Idea Factory",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1150080/header.jpg?t=1730833361",
+    title: "Azur Lane Crosswave",
+    text: "Azur Lane Crosswave is a fast pased anime-style 3d shooter, It features a decent story, great visuals, and a wide roster of cute ship-girls to unlock and play with. Was looking for copper, found gold.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Apr 21, 2023",
+    tags: "Anime, Shooter, Idea Factory",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/347830/header.jpg?t=1730838810",
+    title: "Fairy Fencer F",
+    text: "Fairy Fencer F is an exciting JRPG with stunning anime-style, features a decent story and intriguing characters. Despite having already received a remaster, the game is still worth playing on its own.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Apr 10, 2023",
+    tags: "Anime, JRPG, Idea Factory",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1496250/header.jpg?t=1682415406",
+    title: "Mary Skelter 2",
+    text: "We run into a solid JRPG dungeon crawler adventure, it features a beautiful anime-style, engaging characters and story with pleasing exploration and battles. A must have game, now uncensored!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Apr 9, 2023",
+    tags: "Anime, Dungeon Crawler, Idea Factory",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1364690/header.jpg?t=1698313973",
+    title: "First Racer",
+    text: "First Race is a good Indie game and has a lot of potential, while it's still in development the game features a good selection of legendary cars from 911, GTR, AE86 to wait, Yo! is that a SUPRA!?",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Apr 7, 2023",
+    tags: "Racing, Arcade, Indie",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1164690/header.jpg?t=1739018378",
+    title: "Wigmund",
+    text: "Beautiful occidental Action RPG, set in a stunning medieval fantasy world, it features engaging visuals, challenging combat and a lot of crafting, fishing and exploring. Highly recommended hidden gem.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Apr 4, 2023",
+    tags: "ARPG, Open World",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/451780/header.jpg?t=1730856713",
+    title: "Trillion: God of Destruction",
+    text: "Beautiful anime-style raising sim/SRPG with challenging mechanics and engaging characters set in a wonderful fantasy world, and a compelling story of accepting loss. Highly recommended!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Apr 3, 2023",
+    tags: "Anime, JRPG, Idea Factory",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/772610/header.jpg?t=1754692372",
+    title: "Q-YO Blaster",
+    text: "This beautiful pixelart horizontal shmup features great animations and music. Set in a bizarre world with lots of characters, it provides a very challenging and fun gameplay experience!. A hidden gem.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Mar 30, 2023",
+    tags: "Shoot'Em Up, Anime, Side-Scroller",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2154760/header.jpg?t=1728038735",
+    title: "Schildmaid MX",
+    text: "An incredibly addictive horizontal shmup with unique bullet absorption mechanics and stunning pixelart style. With skill-based modes and ships, it presents a challenge for everyone. It's a must-have!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Mar 29, 2023",
+    tags: "Shoot'Em Up, Side-Scroller, 3D",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/524580/header.jpg?t=1730839090",
+    title: "Fairy Fencer F Advent Dark Force",
+    text: "Remaster of the original Fairy Fencer F, with enhanced visuals and tons of new content, It's a challenging JRPG with modern mechanics, set in a beautiful anime fantasy world, Highly recommended!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Mar 21, 2023",
+    tags: "Anime, JRPG, Idea Factory",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1848710/header.jpg?t=1667034410",
+    title: "Ninja Soul",
+    text: "Fast-paced roguelite with super cool ninjutsu skills and very responsive controls. while still in development, it shows great potential for an exciting gameplay experience. *Katōn Gōka Mekkyaku*",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Mar 20, 2023",
+    tags: "Anime, Roguelike, Hack and Slash",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1932160/header.jpg?t=1730853317",
+    title: "Neptunia: Sisters VS Sisters",
+    text: "Beautiful anime-style RPG with classic gameplay and exciting mechanics. I love it, at first I found it challenging but very fun, it is an adventure that I recommend to all fans of the genre! Yay!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Mar 16, 2023",
+    tags: "Anime, ARPG, Idea Factory",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/415300/header.jpg?t=1731443522",
+    title: "Monster Monpiece",
+    text: "Awesome port!, Very fun and challenging turn based card game, collect all the monster girls, I'm already so hooked on this and I don't think I'll be able to quit any time soon. Highly recommended!.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Mar 11, 2023",
+    tags: "Anime, Deck Builder, Idea Factory",
+    recommended: true
+},
+// Reseñas del 2019
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/275850/bd8d4c2d59dfc199529f50fc2a65828f19096aa3/header_alt_assets_25.jpg?t=1770822722",
+    title: "No Man's Sky (OLD Review)",
+    text: "Muy recomendado, lleno de cosas por hacer y un universo entero para explorar, craftear y con un sistema de bases complejo, vehículos variados, dogfights espaciales, misiones, y mucho contenido nuevo.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/275850/",
+    date: "Sep 10, 2019",
+    tags: "Open World, Space, Survival",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/883710/header.jpg?t=1768954831",
+    title: "Resident Evil 2 Remake (OLD)",
+    text: "Buenas noticias, compra obligada, es muy buen juego, y en muchos apartados supera al original, en lo que innovan lo hacen muy bien, y en cuanto a lore, gráficos/animaciones y sfx/ost es excelente.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/883710/",
+    date: "Feb 8, 2019",
+    tags: "Survival-Horror, Third Person Shooter, Gore, SP",
+    recommended: true
+},
+// Reseñas del 2018
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/339200/header.jpg?t=1667398786",
+    title: "Oceanhorn: Monster of Uncharted Seas (OLD)",
+    text: "Un muy buen ARPG clon de Zelda, nos vamos a aventurar en los mares inexplorados por las diferentes islas con nuestro héroe para acabar con Oceanhorn, con nuestra espada de Coral y escudo de Cronos!.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/339200?snr=1_5_9__402",
+    date: "Apr 12, 2018",
+    tags: "Anime, ARPG, Hack and Slash",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/617440/header.jpg?t=1580161708",
+    title: "Juanito Arcade Mayhem (OLD)",
+    text: "Juego Argentino, estilo Pang, gráficos vectoriales y animaciones casi artesanales, diseñados con muy buen gusto, con mecánicas nuevas e incluso, absorbe mecánicas de varios juegos para cada nivel!.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/617440/",
+    date: "14 Mar, 2018",
+    tags: "Cartoon, Retro",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/454650/header.jpg?t=1770607649",
+    title: "Dragon Ball Xenoverse 2 (OLD)",
+    text: "Mejora en muchos aspectos en cuanto al sistema de lucha a su antecesor con combos un poco más complejos y vistosos, genial entrega, incluye muchisimo contenido, modos y luchadores!",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/454650/",
+    date: "Mar 14, 2018",
+    tags: "Anime, Action",
+    recommended: true
+},
+
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/678950/header.jpg?t=1733508969",
+    title: "Dragon Ball Fighterz (OLD)",
+    text: "Para los fans más exigentes del anime, y para los más habituales del género, Dragon Ball FighterZ, va a superar muy facilmente tanto las expectativas como también derrumbar los prejuicios fácilmente!",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/678950/",
+    date: "Mar 14, 2018",
+    tags: "Anime, 2D Fighter, 3D",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/215830/1c8def9724e90f114c12a7f4f6749a60ea53727e/header.jpg?t=1769675300",
+    title: "Closers (OLD Review)",
+    text: "Un mmo con mecanicas de hack n slash / beat em up muy divertidas y lo suficientemente entretenido como para viciar unas cuantas horas, aunque puede tornarse bastante repetitivo, horas de diversión!.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/215830/",
+    date: "Mar 14, 2018",
+    tags: "Anime, MMO, Gacha",
+    recommended: true
+},
       // Agregá más objetos aquí
       // Copia y cambia los datos para simular múltiples cápsulas (mínimo 10 para probar)
     ];
