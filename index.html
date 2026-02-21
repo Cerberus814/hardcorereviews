@@ -16,7 +16,7 @@
 	  <a href="https://steamcommunity.com/id/cerberus814/" target="_blank" style="text-decoration: none; display: block;">
         <div class="status-overlay">
           <div class="status-wrapper">
-            <img src="img/c814.jpg" alt="Cerberus814" class="avatar-small">
+            <img src="img/c814.jpg" alt="Cerberus814 profile pitcture" class="avatar-small">
             <span class="live-indicator"></span>
           </div>
           <div class="status-text">
@@ -66,6 +66,15 @@
   <main>
     <section id="curated-reviews">
       <h2>CURATED REVIEWS</h2>
+      <div class="filter-section">
+    <div class="search-box">
+        <input type="text" id="reviewSearch" placeholder="Search by title..." onkeyup="filterReviews()">
+    </div>
+    <br>
+    <div class="tags-filter" id="tagsFilter">
+        </div>
+      </div>
+  <br>
       <div id="capsulas-container"></div>
       <div class="pagination" id="pagination"></div>
     </section>
@@ -82,21 +91,29 @@
 	  <p>I'm an active Keymailer user who enjoys playing a wide variety of games. I regularly create no-commentary gameplay videos on my YouTube channel, allowing people from any language or background to enjoy the experience without barriers. </p>
 	  <p>I also participate in both online and offline playtests, where I always make my best effort to provide constructive, positive and detailed feedback to help developers improve their games in any way possible. </p>
       <p>Since I play exclusively on Linux, I can offer valuable insight from the perspective of a non-Windows user, something many developers find especially useful.</p>
-	  <img src="img/proofmailer.jpg"/> 
+	  <img src="img/proofmailer.jpg" alt="Keymailder content creation proof"/>
     </section>
-	
-	<section class="partners-section">
-  <p class="partners-label">EPIC COLLABORATIONS</p>
-  <div class="partners-grid">
-    <img src="img/idea-factory-logo.png" alt="Idea Factory" class="partner-logo">
-    <img src="img/xd-games-logo.png" alt="XD Games" class="partner-logo">
-	<img src="img/Hike_Company_Logo.png" alt="Hike Games" class="partner-logo">
-	<img src="img/Kagura-Games-Logo.webp" alt="Kagura Games" class="partner-logo">
-	<img src="img/inside-system.png" alt="Inside System" class="partner-logo">
-	<img src="img/qbyte.png" alt="QuByte Interactive" class="partner-logo">
-	<img src="img/storytaco.webp" alt="StoryTaco" class="partner-logo">
-	<img src="img/Sunsoft_logo.svg.png" alt="Sunsoft" class="partner-logo">
-    </div>
+	<br>
+<section class="partners-section">
+    <p class="partners-label">EPIC COLLABORATIONS</p>
+    <div class="partners-grid scroll-infinito">
+        <img src="img/idea-factory-logo.png" alt="Idea Factory logo" class="partner-logo">
+        <img src="img/xd-games-logo.png" alt="XD Games logo" class="partner-logo">
+        <img src="img/Hike_Company_Logo.png" alt="Hike Games logo" class="partner-logo">
+        <img src="img/Kagura-Games-Logo.webp" alt="Kagura Games logo" class="partner-logo">
+        <img src="img/inside-system.png" alt="Inside System logo" class="partner-logo">
+        <img src="img/qbyte.png" alt="QuByte Interactive logo" class="partner-logo">
+        <img src="img/storytaco.webp" alt="StoryTaco logo" class="partner-logo">
+        <img src="img/Sunsoft_logo.svg.png" alt="Sunsoft logo" class="partner-logo">
+        <img src="img/idea-factory-logo.png" alt="Idea Factory logo" class="partner-logo">
+        <img src="img/xd-games-logo.png" alt="XD Games logo" class="partner-logo">
+        <img src="img/Hike_Company_Logo.png" alt="Hike Games logo" class="partner-logo">
+        <img src="img/Kagura-Games-Logo.webp" alt="Kagura Games logo" class="partner-logo">
+        <img src="img/inside-system.png" alt="Inside System logo" class="partner-logo">
+        <img src="img/qbyte.png" alt="QuByte Interactive logo" class="partner-logo">
+        <img src="img/storytaco.webp" alt="StoryTaco logo" class="partner-logo">
+        <img src="img/Sunsoft_logo.svg.png" alt="Sunsoft logo" class="partner-logo">
+</div>
 </section>
 	
 <section id="stats-section" class="curator-hero">
@@ -107,7 +124,7 @@
       <h2 class="highlight-line">SINCE 2018.</h2>
 
       <div class="follow-box-integrated">
-        <img src="img/curatorlogo.jpg" alt="Curator Logo">
+        <img src="img/curatorlogo.jpg" alt="Hardcore reviews steam curator profile picture">
         <div class="follow-info">
           <h3>Hardcore Reviews</h3>
           <a href="https://store.steampowered.com/curator/28519188" target="_blank" class="steam-btn">
@@ -131,71 +148,8 @@
 </button>
   </footer>
 
-  <script src="reviews.js"></script>
-<script>
-  async function loadYouTubeVideos() {
-    // REEMPLAZA CON TU ID DE CANAL
-    const channelId = "UC-AWjJhFoRN_TL_D63UUgGw"; 
-    const limit = 6; // <-- CAMBIADO A 6
-    
-    const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
-    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
-
-    try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      const container = document.getElementById('youtube-container');
-      
-      if (data.status === 'ok') {
-        container.innerHTML = ''; 
-
-        data.items.slice(0, limit).forEach(video => {
-          const videoId = video.link.split('v=')[1];
-          // Usamos hqdefault para mejor resolución en las miniaturas
-          const thumb = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-
-		const card = `
-		  <div class="video-card">
-			<a href="${video.link}" target="_blank" style="overflow:hidden; display:block;">
-			  <img src="${thumb}" alt="${video.title}">
-			</a>
-			<h4>${video.title}</h4>
-			<a class="video-link" href="${video.link}" target="_blank">
-			  <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-			  WATCH VIDEO
-			</a>
-		  </div>
-		`;
-          container.innerHTML += card;
-        });
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      document.getElementById('youtube-container').innerHTML = "<p>Could not load videos.</p>";
-    }
-  }
-
-  loadYouTubeVideos();
-		
-		
-		const btnTop = document.getElementById("backToTop");
-
-window.onscroll = function() {
-  if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-    btnTop.style.display = "block";
-  } else {
-    btnTop.style.display = "none";
-  }
-};
-
-btnTop.onclick = function() {
-  window.scrollTo({top: 0, behavior: 'smooth'});
-};
-
-
-
-</script>
+    <script src="reviews.js"></script>
+    <script src="gridyoutube.js"></script>
+<br>
 </body>
-
 </html>
-
