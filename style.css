@@ -732,6 +732,11 @@ section > h2 {
     padding: 1rem;
   }
 
+  .curator-hero {
+    background-size: 130%;
+    background-position: center 20%;
+  }
+
 }
 }
 /* Logos partners */
