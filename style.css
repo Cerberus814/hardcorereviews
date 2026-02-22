@@ -648,6 +648,7 @@ section > h2 {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  background-repeat:no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -740,7 +741,7 @@ section > h2 {
 
   .curator-content .highlight-line {
     font-size: 1.4rem;
-    margin: 1rem 0 0.75rem;
+    margin: 1.5rem 0 0.1.5rem;
   }
 
   .follow-box-integrated {
