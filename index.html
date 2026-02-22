@@ -66,14 +66,24 @@
   <main>
     <section id="curated-reviews">
       <h2>CURATED REVIEWS</h2>
-      <div class="filter-section">
+<div class="filter-section">
+
+    <!-- Barra de búsqueda -->
     <div class="search-box">
         <input type="text" id="reviewSearch" placeholder="Search by title..." onkeyup="filterReviews()">
     </div>
-    <br>
+
+    <!-- Botón toggle -->
+    <button id="toggleTags" class="tags-toggle">
+        🔍 Tag Filter
+    </button>
+
+    <!-- Tags (colapsables) -->
     <div class="tags-filter" id="tagsFilter">
-        </div>
-      </div>
+        <!-- los tags se generan desde reviews.js -->
+    </div>
+
+</div>
   <br>
       <div id="capsulas-container"></div>
       <div class="pagination" id="pagination"></div>
@@ -147,9 +157,9 @@
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
 </button>
   </footer>
-
+<br>
     <script src="reviews.js"></script>
     <script src="gridyoutube.js"></script>
-<br>
+    <script src="tagcollapse.js"></script>
 </body>
 </html>

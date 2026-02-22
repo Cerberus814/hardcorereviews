@@ -47,7 +47,7 @@
         link: 'https://www.youtube.com/watch?v=K7JbGJUiBYI&t=17s',
         recommended: true,
 		date: "Jan 4, 2026",
-    	tags: "Minigame, PVP, Anime",
+    	tags: "Minigames, PVP, Anime",
         },
 
                 {
@@ -137,7 +137,7 @@
         link: 'https://steamcommunity.com/id/cerberus814/recommended/3573070',
         recommended: true,
         date: "Dec 12, 2025",
-    	tags: "Minigame, Roguelite, PVP",
+    	tags: "Minigames, Roguelite, PVP",
         },
 
                 {
@@ -573,6 +573,159 @@
         tags: "Bullet Hell, Action, Shoot'Em Up",
             },
 // Reseñas del 2023
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229500/header.jpg?t=1770062885",
+    title: "Shieldmaiden: Remix Edition",
+    text: "Another hidden gem on steam!, meet Shieldmaiden It stands out as an excellent platforming game with stunning visuals, It delivers a challenging adventure with polished gameplay and tight controls.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/1229500",
+    date: "Dec 18, 2023",
+    tags: "2D, Side-Scroller, Anime, 2D Platformer",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2090760/header.jpg?t=1741917351",
+    title: "X Invader",
+    text: "X Invader stands out as a highly promising survivors-like in EA, featuring beautiful visuals and polished pixelart. This challenging game offers a ton of unlockables, making it a great time killer.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/2090760",
+    date: "Nov 30, 2023",
+    tags: "Roguelike, Survivors-like, 2D, Pixelart",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2671970/header.jpg?t=1733375343",
+    title: "‎My Suika – Kyo’s Fruit Merge",
+    text: "My Suika is an excellent fruit matching puzzle game with adorable visuals and delightful music. Unlockable skins and diverse game modes enhance the overall enjoyment. It's simple yet highly addictive.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Nov 27, 2023",
+    tags: "Minigames, Cartoon, Physics",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1867510/header.jpg?t=1729701662",
+    title: "WrestleQuest",
+    text: "Wrestlequest pays homage to wrestling with numerous nods and details. This turn based RPG seamlessly blends originality with stunning visuals, creating a wonderful world of toys. Highly recommended!",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/1867510/",
+    date: "Nov 25, 2023",
+    tags: "RPG, Turn Based, Pixelart",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2475420/header.jpg?t=1764323692",
+    title: "Parking Tycoon: Business Simulator",
+    text: "Parking Tycoon proves to be an engaging game where you build and manage your own parking haven. Before you know it, hours slip away seamlessly, thanks to its simple yet relaxing vibe.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Nov 22, 2023",
+    tags: "Sim, Manager",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1934040/header.jpg?t=1717746948",
+    title: "Miniland Adventure",
+    text: "Miniland captivates with its beautiful minimalist pixel art. A survival game that seamlessly blends construction, exploration, and gathering. Shape your world with minilands and prepare for the night.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/1934040/",
+    date: "Nov 18, 2023",
+    tags: "2D, Farm, Crafting, Co-op",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2083210/header.jpg?t=1739375975",
+    title: "Super Woden GP 2",
+    text: "Super Woden GP 2, a fantastic sequel, boasts admirable improvements in detail. The gameplay is incredibly smooth, and the addition of more cars, tracks, and modes brings a ton of exciting new content!",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/2083210/",
+    date: "Nov 16, 2023",
+    tags: "Racing, Sports, Retro",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/389170/header.jpg?t=1770062324",
+    title: "Songs for a Hero - Definitive Edition",
+    text: "It shines as a captivating anime style classic platformer game, with a fantastic level design, it offers a unique experience through the songs of our hero, guaranteed to leave a smile on your face.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/389170",
+    date: "Nov 14, 2023",
+    tags: "2D Platformer, Side-Scroller, Pixelart",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2354600/header.jpg?t=1704737452",
+    title: "Renfield: Bring Your Own Blood",
+    text: "Inspired by the film Renfield, this game offers a unique roguelite experience, blending superb visuals with fantastic music. Very fun yet challenging Hero Survivor with tons of unlockable content!.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/2354600/",
+    date: "Nov 9, 2023",
+    tags: "Survivors-like, Roguelike, 2D, Pixelart",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2615290/header.jpg?t=1742184630",
+    title: "Mostroscopy",
+    text: "Mostroscopy is a truly unique visually stunning fighting game with fantastic character design and pleasant music. Despite its casual gameplay approach, the combo mechanics make it incredibly enjoyable",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Nov 8, 2023",
+    tags: "2D Fighter, Cartoon",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2363570/header.jpg?t=1759939532",
+    title: "Rise of Jericho",
+    text: "Rise of Jericho is a charming pixelart city builder indie game that offers challenging village and resource management within an ancient civilization, complemented by its pleasing visuals and music.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Nov 8, 2023",
+    tags: "Side-Scroller, City Builder, 2D",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1534180/header.jpg?t=1714673019",
+    title: "Super Woden GP",
+    text: "Super Woden GP provides a genuine arcade experience, drawing inspiration from classics such as DriftOut and World Rally. It offers stunning visuals, challenging mechanics and a wide collection of cars",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/1534180",
+    date: "Nov 4, 2023",
+    tags: "Racing, Sports, Arcade",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2357400/header.jpg?t=1730844751",
+    title: "Mary Skelter Finale",
+    text: "Mary Skelter Finale delivers a captivating conclusion to the saga, offering a challenging dungeon-crawling adventure with a rich storyline and stunning anime visuals, a very satisfying series finale.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Nov 3, 2023",
+    tags: "Anime, Dungeon Crawler, Idea Factory",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/853200/bd5283e5c7ad29b31c71af3d7cd4ad71d5eb6a1b/header.jpg?t=1764800116",
+    title: "Shred! 2 - ft Sam Pilgrim",
+    text: "Shred 2 is an exceptional extreme sports mountain biking game, featuring polished gameplay with cool mechanics and a wide variety of challenging levels. Highly recommended for thrill-seekers!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Oct 26, 2023",
+    tags: "Sports, Minigames, 3D",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2278630/header.jpg?t=1702003083",
+    title: "Livestream 2: Escape from Togaezuka Happy Place",
+    text: "Livestream 2 is a hybrid of a visual novel and horror game, placing strong emphasis on exploration and puzzle-solving. It boasts a beautiful anime style, captivating characters, and a compelling plot!",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Oct 19, 2023",
+    tags: "Anime, Visual Novel, Horror",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1954750/header.jpg?t=1656541049",
+    title: "Acquitted",
+    text: "Acquitted is a fast-paced shooter with a unique hand-drawn style, offering a real challenge against the braindead. Note: the game touches on controversial themes, so be cautious if easily offended.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Oct 13, 2023",
+    tags: "Shooter, Cartoon, Indie",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1844170/header.jpg?t=1765445865",
+    title: "Galactic Wars EX",
+    text: "Galactic Wars Ex is a captivating side-scrolling pixel art coop shmup. Its unique energy mechanics, challenging gameplay, and responsive controls combine to create a gratifying retro experience.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Oct 9, 2023",
+    tags: "Shoot'Em Up, Side-Scroller, Pixelart",
+    recommended: true
+},
 {
     img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2512430/header.jpg?t=1702338253",
     title: "Void Survivors",

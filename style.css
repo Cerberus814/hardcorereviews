@@ -112,6 +112,13 @@ header {
   animation: blink 2s infinite;
 }
 
+@media (max-width: 768px) {
+  .playing-now-header {
+    background-size: 180%;
+    background-position: center top;
+  }
+}
+
 /* IMPORTANTE: Añade estas dos reglas para el texto */
 .status-text {
   text-align: left;
@@ -459,8 +466,6 @@ main {
   -webkit-box-orient: vertical;
   text-shadow: 2px 2px 10px rgba(0,0,0,0.9); /* Mejora legibilidad sobre imagen */
 }
-
-
 
 /* --- EL NUEVO BOTÓN "WATCH VIDEO" --- */
 .video-link {
@@ -886,3 +891,37 @@ section > h2 {
  }
 
  /* FIN Update filtros buscador y tags */
+ /* BOTÓN FILTRO TAGS */
+ .tags-toggle {
+   margin-top: 10px;
+   margin-bottom: 10px;
+   padding: 8px 14px;
+   background: #1c1c1c;
+   color: #fff;
+   border: 1px solid #333;
+   border-radius: 6px;
+   cursor: pointer;
+   font-family: inherit;
+   font-size: 14px;
+ }
+
+ .tags-toggle:hover {
+   background: #2a2a2a;
+   border: 1px solid var(--color-purple);
+   border-radius: 6px;
+   box-shadow: 0 0 25px rgba(104, 49, 229, 0.6);
+ }
+
+ /* TAGS COLAPSABLES */
+ .tags-filter {
+   max-height: 0;
+   overflow: hidden;
+   opacity: 0;
+   transition: max-height 0.3s ease, opacity 0.25s ease;
+ }
+
+ /* Estado abierto */
+ .tags-filter.open {
+   max-height: 300px; /* ajustable */
+   opacity: 1;
+ }
