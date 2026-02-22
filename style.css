@@ -57,6 +57,7 @@ header {
 .playing-now-header {
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   border-radius: 10px;
   overflow: hidden;
   flex: 0 1 450px; 
@@ -114,8 +115,10 @@ header {
 
 @media (max-width: 768px) {
   .playing-now-header {
-    background-size: 180%;
-    background-position: center top;
+    height: 140px;          /* altura tipo banner */
+    max-height: 140px;
+    background-size: cover;
+    background-position: center;
   }
 }
 
