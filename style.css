@@ -388,7 +388,6 @@ main {
 
   /* Contenedor de la cápsula */
   .capsula {
-    padding: 0 0.75rem;
     max-width: 100%;
     width: 100%;
   }
