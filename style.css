@@ -113,15 +113,6 @@ header {
   animation: blink 2s infinite;
 }
 
-@media (max-width: 768px) {
-  .playing-now-header {
-    height: 140px;          /* altura tipo banner */
-    max-height: 140px;
-    background-size: cover;
-    background-position: center;
-  }
-}
-
 /* IMPORTANTE: Añade estas dos reglas para el texto */
 .status-text {
   text-align: left;
@@ -237,7 +228,6 @@ main {
 }
 
 /* --- CAPSULAS (De reviews.js) --- */
-/* --- CÁPSULAS MODERNAS (IMAGEN DE FONDO) --- */
 .capsula {
     position: relative;
     display: flex;
@@ -253,7 +243,7 @@ main {
     max-width: 1000px; /* Ajusta según tu diseño */
 }
 
-/* El Outline Morado que pediste */
+/* Outline Morado */
 .capsula:hover {
     border-color: var(--color-purple);
     box-shadow: 0 0 25px rgba(104, 49, 229, 0.6);
@@ -562,6 +552,7 @@ main {
 @media (max-width: 768px) {
   .header-container { flex-direction: column; text-align: center; }
   .playing-now-header { width: 100%; }
+  .playing-now-header img { height: 100%; }
   .capsula { flex-direction: column; }
   .capsula img { width: 100%; height: 200px; }
   .integrated-nav { flex-wrap: wrap; padding: 1rem; }
@@ -582,6 +573,12 @@ section > h2 {
   padding-bottom: 4px;
   display: inline-block; /* La línea solo ocupa el ancho del texto */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+  section > h2 {
+      font-size: 1rem; /* Tamaño equilibrado */
+  }
 }
 
 /* Ajuste opcional: centrar títulos de sección si lo deseas */
@@ -753,46 +750,6 @@ section > h2 {
   }
 }
 
-/* --- FULL REVIEWS STYLES --- */
-
-.full-review-content {
-    max-width: 1000px; /* Limita el ancho para que no se vea infinito */
-    margin: 2rem auto; /* Centra el bloque horizontalmente */
-    background: #121212; /* Color de fondo oscuro sólido o semitransparente */
-    border-radius: 15px;
-    border: 1px solid rgba(104, 49, 229, 0.3);
-    overflow: hidden; /* Evita que la imagen de arriba se salga de los bordes redondeados */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.review-body-text {
-    padding: 3rem; /* Da aire al texto para que no toque los bordes */
-    text-align: left; /* Alineación de lectura estándar */
-    line-height: 1.8; /* Mejora la legibilidad */
-}
-
-.back-link-container { max-width: 900px; margin: 2rem auto 1rem; }
-.back-link { color: var(--color-cyan); text-decoration: none; font-weight: bold; letter-spacing: 1px; transition: 0.3s; }
-.back-link:hover { color: var(--color-purple); text-shadow: 0 0 10px var(--color-purple); }
-
-.review-header-section {
-    height: 500px; background-size: cover; background-position: center;
-    position: relative; border-radius: 15px 15px 0 0;
-}
-
-.header-overlay {
-    position: absolute; bottom: 0; left: 0; width: 100%; padding: 3rem;
-    background: linear-gradient(transparent, rgba(18, 18, 18, 1));
-}
-
-.genre-tags span {
-    background: var(--color-purple); color: white; padding: 4px 12px;
-    border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-right: 8px;
-    text-transform: uppercase;
-}
-
-.review-meta { margin-top: 1rem; display: flex; gap: 20px; font-size: 0.9rem; color: #888; }
-
 /* Galería Cuadrada 1:1 */
 .gallery-grid {
     display: flex;
@@ -925,6 +882,6 @@ section > h2 {
 
  /* Estado abierto */
  .tags-filter.open {
-   max-height: 300px; /* ajustable */
+   max-height: 350px; /* ajustable */
    opacity: 1;
  }
