@@ -724,7 +724,14 @@ section > h2 {
   .curator-content .highlight-line { font-size: 1.5rem; margin:2rem; }
   .follow-box-integrated { flex-direction: column; text-align: center; padding: 1.5rem; }
 }
-
+@media (max-width: 768px) {
+.highlight-line {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: var(--color-cyan);
+  opacity: 1; /* Cambiado a 1 para que se vea siempre si el JS falla */
+}
+}
 /* Logos partners */
 .partners-section {
   padding: 2rem 0;
