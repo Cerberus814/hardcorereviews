@@ -16,14 +16,22 @@ html {
   scroll-padding-top: 20px;
 }
 
-body {
+/*-- body {
   margin: 0;
   font-family: 'Rajdhani', sans-serif;
   background-color: var(--bg-dark);
   color: var(--color-white);
   display: flex;
   flex-direction: column;
-  align-items: center; /* Esto centra todo el contenido */
+  align-items: center;
+  min-height: 100vh;
+} --*/
+
+body {
+  margin: 0;
+  font-family: 'Rajdhani', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--color-white);
   min-height: 100vh;
 }
 
@@ -198,6 +206,12 @@ header {
   text-shadow: 0 0 10px var(--color-cyan);
 }
 
+@media (max-width: 768px) {
+  .integrated-nav {
+    top: 0;
+  }
+}
+
 .dropdown { position: relative; }
 .dropdown-content {
   display: none;
@@ -252,12 +266,19 @@ header {
     text-align: center;
 }
 
-/* --- MAIN CONTENT --- */
+/* --- MAIN CONTENT
 main {
   width: 90%;
-  max-width: 900px; /* Esto evita que el sitio se vea "alargado" o infinito hacia los lados */
+  max-width: 900px;
   padding: 2rem 0;
   text-align: center;
+}
+--- */
+main {
+  width: 90%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* --- CAPSULAS (De reviews.js) --- */
@@ -601,7 +622,7 @@ section > h2 {
   color: var(--color-purple);
   text-transform: uppercase;
   letter-spacing: 4px;
-  margin: 3rem 0 1rem 0; /* Espaciado arriba y abajo */
+  margin: 1.5rem 0 1rem 0; /* Espaciado arriba y abajo */
   padding-bottom: 4px;
   display: inline-block; /* La línea solo ocupa el ancho del texto */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -621,16 +642,12 @@ section > h2 {
 /* --- CURATOR HERO SECTION --- */
 .curator-hero {
   position: relative;
-  width: 100vw; /* Ocupa todo el ancho de la pantalla */
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  width: 100%;
   min-height: 600px;
-  background-image: url('img/footfondo.jpg'); /* Pon aquí tu imagen de fondo */
+  background-image: url('img/footfondo.jpg');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed; /* Efecto parallax opcional */
+  background-attachment: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -737,7 +754,6 @@ section > h2 {
     background-position: center 20%;
   }
 
-}
 }
 /* Logos partners */
 .partners-section {
@@ -930,4 +946,11 @@ section > h2 {
  .tags-filter.open {
    max-height: 350px; /* ajustable */
    opacity: 1;
+ }
+
+ footer {
+   width: 100%;
+   text-align: center;
+   position: relative;
+   padding: 1rem 0;
  }
