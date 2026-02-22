@@ -719,10 +719,19 @@ section > h2 {
   box-shadow: 0 0 20px rgba(102, 193, 76, 0.4);
 }
 
-/* Responsivo */
 @media (max-width: 768px) {
-  .curator-content .highlight-line { font-size: 1rem; margin:2rem; }
-  .follow-box-integrated { flex-direction: column; text-align: center; padding: 1rem; }
+
+  .curator-content .highlight-line {
+    font-size: 1.4rem;
+    margin: 0.25rem 0 0.75rem;
+  }
+
+  .follow-box-integrated {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+
 }
 }
 /* Logos partners */
