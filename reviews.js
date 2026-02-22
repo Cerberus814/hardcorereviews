@@ -67,7 +67,7 @@
         link: 'https://www.youtube.com/watch?v=OMJAQW0T1s0&t=2s&pp=0gcJCYcKAYcqIYzv',
         recommended: true,
 		date: "Dec 31, 2025",
-    	tags: "Deck Builder, Roguelite",
+    	tags: "Deck Builder, Roguelike",
         },
 
                 {
@@ -97,7 +97,7 @@
         link: 'https://www.youtube.com/watch?v=zhFE_CUfb9c&t=1s',
 		recommended: true,
 		date: "Dec 26, 2025",
-    	tags: "Roguelite, 2D Platformer, Anime",
+    	tags: "Roguelike, 2D Platformer, Anime",
         },
 
                 {
@@ -107,7 +107,7 @@
         link: 'https://steamcommunity.com/id/cerberus814/recommended/3966010/',
 		recommended: true,
 		date: "Dec 23, 2025",
-    	tags: "Roguelite, Pixelart, Anime",
+    	tags: "Roguelike, Pixelart, Anime",
         },
 
                 {
@@ -117,7 +117,7 @@
         link: 'https://steamcommunity.com/id/cerberus814/recommended/2342150/',
 		recommended: true,
 		date: "Dec 21, 2025",
-    	tags: "Roguelite, Pixelart, Exploration",
+    	tags: "Roguelike, Pixelart, Exploration",
         },
 
                 {
@@ -137,7 +137,7 @@
         link: 'https://steamcommunity.com/id/cerberus814/recommended/3573070',
         recommended: true,
         date: "Dec 12, 2025",
-    	tags: "Minigames, Roguelite, PVP",
+    	tags: "Minigames, Roguelike, PVP",
         },
 
                 {
@@ -246,7 +246,7 @@
         link: 'https://steamcommunity.com/id/cerberus814/recommended/1952370?snr=1_5_9__402',
         recommended: true,
         date: "Aug 20, 2025",
-        tags: "Roguelike, Side-Scroller, 2D Platformers",
+        tags: "Roguelike, Side-Scroller, 2D Platformer",
       },
 	  {
         img: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3421080/126ea00e508411ef11c08e55ab4cd6118cc7cd61/header.jpg?t=1754712009',
@@ -309,7 +309,7 @@
         link: 'https://steamcommunity.com/id/cerberus814/recommended/',
         recommended: true,
         date: "Jul 5, 2025",
-        tags: "Shoot'Em Up, Anime, Third Person Shooter",
+        tags: "Shoot'Em Up, Anime, TPS",
       },
       {
         img: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/420770/header_292x136.jpg?t=1746490776',
@@ -561,7 +561,7 @@
 		link: 'https://steamcommunity.com/id/cerberus814/recommended/',
         recommended: true,
         date: "Jan 10, 2025",
-        tags: "Third Person Shooter, Co-op, Gore, SP",
+        tags: "TPS, Co-op, Gore, Single Player",
             },
 			{
 		img: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1863300/header_292x136.jpg?t=1735908157',
@@ -572,6 +572,89 @@
         date: "Jan 7, 2025",
         tags: "Bullet Hell, Action, Shoot'Em Up",
             },
+
+// Reseñas del 2024
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2732820/header.jpg?t=1734710743",
+    title: "The Great Rebellion",
+    text: "The Great Rebellion is an absolute gem that bright for Its unique way to explore a well known genre, offering a fantastic roguelike with a compelling narrative, stunning visuals and great OST. A must!",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/2732820?snr=1_5_9__402",
+    date: "Jun 3, 2024",
+    tags: "Roguelike, Pixelart, 2D Platformer, Sci-Fi",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1201230/070171415f90a240b0617acb611fa111065279bd/header.jpg?t=1770712350",
+    title: "Immortal Life",
+    text: "Immortal Life delights with It's beautiful anime style, It stands out as a fantastic farming sim with an interesting plot and compeling characters. Packed with tons of content and exploration! A must!",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/1201230?snr=1_5_9__402",
+    date: "May 31, 2024",
+    tags: "Anime, Farming Sim",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1078490/header.jpg?t=1763376128",
+    title: "Seed Hunter 猎源",
+    text: "Seed Hunter invites you to discover a fantastic roguelike, offering a very compelling and highly replayable game, with stunning illustrations and very polished mechanics. It brights as a shiny gem!",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/1078490/",
+    date: "May 1, 2024",
+    tags: "Roguelike, 2D Platformer",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2712480/header.jpg?t=1731308185",
+    title: "Shikhondo: Youkai Rampage",
+    text: "Shikhondo Youkai Rampage stands out as a love letter to shoot em ups, with a stunning anime style and detailed illustrations. Fantastic gameplay, with a very satisfying bullet cancel mechanic. A must!",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/2712480?snr=1_5_9__402",
+    date: "Apr 22, 2024",
+    tags: "Shoot'Em Up, Vertical-Scroller, Anime",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2821290/header.jpg?t=1731404428",
+    title: "SUNSOFT is Back! レトロゲームセレクション",
+    text: "Fantastic collection of three Famicom classics from Sunsoft works. Completely recommended to discover Japan exclusive gems. A true labor of love, with tons of game improvements and extra content!.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/2821290?snr=1_5_9__402",
+    date: "Apr 18, 2024",
+    tags: "Retro, Pixelart, Collection",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2303500/header.jpg?t=1732320679",
+    title: "MF-01 Aerostrike",
+    text: "MF-01 Aerostrike stands out as a very unique and interesting Shmup Metroidvania. Very fun and challenging arcade style with lots of exploration and upgrades. Could be much better with some polishing.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/2303500?snr=1_5_9__402",
+    date: "Apr 15, 2024",
+    tags: "Metroidvania, Shoot'Em Up, Bullet Hell",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2786680/header.jpg?t=1757668350",
+    title: "Knowledge, or know Lady",
+    text: "Knowledge, or know Lady is a fantastic FMV game that perfectly blends a good storytelling with some beautiful girls boasting amazing acting with stunning cinemathic visuals. You don't want to miss it!",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/2786680/",
+    date: "Apr 11, 2024",
+    tags: "FMV, Dating Sim, Visual Novel",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2254600/header.jpg?t=1712010956",
+    title: "Let's Pet Pets",
+    text: "Another fantastic incremental idler, with a very unique and interesting twist. Collect a wide variety of adorable animals, pet them by moving your mouse, and purchase upgrades to pet them even more.",
+    link: "https://cerberus814.github.io/hardcorereviews/",
+    date: "Apr 10, 2024",
+    tags: "Clicker, Idler, 3D",
+    recommended: true
+},
+{
+    img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1127700/header.jpg?t=1762224382",
+    title: "Reverse Collapse: Code Name Bakery",
+    text: "Reverse Collapse Code Name Bakery is a fantastic grid style Tactical RPG, boasting a stunning anime aesthetic that seamlessly complements its compelling storytelling. Dynamic and challenging gameplay.",
+    link: "https://steamcommunity.com/id/cerberus814/recommended/1127700",
+    date: "Apr 7, 2024",
+    tags: "Anime, TRPG, Turn Based",
+    recommended: true
+},
 // Reseñas del 2023
 {
     img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229500/header.jpg?t=1770062885",
@@ -615,7 +698,7 @@
     text: "Parking Tycoon proves to be an engaging game where you build and manage your own parking haven. Before you know it, hours slip away seamlessly, thanks to its simple yet relaxing vibe.",
     link: "https://cerberus814.github.io/hardcorereviews/",
     date: "Nov 22, 2023",
-    tags: "Sim, Manager",
+    tags: "Simulator, Management",
     recommended: true
 },
 {
@@ -624,7 +707,7 @@
     text: "Miniland captivates with its beautiful minimalist pixel art. A survival game that seamlessly blends construction, exploration, and gathering. Shape your world with minilands and prepare for the night.",
     link: "https://steamcommunity.com/id/cerberus814/recommended/1934040/",
     date: "Nov 18, 2023",
-    tags: "2D, Farm, Crafting, Co-op",
+    tags: "2D, Farming Sim, Crafting, Co-op",
     recommended: true
 },
 {
@@ -867,7 +950,7 @@
     text: "It's a promising sci-fi FPS. It features great visuals and offers a wide variety of game modes. It's already enjoyable, but it requires further polishing to provide a more satisfying experience.",
     link: "https://cerberus814.github.io/hardcorereviews/",
     date: "Jun 8, 2023",
-    tags: "FSP, Sci-Fi",
+    tags: "FPS, Sci-Fi",
     recommended: true
 },
 {
@@ -1021,7 +1104,7 @@
     text: "Buenas noticias, compra obligada, es muy buen juego, y en muchos apartados supera al original, en lo que innovan lo hacen muy bien, y en cuanto a lore, gráficos/animaciones y sfx/ost es excelente.",
     link: "https://steamcommunity.com/id/cerberus814/recommended/883710/",
     date: "Feb 8, 2019",
-    tags: "Survival-Horror, Third Person Shooter, Gore, SP",
+    tags: "Survival-Horror, TPS, Gore, Single Player",
     recommended: true
 },
 // Reseñas del 2018
