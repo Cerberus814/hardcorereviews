@@ -53,8 +53,9 @@ header {
   50% { transform: translateY(-5px); }
 }
 
-/* --- PLAYING NOW (VERSIÓN DEFINITIVA) --- */
+/* --- PLAYING NOW (VERSIÓN DEFINITIVA) En caso de fallo eliminar position relative --- */
 .playing-now-header {
+  position:relative;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -64,6 +65,13 @@ header {
   min-width: 300px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+  .playing-now-header {
+    height: 140px;
+    max-height: 140px;
+  }
 }
 
 .status-overlay {
@@ -552,7 +560,6 @@ main {
 @media (max-width: 768px) {
   .header-container { flex-direction: column; text-align: center; }
   .playing-now-header { width: 100%; }
-  .playing-now-header img { height: 100%; }
   .capsula { flex-direction: column; }
   .capsula img { width: 100%; height: 200px; }
   .integrated-nav { flex-wrap: wrap; padding: 1rem; }
