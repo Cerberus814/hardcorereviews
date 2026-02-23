@@ -1,6 +1,14 @@
     const reviews = [
         // Reseñas del 2026
-
+        {
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3513070/19182cc428d992f0cf1b1019e7326d9651044824/header.jpg?t=1771435288",
+            title: "Blaze of Storm",
+            text: "Blaze of Storm is a fantastic pixel art Vertical-Scroller SHMUP. Super fun and challenging with tight controls, epic boss fights and Its super cool OST. I highly recommend it for all type of players!",
+            link: "https://www.youtube.com/watch?v=Q1KvQ3BzK6g&t=1553s",
+            date: "Feb 22, 2026",
+            tags: "Shoot'Em Up, Arcade, Pixelart",
+            recommended: true
+        },
         {
             img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3021100/header.jpg?t=1767952649",
             title: "Five Girls Under One Roof",
@@ -18,8 +26,7 @@
         recommended: true,
 		date: "Feb 9, 2026",
     	tags: "Roguelike, Pixelart, Keymailer",
-        },
-        
+        },        
                 {
         img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2253470/header.jpg?t=1708505018",
         title: "Capoo Pals",
