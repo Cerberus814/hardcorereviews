@@ -1,5 +1,14 @@
     const reviews = [
         // Reseñas del 2026
+		        {
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4412810/0ab1fdc0cd79abf3c10b5e1d79a2ebe8026877fd/header.jpg?t=1771875884",
+            title: "Spot Zero Demo",
+            text: "Spot Zero is a very cool and promising anime style Hack'n Slash gacha coming soon, we have played the DEMO during the 2026 Steam Next Fest event and it looks amazing. Nice visuals with great gameplay!",
+            link: "https://www.youtube.com/watch?v=3zPGtwfzJk8",
+            date: "Feb 24, 2026",
+            tags: "Anime, Gacha, Hack and Slash",
+            recommended: true
+        },
         {
             img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3513070/19182cc428d992f0cf1b1019e7326d9651044824/header.jpg?t=1771435288",
             title: "Blaze of Storm",
