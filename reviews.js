@@ -1,21 +1,39 @@
     const reviews = [
         // Reseñas del 2026
-		        {
-            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4412810/0ab1fdc0cd79abf3c10b5e1d79a2ebe8026877fd/header.jpg?t=1771875884",
-            title: "Spot Zero Demo",
-            text: "Spot Zero is a very cool and promising anime style Hack'n Slash gacha coming soon, we have played the DEMO during the 2026 Steam Next Fest event and it looks amazing. Nice visuals with great gameplay!",
-            link: "https://www.youtube.com/watch?v=3zPGtwfzJk8",
-            date: "Feb 24, 2026",
-            tags: "Anime, Gacha, Hack and Slash",
+        {
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2096020/276aa18bac8e0c6f3476ac59645790b0e20a86f4/header_alt_assets_1.jpg?t=1785183457",
+            title: "Viral Reload EX",
+            text: "Viral Reload EX is a simple and accessible vertical scroller cute ‘em up with anime style and dash mechanics. Fun, easy to get into. Up to 2 players co-op. Good pick for casual shmup players.",
+            link: "https://steamcommunity.com/id/cerberus814/recommended/2096020?snr=1_5_9__402",
+            date: "Jul 27, 2026",
+            tags: "Shoot'Em Up, Pixelart, 2D, Anime",
             recommended: true
         },
         {
-            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3513070/19182cc428d992f0cf1b1019e7326d9651044824/header.jpg?t=1771435288",
-            title: "Blaze of Storm",
-            text: "Blaze of Storm is a fantastic pixel art Vertical-Scroller SHMUP. Super fun and challenging with tight controls, epic boss fights and Its super cool OST. I highly recommend it for all type of players!",
-            link: "https://www.youtube.com/watch?v=Q1KvQ3BzK6g&t=1553s",
-            date: "Feb 22, 2026",
-            tags: "Shoot'Em Up, Arcade, Pixelart",
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2091300/header.jpg?t=1776204378",
+            title: "Raimodula",
+            text: "Raimodula is a truly unique gem of a run and gun game featuring beautiful pixel art. Tight gameplay. Two characters with different playstyles, upgrades, and weapons. Up to 2-player co-op. A must have!",
+            link: "https://steamcommunity.com/id/cerberus814/recommended/2091300?snr=1_5_9__402",
+            date: "Jul 26, 2026",
+            tags: "2D, 2D Platformer, Pixelart, Run & Gun",
+            recommended: true
+        },
+        {
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/428550/header.jpg?t=1734415917",
+            title: "Momodora: Reverie Under The Moonlight",
+            text: "Beautiful pixel art and one of my favorite metroidvania indie games with tight combat and solid exploration. Short but challenging, especially on higher difficulty. A must-play for genre fans.",
+            link: "https://steamcommunity.com/id/cerberus814/recommended/428550/",
+            date: "Jul 23, 2026",
+            tags: "Anime, Metroidvania, Pixelart, 2D, 2D Platformer",
+            recommended: true
+        },
+        {
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4290470/8a99ecee0bd6bb0bf74672402f4db016a33a428e/header.jpg?t=1780709069",
+            title: "Echo Isle",
+            text: "Echo Isle is a very fun retro style tiny adventure inspired by Zelda Link's Awakening. Beautiful pixel art graphics with cool OST. Fight monsters, solve puzzles and complete classic dungeons! A must!",
+            link: "https://www.youtube.com/watch?v=UvUfI0AaMLQ",
+            date: "Jun 3, 2026",
+            tags: "Anime, Arpg, Zelda-like, Pixelart, Hack and Slash",
             recommended: true
         },
         {
@@ -35,7 +53,8 @@
         recommended: true,
 		date: "Feb 9, 2026",
     	tags: "Roguelike, Pixelart, Keymailer",
-        },        
+        },
+        
                 {
         img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2253470/header.jpg?t=1708505018",
         title: "Capoo Pals",
