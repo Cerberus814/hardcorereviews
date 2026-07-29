@@ -9,6 +9,7 @@
       const response = await fetch(apiUrl);
       const data = await response.json();
       const container = document.getElementById("youtube-container");
+      if (!container) return;
 
       if (data.status !== "ok") return;
 
@@ -78,8 +79,8 @@
 
     } catch (error) {
       console.error("Error:", error);
-      document.getElementById("youtube-container").innerHTML =
-        "<p>Could not load videos.</p>";
+      const errContainer = document.getElementById("youtube-container");
+      if (errContainer) errContainer.innerHTML = "<p>Could not load videos.</p>";
     }
   }
 
