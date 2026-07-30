@@ -12,19 +12,13 @@
   <header>
     <div class="header-container">
       <a href="index.html"><img src="img/hrlogo.png" alt="Hardcore Reviews Logo" class="logo"></a>
-      <div class="playing-now-header" style="background-image: url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/524220/header.jpg');">
-	  <a href="https://steamcommunity.com/id/cerberus814/" target="_blank" style="text-decoration: none; display: block;">
-        <div class="status-overlay">
-          <div class="status-wrapper">
-            <img src="img/c814.jpg" alt="Cerberus814 profile pitcture" class="avatar-small">
-            <span class="live-indicator"></span>
-          </div>
-          <div class="status-text">
-            <span class="status-label">CURRENTLY PLAYING</span>
-            <h3 class="game-title">NIER AUTOMATA</h3>
-          </div>
-		  </div>
-      </a></div>
+      <a href="https://x.com/Cerberus814" target="_blank" class="x-follow-card">
+        <span class="x-follow-icon">𝕏</span>
+        <span class="x-follow-text">
+          <span class="x-follow-label">FOLLOW ME ON X</span>
+          <span class="x-follow-handle">@Cerberus814</span>
+        </span>
+      </a>
     </div>
   </header>
 
@@ -58,6 +52,14 @@
   </div>
 
   <main>
+    <div class="filter-section">
+      <div class="search-box">
+        <input type="text" id="reviewSearch" placeholder="Search by title..." onkeyup="filterReviews()">
+      </div>
+      <button id="toggleTags" class="tags-toggle">🔍 Tag Filter</button>
+      <div class="tags-filter" id="tagsFilter"></div>
+    </div>
+    <br>
     <div id="fullreviews-container"></div>
     <div class="pagination" id="pagination"></div>
   </main>
@@ -71,5 +73,6 @@
 
   <script src="fullreviews-data.js"></script>
   <script src="fullreviews.js"></script>
+  <script src="tagcollapse.js"></script>
 </body>
 </html>

@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hardcore Reviews — Generador de Reseñas</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-pink: #d92180;
+  --color-purple: #6831e5;
+  --color-cyan: #28a7e7;
+  --color-white: #ffffff;
+  --bg-dark: #1c1c1e;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Rajdhani', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--color-white);
+  min-height: 100vh;
+}
+header {
+  background: linear-gradient(90deg, var(--color-pink), var(--color-purple), var(--color-cyan));
+  padding: 1.2rem 1.5rem;
+}
+header h1 { margin: 0; font-size: 1.6rem; letter-spacing: 1px; }
+header p { margin: 0.3rem 0 0; opacity: 0.9; font-size: 0.95rem; }
+.wrap { max-width: 1300px; margin: 0 auto; padding: 1.5rem; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.tab-btn {
+  background: #2a2a2e; color: #ccc; border: 1px solid #444;
+  padding: 10px 18px; border-radius: 8px; cursor: pointer;
+  font-family: inherit; font-size: 0.95rem; font-weight: 700;
+}
+.tab-btn.active { background: var(--color-purple); color: white; border-color: var(--color-cyan); }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+@media (max-width: 950px) { .grid { grid-template-columns: 1fr; } }
+.panel { background: #232326; border: 1px solid #3a3a3e; border-radius: 12px; padding: 1.5rem; }
+.panel h2 { margin-top: 0; font-size: 1.1rem; color: var(--color-cyan); text-transform: uppercase; letter-spacing: 1px; }
+label { display: block; font-size: 0.85rem; color: #aaa; margin: 0.9rem 0 0.3rem; font-weight: 700; }
+label:first-of-type { margin-top: 0; }
+input[type=text], input[type=date], input[type=url], textarea {
+  width: 100%; padding: 10px 12px; background: #2a2a2e; border: 1px solid #444;
+  border-radius: 8px; color: white; font-family: 'Rajdhani', sans-serif; font-size: 0.95rem;
+}
+textarea { resize: vertical; min-height: 80px; }
+.hint { font-size: 0.75rem; color: #777; margin-top: 3px; }
+.checkbox-row { display: flex; align-items: center; gap: 8px; margin-top: 1rem; }
+.checkbox-row input { width: 18px; height: 18px; }
+.checkbox-row label { margin: 0; }
+
+.btn-cap-gaming {
+  display: inline-block; padding: 10px 25px; background: var(--color-purple); color: white !important;
+  border: 1px solid var(--color-cyan); border-radius: 6px; text-decoration: none !important;
+  font-weight: bold; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;
+  transition: all 0.3s ease; cursor: pointer; font-family: inherit;
+}
+.btn-cap-gaming:hover { background: var(--color-cyan); }
+.btn-secondary {
+  background: #333; color: white; border: 1px solid #555; padding: 10px 20px; border-radius: 6px;
+  cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.8rem; text-transform: uppercase;
+}
+.btn-secondary:hover { border-color: var(--color-cyan); }
+.btn-mini {
+  background: #2a2a2e; color: #ccc; border: 1px solid #444; border-radius: 5px;
+  cursor: pointer; font-family: inherit; font-size: 0.8rem; padding: 4px 8px;
+}
+.btn-mini:hover { border-color: var(--color-cyan); }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1.2rem; }
+
+/* --- Cápsula preview (clon del sitio) --- */
+.preview-label { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.capsula {
+  position: relative; display: flex; flex-direction: column; background: #2a2a2e;
+  border: 1px solid #444; border-radius: 12px; overflow: hidden; min-height: 250px; width: 100%;
+}
+.capsula-bg { position: absolute; top:0; left:0; width:100%; height:100%; z-index:1; }
+.capsula-bg img {
+  width: 100%; height: 100%; object-fit: cover; opacity: 0.6;
+  -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 80%);
+  mask-image: linear-gradient(to bottom, black 20%, transparent 80%);
+}
+.capsula-content {
+  position: relative; z-index: 2; padding: 2rem; flex: 1;
+  background: linear-gradient(to right, rgba(28,28,30,0.9) 30%, transparent 100%); text-align: left;
+}
+.capsula-content h3 { margin: 0; font-size: 1.8rem; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+.capsula-meta, .review-meta { display: flex; gap: 15px; font-size: 0.85rem; color: var(--color-cyan); margin: 8px 0; font-weight: bold; }
+.capsula-tags, .review-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+.capsula-tags span, .review-tags span { background: rgba(0,0,0,0.6); color: white; border: 1px solid var(--color-purple); padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; }
+.capsula-text { max-width: 60%; line-height: 1.5; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,1); }
+@media (max-width: 700px) { .capsula-text { max-width: 100%; } }
+
+/* --- Full review preview (clon del artículo) --- */
+.review-card-preview { position: relative; background: #2a2a2e; border: 1px solid #444; border-radius: 12px; overflow: hidden; }
+.review-card-preview-bg { position: absolute; top:0; left:0; width:100%; height:100%; z-index:0; }
+.review-card-preview-bg img { width:100%; height:100%; object-fit:cover; opacity:0.35;
+  -webkit-mask-image: linear-gradient(to bottom left, black 15%, transparent 75%);
+  mask-image: linear-gradient(to bottom left, black 15%, transparent 75%); }
+.review-card-preview-inner { position: relative; z-index: 1; padding: 1.8rem; }
+.review-card-preview h3 { margin: 0 0 8px; font-size: 1.5rem; color: white; }
+.review-excerpt { color: #ccc; line-height: 1.5; margin-bottom: 10px; }
+.review-article-preview { background: #1c1c1e; border: 1px solid #333; border-radius: 10px; padding: 1.5rem; margin-top: 1.2rem; }
+.review-article-preview h2 { font-size: 1.5rem; margin: 0 0 8px; }
+.review-article-header-preview { position: relative; overflow: hidden; }
+.review-article-header-preview.has-bg { padding: 1rem; border-radius: 8px; margin: -1rem -1rem 0.5rem; }
+.review-article-header-preview-bg { position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; }
+.review-article-header-preview-bg img { width:100%; height:100%; object-fit:cover; opacity:0.35;
+  -webkit-mask-image: linear-gradient(to bottom left, black 15%, transparent 75%);
+  mask-image: linear-gradient(to bottom left, black 15%, transparent 75%); }
+.review-article-header-preview-inner { position: relative; z-index: 1; }
+.review-text { line-height: 1.7; font-size: 1rem; margin: 1rem 0; }
+.review-text a, .review-table a { color: var(--color-cyan); text-decoration: underline; }
+.review-text h3 { font-family: 'Rajdhani', sans-serif; color: var(--color-cyan); font-size: 1.4rem; font-weight: 700; margin: 1.4rem 0 0.5rem; }
+.review-text h4 { font-family: 'Rajdhani', sans-serif; color: var(--color-cyan); font-size: 1.1rem; font-weight: 700; margin: 1.2rem 0 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.review-shot { display: flex; align-items: stretch; max-width: 420px; margin: 1.2rem 0; background: #1f1f22; border: 1px solid #333; border-radius: 10px; overflow: hidden; }
+.review-shot-frame { flex: 0 0 150px; width: 150px; aspect-ratio: 16/9; overflow: hidden; background: #000; display:block; }
+.review-shot-frame img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
+.review-shot-caption { flex:1; display: flex; flex-direction:column; justify-content:center; gap: 4px; padding: 8px 14px; font-size: 0.78rem; color: #aaa; }
+.review-shot-caption strong { color: var(--color-cyan); font-size: 0.82rem; text-transform: uppercase; }
+.review-video-block { max-width: 420px; margin: 1.2rem 0; background: #1f1f22; border: 1px solid #333; border-radius: 10px; overflow: hidden; }
+.review-video-frame { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background: #000; }
+.review-video-frame iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
+.review-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 0.8rem; }
+.btn-cap-gaming.btn-youtube { background: #cc2b2b; border-color: #ff4d4d; }
+.btn-cap-gaming.btn-x { background: #000; border-color: #444; }
+.review-verdict { display: inline-flex; align-items: center; gap: 12px; background: #1f1f22; border: 1px solid #333; border-radius: 10px; padding: 10px 16px; margin: 0.4rem 0 1rem; }
+.review-verdict-icon { font-size: 1.4rem; line-height: 1; }
+.review-verdict-text { display: flex; flex-direction: column; gap: 2px; }
+.review-verdict-label { font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
+.review-verdict.recommended .review-verdict-label { color: #66c266; }
+.review-verdict.not-recommended .review-verdict-label { color: #d96666; }
+.review-verdict-playtime { font-size: 0.75rem; color: #999; }
+
+/* --- Editor de bloques --- */
+.block-list { margin-top: 1rem; display: flex; flex-direction: column; gap: 10px; }
+.block-item { background: #2a2a2e; border: 1px solid #444; border-radius: 8px; padding: 12px; }
+.block-item-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.block-item-head span { font-size: 0.75rem; color: var(--color-cyan); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+.block-item-controls { display: flex; gap: 5px; }
+.add-block-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1rem; }
+.two-col-inline { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 500px) { .two-col-inline { grid-template-columns: 1fr; } }
+
+/* --- Cola / output --- */
+.queue-item {
+  display: flex; justify-content: space-between; align-items: center; background: #2a2a2e;
+  border: 1px solid #444; border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; font-size: 0.9rem;
+}
+.queue-item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.queue-item-actions button {
+  border-radius: 5px; padding: 4px 9px; cursor: pointer; font-family: inherit; font-size: 0.9rem;
+}
+.queue-item-actions button:disabled { opacity: 0.3; cursor: not-allowed; }
+.q-move { background: #2a2a3a; color: #aab; border: 1px solid #444; }
+.q-move:not(:disabled):hover { border-color: var(--color-cyan); color: white; }
+.q-edit { background: #2a3a2a; color: #9c9; border: 1px solid #446644; }
+.q-edit:hover { border-color: var(--color-cyan); color: white; }
+.q-remove { background: #4a1a1a; color: #ff8888; border: 1px solid #663333; }
+.edit-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  background: rgba(217,33,128,0.15); border: 1px solid var(--color-pink); border-radius: 8px;
+  padding: 10px 14px; margin-top: 1rem; font-size: 0.85rem; color: #f0c;
+}
+.edit-banner button { flex-shrink: 0; }
+
+/* --- Editor de texto enriquecido (párrafos y celdas de tabla) --- */
+.rt-toolbar { display: flex; gap: 4px; margin-bottom: 6px; }
+.rt-toolbar button {
+  background: #2a2a2e; color: #ccc; border: 1px solid #444; border-radius: 5px;
+  padding: 4px 10px; cursor: pointer; font-family: inherit; font-size: 0.85rem; min-width: 30px;
+}
+.rt-toolbar button:hover { border-color: var(--color-cyan); color: white; }
+.rt-editor, .rt-cell {
+  background: #2a2a2e; border: 1px solid #444; border-radius: 8px; color: white;
+  font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; line-height: 1.5;
+}
+.rt-editor { width: 100%; min-height: 90px; padding: 10px 12px; }
+.rt-editor a, .rt-cell a { color: var(--color-cyan); }
+.rt-editor:empty:before, .rt-cell:empty:before {
+  content: attr(data-placeholder); color: #666;
+}
+.block-table-edit { border-collapse: collapse; width: 100%; margin: 6px 0; }
+.block-table-edit td { border: 1px solid #3a3a3e; padding: 3px; }
+.rt-cell { min-height: 30px; padding: 6px 8px; border-radius: 4px; font-size: 0.85rem; }
+
+/* --- Tabla renderizada en el artículo final --- */
+.review-table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+.review-table { width: 100%; border-collapse: collapse; background: #1f1f22; border: 1px solid #333; border-radius: 8px; }
+.review-table th, .review-table td { border: 1px solid #333; padding: 8px 12px; text-align: left; font-size: 0.9rem; }
+.review-table th { background: rgba(104,49,229,0.25); color: var(--color-cyan); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+.review-table tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+.review-table a, .review-text a { color: var(--color-cyan); }
+
+pre {
+  background: #18181a; border: 1px solid #333; border-radius: 8px; padding: 1rem; overflow-x: auto;
+  font-size: 0.85rem; line-height: 1.5; color: #d4d4d4; white-space: pre-wrap; word-break: break-word;
+}
+.copied-msg { color: var(--color-cyan); font-size: 0.85rem; font-weight: 700; margin-left: 8px; }
+.empty-state { color: #666; font-size: 0.9rem; font-style: italic; }
+.instructions {
+  background: rgba(104,49,229,0.12); border: 1px solid var(--color-purple); border-radius: 8px;
+  padding: 1rem 1.2rem; font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;
+}
+.instructions strong { color: var(--color-cyan); }
+.section-title { margin-top: 2.5rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🎮 Hardcore Reviews — Generador de Reseñas</h1>
+  <p>Completá el formulario, revisá la vista previa, y copiá el código listo para pegar.</p>
+</header>
+
+<div class="wrap">
+
+  <div class="tabs">
+    <button class="tab-btn active" id="tabCapsulaBtn" onclick="switchTab('capsula')">📋 Reseña rápida (lista corta)</button>
+    <button class="tab-btn" id="tabFullBtn" onclick="switchTab('full')">📄 Reseña completa (página propia)</button>
+  </div>
+
+  <div class="instructions" id="tabIntro"></div>
+
+  <!-- ============ TAB: RESEÑA RÁPIDA ============ -->
+  <div id="capsulaTab">
+    <div class="grid">
+      <div class="panel">
+        <h2>Datos de la reseña</h2>
+        <label>URL de la imagen (header de Steam u otra)</label>
+        <input type="url" id="f_img" placeholder="https://shared.fastly.steamstatic.com/.../header.jpg" oninput="updateCapsulaPreview()">
+        <label>Título del juego</label>
+        <input type="text" id="f_title" placeholder="Spot Zero Demo" oninput="updateCapsulaPreview()">
+        <label>Texto de la reseña (resumen corto)</label>
+        <textarea id="f_text" placeholder="Escribí acá tu reseña corta..." oninput="updateCapsulaPreview()"></textarea>
+        <label>Enlace (Steam o YouTube)</label>
+        <input type="url" id="f_link" placeholder="https://store.steampowered.com/app/...">
+        <label>Fecha</label>
+        <input type="date" id="f_date" oninput="updateCapsulaPreview()">
+        <label>Tags (separados por coma)</label>
+        <input type="text" id="f_tags" placeholder="Anime, Gacha, Hack and Slash" oninput="updateCapsulaPreview()">
+        <div class="checkbox-row">
+          <input type="checkbox" id="f_recommended" checked>
+          <label>Recomendado</label>
+        </div>
+        <div id="capsulaEditBanner" class="edit-banner" style="display:none;">
+          ✎ Editando una reseña de la cola — los cambios se guardan en su lugar.
+          <button class="btn-secondary" onclick="cancelCapsulaEdit()">Cancelar edición</button>
+        </div>
+        <div class="actions">
+          <button class="btn-cap-gaming" id="capsulaAddBtn" onclick="addCapsulaToQueue()">➕ Añadir a la lista</button>
+          <button class="btn-secondary" onclick="clearCapsulaForm()">🧹 Limpiar</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="preview-label">Así se ve en tu web:</div>
+        <div class="capsula">
+          <div class="capsula-bg"><img id="p_img" src="" alt=""></div>
+          <div class="capsula-content">
+            <h3 id="p_title">Título del juego</h3>
+            <div class="capsula-meta" id="p_meta"></div>
+            <div class="capsula-tags" id="p_tags"></div>
+            <p class="capsula-text" id="p_text">Tu texto de reseña va a aparecer acá...</p>
+            <div><a class="btn-cap-gaming" href="#" onclick="return false;">VIEW ON STEAM / YT</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">📦 Reseñas rápidas en cola (<span id="capsulaQueueCount">0</span>)</h2>
+    <div id="capsulaQueueList"><p class="empty-state">Todavía no añadiste ninguna.</p></div>
+
+    <h2 class="section-title">✅ Código para <code>reviews.js</code></h2>
+    <p class="hint">Pegá esto justo después de <code>const reviews = [</code></p>
+    <div class="actions">
+      <button class="btn-cap-gaming" onclick="copyText(document.getElementById('capsulaCodeOutput').textContent, 'copyMsgCapsula')">📋 Copiar código</button>
+      <span class="copied-msg" id="copyMsgCapsula"></span>
+    </div>
+    <pre id="capsulaCodeOutput">// Añadí reseñas a la cola para ver el código acá</pre>
+  </div>
+
+  <!-- ============ TAB: RESEÑA COMPLETA ============ -->
+  <div id="fullTab" style="display:none;">
+    <div class="grid">
+      <div class="panel">
+        <h2>Datos generales</h2>
+        <label>Título</label>
+        <input type="text" id="rf_title" placeholder="Spot Zero Demo" oninput="onFullTitleChange()">
+        <label>Fecha</label>
+        <input type="date" id="rf_date">
+        <label>Tags (separados por coma)</label>
+        <input type="text" id="rf_tags" placeholder="Anime, Gacha, Hack and Slash">
+        <label>Nombre de archivo (slug)</label>
+        <input type="text" id="rf_slug" placeholder="spot-zero-demo">
+        <div class="hint">Se va a guardar como <code>fullreviews/<span id="slugPreview">tu-slug</span>.html</code></div>
+        <label>Imagen de fondo (opcional)</label>
+        <input type="url" id="rf_bgimg" placeholder="https://shared.fastly.steamstatic.com/.../header.jpg" oninput="updateFullPreview()">
+        <div class="hint">Si la dejás vacía, la tarjeta y el encabezado del artículo se ven simples, sin fondo.</div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="rf_recommended" checked onchange="updateFullPreview()">
+          <label>Recomendado</label>
+        </div>
+        <label>Playtime (como lo copiás de Steam)</label>
+        <input type="text" id="rf_playtime" placeholder="3.4 hrs on record" oninput="updateFullPreview()">
+
+        <label>Link "Read on Steam" (tu reseña en Steam, opcional)</label>
+        <input type="url" id="rf_steamlink" placeholder="https://steamcommunity.com/id/cerberus814/recommended/...">
+        <label>Link "Game Store Page" (ficha del juego, opcional)</label>
+        <input type="url" id="rf_storelink" placeholder="https://store.steampowered.com/app/...">
+        <label>Link "Watch on YouTube" (tu video, opcional)</label>
+        <input type="url" id="rf_ytlink" placeholder="https://www.youtube.com/watch?v=...">
+        <div class="hint">El botón "Share on 𝕏" se agrega siempre, sin que cargues nada — comparte la página misma cuando esté publicada.</div>
+
+        <h2 class="section-title" style="margin-top:1.8rem;">Contenido de la reseña</h2>
+        <p class="hint">Agregá los bloques en el orden que quieras: párrafos, capturas de Steam (con crédito automático) y videos de YouTube. Las capturas se recortan siempre a 16:9, así que usá imágenes 1920×1080 para que no se vean estiradas.</p>
+        <div class="add-block-buttons">
+          <button class="btn-secondary" onclick="addBlock('p')">📝 + Párrafo</button>
+          <button class="btn-secondary" onclick="addBlock('shot')">🖼️ + Captura</button>
+          <button class="btn-secondary" onclick="addBlock('video')">▶️ + Video YouTube</button>
+          <button class="btn-secondary" onclick="addBlock('table')">📊 + Tabla</button>
+        </div>
+        <div class="block-list" id="blockList"></div>
+      </div>
+
+      <div class="panel">
+        <div class="preview-label">Vista previa del listado (tarjeta):</div>
+        <div class="review-card-preview" id="cardPreviewOuter">
+          <div class="review-card-preview-bg" id="cardPreviewBgWrap" style="display:none;"><img id="cardPreviewBg" src="" alt=""></div>
+          <div class="review-card-preview-inner">
+            <h3 id="rp_title">Título de la reseña</h3>
+            <div class="review-meta" id="rp_meta"></div>
+            <div class="review-tags" id="rp_tags"></div>
+            <p class="review-excerpt" id="rp_excerpt">El resumen se genera automáticamente con tu primer párrafo...</p>
+            <span class="btn-cap-gaming">LEER MÁS</span>
+          </div>
+        </div>
+
+        <div class="preview-label" style="margin-top:1.5rem;">Vista previa del artículo completo:</div>
+        <div class="review-article-preview" id="articlePreview"></div>
+      </div>
+    </div>
+
+    <div id="fullEditBanner" class="edit-banner" style="display:none;">
+      ✎ Editando una reseña de la cola — los cambios se guardan en su lugar.
+      <button class="btn-secondary" onclick="cancelFullEdit()">Cancelar edición</button>
+    </div>
+    <div class="actions">
+      <button class="btn-cap-gaming" id="fullAddBtn" onclick="addFullToQueue()">➕ Añadir a la lista</button>
+      <button class="btn-secondary" onclick="clearFullForm()">🧹 Limpiar todo</button>
+    </div>
+
+    <h2 class="section-title">📦 Reseñas completas en cola (<span id="fullQueueCount">0</span>)</h2>
+    <div id="fullQueueList"><p class="empty-state">Todavía no añadiste ninguna.</p></div>
+
+    <h2 class="section-title">✅ Código para <code>fullreviews-data.js</code></h2>
+    <p class="hint">Pegá esto dentro del array <code>fullReviews = [ ... ]</code></p>
+    <div class="actions">
+      <button class="btn-cap-gaming" onclick="copyText(document.getElementById('fullDataOutput').textContent, 'copyMsgData')">📋 Copiar código</button>
+      <span class="copied-msg" id="copyMsgData"></span>
+    </div>
+    <pre id="fullDataOutput">// Añadí reseñas a la cola para ver el código acá</pre>
+
+    <h2 class="section-title">📄 Páginas HTML de reseña completa</h2>
+    <p class="hint">Guardá cada una como <code>fullreviews/&lt;slug&gt;.html</code> en tu repo y subila a GitHub.</p>
+    <div id="fullPagesOutput"><p class="empty-state">Sin páginas generadas todavía.</p></div>
+  </div>
+
+</div>
+
+<script>
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+function esc(str) { return (str || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"'); }
+function escHtml(str) { return (str || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function slugify(str) {
+  return (str || '').toLowerCase().trim()
+    .replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
+}
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00');
+  if (isNaN(d)) return '';
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+function youtubeId(url) {
+  if (!url) return '';
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : '';
+}
+function copyText(text, msgId) {
+  navigator.clipboard.writeText(text).then(() => {
+    if (msgId) {
+      const el = document.getElementById(msgId);
+      el.textContent = '¡Copiado!';
+      setTimeout(() => el.textContent = '', 2000);
+    }
+  }).catch(() => alert('No se pudo copiar automáticamente. Seleccioná el texto manualmente.'));
+}
+
+/* ============================================================
+   TABS
+   ============================================================ */
+const intros = {
+  capsula: '<strong>Reseña rápida:</strong> genera una entrada para la lista corta de <code>reviews.js</code> que enlaza directo a Steam o YouTube (como ya tenés hoy).',
+  full: '<strong>Reseña completa:</strong> genera una entrada para el listado de <code>fullreviews.html</code> + una página propia con tu contenido armado por bloques (párrafos, capturas con crédito, videos).'
+};
+function switchTab(t) {
+  document.getElementById('tabCapsulaBtn').classList.toggle('active', t === 'capsula');
+  document.getElementById('tabFullBtn').classList.toggle('active', t === 'full');
+  document.getElementById('capsulaTab').style.display = t === 'capsula' ? 'block' : 'none';
+  document.getElementById('fullTab').style.display = t === 'full' ? 'block' : 'none';
+  document.getElementById('tabIntro').innerHTML = intros[t];
+}
+
+/* ============================================================
+   RESEÑA RÁPIDA (capsula corta)
+   ============================================================ */
+let capsulaQueue = [];
+let editingCapsulaIndex = null;
+
+function updateCapsulaPreview() {
+  const img = document.getElementById('f_img').value.trim();
+  const title = document.getElementById('f_title').value.trim();
+  const text = document.getElementById('f_text').value.trim();
+  const date = formatDate(document.getElementById('f_date').value);
+  const tags = document.getElementById('f_tags').value.trim();
+
+  document.getElementById('p_img').src = img;
+  document.getElementById('p_title').textContent = title || 'Título del juego';
+  document.getElementById('p_text').textContent = text || 'Tu texto de reseña va a aparecer acá...';
+  document.getElementById('p_meta').innerHTML = date ? `<span>📅 ${date}</span><span>👤 BY CERBERUS814</span>` : '';
+  const tagList = tags ? tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+  document.getElementById('p_tags').innerHTML = tagList.map(t => `<span>${t}</span>`).join('');
+}
+
+function clearCapsulaForm() {
+  ['f_img','f_title','f_text','f_link','f_date','f_tags'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f_recommended').checked = true;
+  editingCapsulaIndex = null;
+  document.getElementById('capsulaAddBtn').textContent = '➕ Añadir a la lista';
+  document.getElementById('capsulaEditBanner').style.display = 'none';
+  updateCapsulaPreview();
+}
+
+function cancelCapsulaEdit() { clearCapsulaForm(); }
+
+function addCapsulaToQueue() {
+  const d = {
+    img: document.getElementById('f_img').value.trim(),
+    title: document.getElementById('f_title').value.trim(),
+    text: document.getElementById('f_text').value.trim(),
+    link: document.getElementById('f_link').value.trim(),
+    dateRaw: document.getElementById('f_date').value,
+    date: formatDate(document.getElementById('f_date').value),
+    tags: document.getElementById('f_tags').value.trim(),
+    recommended: document.getElementById('f_recommended').checked
+  };
+  if (!d.img || !d.title || !d.text || !d.link || !d.date) {
+    alert('Faltan campos: imagen, título, texto, enlace y fecha son obligatorios.');
+    return;
+  }
+  if (editingCapsulaIndex !== null) {
+    capsulaQueue[editingCapsulaIndex] = d;
+  } else {
+    capsulaQueue.push(d);
+  }
+  clearCapsulaForm();
+  renderCapsulaQueue();
+}
+
+function removeCapsulaFromQueue(i) {
+  capsulaQueue.splice(i, 1);
+  if (editingCapsulaIndex === i) clearCapsulaForm();
+  renderCapsulaQueue();
+}
+
+function editCapsulaItem(i) {
+  const d = capsulaQueue[i];
+  document.getElementById('f_img').value = d.img;
+  document.getElementById('f_title').value = d.title;
+  document.getElementById('f_text').value = d.text;
+  document.getElementById('f_link').value = d.link;
+  document.getElementById('f_date').value = d.dateRaw || '';
+  document.getElementById('f_tags').value = d.tags;
+  document.getElementById('f_recommended').checked = d.recommended;
+  editingCapsulaIndex = i;
+  document.getElementById('capsulaAddBtn').textContent = '💾 Guardar cambios';
+  document.getElementById('capsulaEditBanner').style.display = 'flex';
+  updateCapsulaPreview();
+  document.getElementById('f_img').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function moveCapsulaItem(i, dir) {
+  const j = i + dir;
+  if (j < 0 || j >= capsulaQueue.length) return;
+  [capsulaQueue[i], capsulaQueue[j]] = [capsulaQueue[j], capsulaQueue[i]];
+  if (editingCapsulaIndex === i) editingCapsulaIndex = j;
+  else if (editingCapsulaIndex === j) editingCapsulaIndex = i;
+  renderCapsulaQueue();
+}
+
+function buildCapsulaEntry(d) {
+  return `        {
+            img: "${esc(d.img)}",
+            title: "${esc(d.title)}",
+            text: "${esc(d.text)}",
+            link: "${esc(d.link)}",
+            date: "${esc(d.date)}",
+            tags: "${esc(d.tags)}",
+            recommended: ${d.recommended}
+        },`;
+}
+
+function renderCapsulaQueue() {
+  const list = document.getElementById('capsulaQueueList');
+  document.getElementById('capsulaQueueCount').textContent = capsulaQueue.length;
+  const last = capsulaQueue.length - 1;
+  list.innerHTML = capsulaQueue.length
+    ? capsulaQueue.map((d, i) => `<div class="queue-item">
+        <span>📋 <strong>${d.title}</strong> — ${d.date}</span>
+        <span class="queue-item-actions">
+          <button class="q-move" onclick="moveCapsulaItem(${i}, -1)" ${i === 0 ? 'disabled' : ''} title="Subir">▲</button>
+          <button class="q-move" onclick="moveCapsulaItem(${i}, 1)" ${i === last ? 'disabled' : ''} title="Bajar">▼</button>
+          <button class="q-edit" onclick="editCapsulaItem(${i})" title="Editar">✎</button>
+          <button class="q-remove" onclick="removeCapsulaFromQueue(${i})" title="Quitar">✕</button>
+        </span>
+      </div>`).join('')
+    : '<p class="empty-state">Todavía no añadiste ninguna.</p>';
+  document.getElementById('capsulaCodeOutput').textContent = capsulaQueue.length
+    ? capsulaQueue.map(buildCapsulaEntry).join('\n')
+    : '// Añadí reseñas a la cola para ver el código acá';
+}
+
+/* ============================================================
+   RESEÑA COMPLETA (por bloques)
+   ============================================================ */
+let fullBlocks = [];
+let fullQueue = [];
+let blockIdCounter = 0;
+let editingFullIndex = null;
+
+function onFullTitleChange() {
+  const title = document.getElementById('rf_title').value.trim();
+  const slugField = document.getElementById('rf_slug');
+  if (!slugField.dataset.manual) slugField.value = slugify(title);
+  updateFullPreview();
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('rf_slug').addEventListener('input', function() { this.dataset.manual = 'true'; updateFullPreview(); });
+  ['rf_date','rf_tags','rf_bgimg','rf_steamlink','rf_storelink','rf_ytlink'].forEach(id => document.getElementById(id).addEventListener('input', updateFullPreview));
+});
+
+function addBlock(type) {
+  const block = { id: ++blockIdCounter, type };
+  if (type === 'p') block.html = '';
+  if (type === 'shot') { block.img = ''; block.caption1 = document.getElementById('rf_title').value.trim(); block.caption2 = 'by Cerberus814'; }
+  if (type === 'video') { block.url = ''; block.caption1 = document.getElementById('rf_title').value.trim(); block.caption2 = 'by Cerberus814'; }
+  if (type === 'table') { block.rows = [['',''],['','']]; block.hasHeader = true; }
+  fullBlocks.push(block);
+  renderBlockEditor();
+  updateFullPreview();
+}
+function removeBlock(id) { fullBlocks = fullBlocks.filter(b => b.id !== id); renderBlockEditor(); updateFullPreview(); }
+function moveBlock(id, dir) {
+  const i = fullBlocks.findIndex(b => b.id === id);
+  const j = i + dir;
+  if (j < 0 || j >= fullBlocks.length) return;
+  [fullBlocks[i], fullBlocks[j]] = [fullBlocks[j], fullBlocks[i]];
+  renderBlockEditor();
+  updateFullPreview();
+}
+function updateBlockField(id, field, value) {
+  const b = fullBlocks.find(b => b.id === id);
+  if (b) b[field] = value;
+  updateFullPreview();
+}
+
+/* --- Texto enriquecido: negrita/cursiva/subrayado/link, para párrafos y celdas de tabla --- */
+function rtBold() { document.execCommand('bold'); rtSync(); }
+function rtItalic() { document.execCommand('italic'); rtSync(); }
+function rtUnderline() { document.execCommand('underline'); rtSync(); }
+function rtFormatBlock(tag) { document.execCommand('formatBlock', false, tag); rtSync(); }
+function rtLink() {
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0 || sel.isCollapsed) { alert('Primero seleccioná el texto que querés convertir en link.'); return; }
+  const range = sel.getRangeAt(0).cloneRange();
+  const url = prompt('URL del link:', 'https://');
+  if (!url) return;
+  sel.removeAllRanges();
+  sel.addRange(range);
+  document.execCommand('createLink', false, url);
+  rtSync();
+}
+function rtSync() {
+  const el = document.activeElement;
+  if (!el || !el.classList) return;
+  if (el.classList.contains('rt-editor')) {
+    updateBlockHtml(+el.dataset.blockId, el);
+  } else if (el.classList.contains('rt-cell')) {
+    updateTableCell(+el.dataset.blockId, +el.dataset.row, +el.dataset.col, el);
+  }
+}
+function updateBlockHtml(id, el) {
+  const b = fullBlocks.find(b => b.id === id);
+  if (b) b.html = el.innerHTML;
+  updateFullPreview();
+}
+function stripTags(html) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return div.textContent || div.innerText || '';
+}
+
+/* --- Pegado "limpio": conserva negrita/cursiva/subrayado/links/párrafos/listas,
+   descarta colores, fuentes, fondos y cualquier otro estilo en línea (ej. al pegar desde Steam) --- */
+const RT_ALLOWED_TAGS = { B: 1, STRONG: 1, I: 1, EM: 1, U: 1, A: 1, BR: 1, P: 1, DIV: 1, UL: 1, OL: 1, LI: 1 };
+function sanitizePastedHtml(html) {
+  const container = document.createElement('div');
+  container.innerHTML = html;
+  function walk(node) {
+    const frag = document.createDocumentFragment();
+    node.childNodes.forEach(child => {
+      if (child.nodeType === Node.TEXT_NODE) {
+        frag.appendChild(document.createTextNode(child.textContent));
+      } else if (child.nodeType === Node.ELEMENT_NODE) {
+        const tag = child.tagName;
+        if (RT_ALLOWED_TAGS[tag]) {
+          const outTag = tag === 'STRONG' ? 'B' : tag === 'EM' ? 'I' : tag;
+          const newEl = document.createElement(outTag);
+          if (tag === 'A') {
+            const href = child.getAttribute('href');
+            if (href) newEl.setAttribute('href', href);
+            newEl.setAttribute('target', '_blank');
+            newEl.setAttribute('rel', 'noopener noreferrer');
+          }
+          newEl.appendChild(walk(child));
+          frag.appendChild(newEl);
+        } else {
+          // Tag no permitido (span, font, etc. con colores/fuentes de Steam): se descarta
+          // la etiqueta pero se conserva su contenido/texto.
+          frag.appendChild(walk(child));
+        }
+      }
+    });
+    return frag;
+  }
+  const out = document.createElement('div');
+  out.appendChild(walk(container));
+  return out.innerHTML;
+}
+function handleRichPaste(e, el) {
+  e.preventDefault();
+  const dt = e.clipboardData || window.clipboardData;
+  const html = dt.getData('text/html');
+  const text = dt.getData('text/plain');
+  const clean = html ? sanitizePastedHtml(html) : escHtml(text).replace(/\n/g, '<br>');
+  document.execCommand('insertHTML', false, clean);
+  if (el.classList.contains('rt-editor')) {
+    updateBlockHtml(+el.dataset.blockId, el);
+  } else if (el.classList.contains('rt-cell')) {
+    updateTableCell(+el.dataset.blockId, +el.dataset.row, +el.dataset.col, el);
+  }
+}
+
+/* --- Bloque de tabla --- */
+function updateTableCell(id, r, c, el) {
+  const b = fullBlocks.find(b => b.id === id);
+  if (b && b.rows[r]) { b.rows[r][c] = el.innerHTML; }
+  updateFullPreview();
+}
+function addTableRow(id) {
+  const b = fullBlocks.find(b => b.id === id);
+  const cols = b.rows[0] ? b.rows[0].length : 2;
+  b.rows.push(new Array(cols).fill(''));
+  renderBlockEditor(); updateFullPreview();
+}
+function addTableCol(id) {
+  const b = fullBlocks.find(b => b.id === id);
+  b.rows.forEach(row => row.push(''));
+  renderBlockEditor(); updateFullPreview();
+}
+function removeTableRow(id) {
+  const b = fullBlocks.find(b => b.id === id);
+  if (b.rows.length > 1) b.rows.pop();
+  renderBlockEditor(); updateFullPreview();
+}
+function removeTableCol(id) {
+  const b = fullBlocks.find(b => b.id === id);
+  if (b.rows[0] && b.rows[0].length > 1) b.rows.forEach(row => row.pop());
+  renderBlockEditor(); updateFullPreview();
+}
+function toggleTableHeader(id, checked) {
+  const b = fullBlocks.find(b => b.id === id);
+  b.hasHeader = checked;
+  updateFullPreview();
+}
+
+const blockLabels = { p: '📝 Párrafo', shot: '🖼️ Captura', video: '▶️ Video YouTube', table: '📊 Tabla' };
+
+function renderBlockEditor() {
+  const list = document.getElementById('blockList');
+  if (!fullBlocks.length) { list.innerHTML = '<p class="empty-state">Sin bloques todavía. Usá los botones de arriba para agregar contenido.</p>'; return; }
+  list.innerHTML = fullBlocks.map((b, idx) => {
+    let fields = '';
+    if (b.type === 'p') {
+      fields = `
+        <div class="rt-toolbar">
+          <button type="button" onmousedown="event.preventDefault()" onclick="rtBold()"><b>B</b></button>
+          <button type="button" onmousedown="event.preventDefault()" onclick="rtItalic()"><i>I</i></button>
+          <button type="button" onmousedown="event.preventDefault()" onclick="rtUnderline()"><u>U</u></button>
+          <button type="button" onmousedown="event.preventDefault()" onclick="rtLink()">🔗 Link</button>
+          <button type="button" onmousedown="event.preventDefault()" onclick="rtFormatBlock('H3')" title="Subtítulo grande">H3</button>
+          <button type="button" onmousedown="event.preventDefault()" onclick="rtFormatBlock('H4')" title="Subtítulo chico">H4</button>
+          <button type="button" onmousedown="event.preventDefault()" onclick="rtFormatBlock('P')" title="Texto normal">¶</button>
+        </div>
+        <div class="rt-editor" contenteditable="true" data-block-id="${b.id}" data-placeholder="Texto del párrafo... (podés pegar texto con formato desde Steam)" oninput="updateBlockHtml(${b.id}, this)" onpaste="handleRichPaste(event, this)">${b.html || ''}</div>`;
+    } else if (b.type === 'shot') {
+      fields = `
+        <input type="url" placeholder="URL de la captura de Steam" value="${b.img || ''}" oninput="updateBlockField(${b.id}, 'img', this.value)">
+        <div class="two-col-inline" style="margin-top:8px;">
+          <input type="text" placeholder="Nombre del juego" value="${b.caption1 || ''}" oninput="updateBlockField(${b.id}, 'caption1', this.value)">
+          <input type="text" placeholder="Crédito" value="${b.caption2 || ''}" oninput="updateBlockField(${b.id}, 'caption2', this.value)">
+        </div>`;
+    } else if (b.type === 'video') {
+      fields = `
+        <input type="url" placeholder="https://www.youtube.com/watch?v=..." value="${b.url || ''}" oninput="updateBlockField(${b.id}, 'url', this.value)">
+        <div class="two-col-inline" style="margin-top:8px;">
+          <input type="text" placeholder="Nombre del juego" value="${b.caption1 || ''}" oninput="updateBlockField(${b.id}, 'caption1', this.value)">
+          <input type="text" placeholder="Crédito" value="${b.caption2 || ''}" oninput="updateBlockField(${b.id}, 'caption2', this.value)">
+        </div>`;
+    } else if (b.type === 'table') {
+      const cellsHtml = b.rows.map((row, r) => `
+        <tr>${row.map((cell, c) => `<td><div class="rt-cell" contenteditable="true" data-block-id="${b.id}" data-row="${r}" data-col="${c}" data-placeholder="..." oninput="updateTableCell(${b.id}, ${r}, ${c}, this)" onpaste="handleRichPaste(event, this)">${cell || ''}</div></td>`).join('')}</tr>
+      `).join('');
+      fields = `
+        <div class="rt-toolbar">
+          <button type="button" onmousedown="event.preventDefault()" onclick="rtBold()"><b>B</b></button>
+          <button type="button" onmousedown="event.preventDefault()" onclick="rtItalic()"><i>I</i></button>
+          <button type="button" onmousedown="event.preventDefault()" onclick="rtUnderline()"><u>U</u></button>
+          <button type="button" onmousedown="event.preventDefault()" onclick="rtLink()">🔗 Link</button>
+        </div>
+        <div class="checkbox-row" style="margin: 6px 0;">
+          <input type="checkbox" id="tblHeader${b.id}" ${b.hasHeader ? 'checked' : ''} onchange="toggleTableHeader(${b.id}, this.checked)">
+          <label for="tblHeader${b.id}" style="margin:0;">Primera fila es encabezado</label>
+        </div>
+        <table class="block-table-edit">${cellsHtml}</table>
+        <div class="actions" style="margin-top:8px;">
+          <button class="btn-mini" onclick="addTableRow(${b.id})">+ Fila</button>
+          <button class="btn-mini" onclick="addTableCol(${b.id})">+ Columna</button>
+          <button class="btn-mini" onclick="removeTableRow(${b.id})" ${b.rows.length <= 1 ? 'disabled' : ''}>- Fila</button>
+          <button class="btn-mini" onclick="removeTableCol(${b.id})" ${b.rows[0] && b.rows[0].length <= 1 ? 'disabled' : ''}>- Columna</button>
+        </div>`;
+    }
+    return `
+      <div class="block-item">
+        <div class="block-item-head">
+          <span>${blockLabels[b.type]}</span>
+          <div class="block-item-controls">
+            <button class="btn-mini" onclick="moveBlock(${b.id}, -1)" ${idx === 0 ? 'disabled' : ''}>▲</button>
+            <button class="btn-mini" onclick="moveBlock(${b.id}, 1)" ${idx === fullBlocks.length - 1 ? 'disabled' : ''}>▼</button>
+            <button class="btn-mini" onclick="removeBlock(${b.id})">✖</button>
+          </div>
+        </div>
+        ${fields}
+      </div>`;
+  }).join('');
+}
+
+function renderBlockHtml(b) {
+  if (b.type === 'p') return `<div class="review-text">${b.html || ''}</div>`;
+  if (b.type === 'shot') return `
+      <div class="review-shot">
+        <a href="${b.img || ''}" target="_blank" class="review-shot-frame"><img src="${b.img || ''}" alt="${escHtml(b.caption1 || '')}"></a>
+        <div class="review-shot-caption"><strong>${escHtml(b.caption1 || '')}</strong><span>${escHtml(b.caption2 || '')}</span></div>
+      </div>`;
+  if (b.type === 'video') {
+    const id = youtubeId(b.url);
+    return id ? `
+      <div class="review-video-block">
+        <div class="review-video-frame"><iframe src="https://www.youtube.com/embed/${id}" title="YouTube video" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="review-shot-caption"><strong>${escHtml(b.caption1 || '')}</strong><span>${escHtml(b.caption2 || '')}</span></div>
+      </div>`
+      : `<p class="hint">⚠️ Pegá un link válido de YouTube en este bloque.</p>`;
+  }
+  if (b.type === 'table') {
+    const rowsHtml = b.rows.map((row, r) => {
+      const tag = (b.hasHeader && r === 0) ? 'th' : 'td';
+      return `<tr>${row.map(cell => `<${tag}>${cell || ''}</${tag}>`).join('')}</tr>`;
+    }).join('');
+    return `<div class="review-table-wrap"><table class="review-table">${rowsHtml}</table></div>`;
+  }
+  return '';
+}
+
+function getExcerpt() {
+  const firstP = fullBlocks.find(b => b.type === 'p' && b.html && stripTags(b.html).trim());
+  if (!firstP) return '';
+  const t = stripTags(firstP.html).trim();
+  return t.length > 160 ? t.slice(0, 160) + '...' : t;
+}
+
+function updateFullPreview() {
+  const title = document.getElementById('rf_title').value.trim();
+  const date = formatDate(document.getElementById('rf_date').value);
+  const tags = document.getElementById('rf_tags').value.trim();
+  const slug = document.getElementById('rf_slug').value.trim();
+  const bgImg = document.getElementById('rf_bgimg').value.trim();
+  document.getElementById('slugPreview').textContent = slug || 'tu-slug';
+
+  document.getElementById('rp_title').textContent = title || 'Título de la reseña';
+  document.getElementById('rp_meta').innerHTML = date ? `<span>📅 ${date}</span><span>👤 BY CERBERUS814</span>` : '';
+  const tagList = tags ? tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+  document.getElementById('rp_tags').innerHTML = tagList.map(t => `<span>${t}</span>`).join('');
+  document.getElementById('rp_excerpt').textContent = getExcerpt() || 'El resumen se genera automáticamente con tu primer párrafo...';
+
+  const bgWrap = document.getElementById('cardPreviewBgWrap');
+  if (bgImg) { document.getElementById('cardPreviewBg').src = bgImg; bgWrap.style.display = 'block'; }
+  else { bgWrap.style.display = 'none'; }
+
+  const headerBgHtml = bgImg
+    ? `<div class="review-article-header-preview-bg"><img src="${bgImg}" alt=""></div>`
+    : '';
+
+  const recommended = document.getElementById('rf_recommended').checked;
+  const playtime = document.getElementById('rf_playtime').value.trim();
+  const verdictHtml = `
+    <div class="review-verdict ${recommended ? 'recommended' : 'not-recommended'}">
+      <span class="review-verdict-icon">${recommended ? '👍' : '👎'}</span>
+      <div class="review-verdict-text">
+        <span class="review-verdict-label">${recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED'}</span>
+        <span class="review-verdict-playtime">${playtime || 'X hrs on record'}</span>
+      </div>
+    </div>`;
+
+  const steamlink = document.getElementById('rf_steamlink').value.trim();
+  const storelink = document.getElementById('rf_storelink').value.trim();
+  const ytlink = document.getElementById('rf_ytlink').value.trim();
+  const previewButtons = [];
+  if (steamlink) previewButtons.push('<span class="btn-cap-gaming">Read on Steam</span>');
+  if (storelink) previewButtons.push('<span class="btn-cap-gaming">Game Store Page</span>');
+  if (ytlink) previewButtons.push('<span class="btn-cap-gaming btn-youtube">Watch on YouTube</span>');
+  previewButtons.push('<span class="btn-cap-gaming btn-x">Share on 𝕏</span>');
+
+  document.getElementById('articlePreview').innerHTML = `
+    <div class="review-article-header-preview ${bgImg ? 'has-bg' : ''}">
+      ${headerBgHtml}
+      <div class="review-article-header-preview-inner">
+        <h2>${title || 'Título de la reseña'}</h2>
+        <div class="review-meta">${date ? `<span>📅 ${date}</span><span>👤 BY CERBERUS814</span>` : ''}</div>
+        <div class="review-tags">${tagList.map(t => `<span>${t}</span>`).join('')}</div>
+      </div>
+    </div>
+    ${verdictHtml}
+    <hr style="border-color:#333;">
+    ${fullBlocks.map(renderBlockHtml).join('')}
+    <hr style="border-color:#333;">
+    <div class="review-buttons">${previewButtons.join('')}</div>
+  `;
+}
+
+function clearFullForm() {
+  ['rf_title','rf_date','rf_tags','rf_slug','rf_steamlink','rf_storelink','rf_ytlink','rf_bgimg','rf_playtime'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('rf_recommended').checked = true;
+  document.getElementById('rf_slug').dataset.manual = '';
+  fullBlocks = [];
+  editingFullIndex = null;
+  document.getElementById('fullAddBtn').textContent = '➕ Añadir a la lista';
+  document.getElementById('fullEditBanner').style.display = 'none';
+  renderBlockEditor();
+  updateFullPreview();
+}
+
+function cancelFullEdit() { clearFullForm(); }
+
+function addFullToQueue() {
+  const title = document.getElementById('rf_title').value.trim();
+  const dateRaw = document.getElementById('rf_date').value;
+  const date = formatDate(dateRaw);
+  const tags = document.getElementById('rf_tags').value.trim();
+  const slug = document.getElementById('rf_slug').value.trim();
+  const steamlink = document.getElementById('rf_steamlink').value.trim();
+  const storelink = document.getElementById('rf_storelink').value.trim();
+  const ytlink = document.getElementById('rf_ytlink').value.trim();
+  const bgImg = document.getElementById('rf_bgimg').value.trim();
+  const recommended = document.getElementById('rf_recommended').checked;
+  const playtime = document.getElementById('rf_playtime').value.trim();
+  const excerpt = getExcerpt();
+
+  if (!title || !date || !slug) { alert('Faltan campos: título, fecha y slug son obligatorios.'); return; }
+  if (!fullBlocks.length) { alert('Agregá al menos un bloque de contenido.'); return; }
+  if (!excerpt) { alert('Agregá al menos un párrafo de texto (se usa como resumen en el listado).'); return; }
+
+  const entry = { title, date, dateRaw, tags, slug, excerpt, steamlink, storelink, ytlink, bgImg, recommended, playtime, blocks: fullBlocks.slice() };
+  if (editingFullIndex !== null) {
+    fullQueue[editingFullIndex] = entry;
+  } else {
+    fullQueue.push(entry);
+  }
+  clearFullForm();
+  renderFullQueue();
+}
+
+function removeFullFromQueue(i) {
+  fullQueue.splice(i, 1);
+  if (editingFullIndex === i) clearFullForm();
+  renderFullQueue();
+}
+
+function editFullItem(i) {
+  const d = fullQueue[i];
+  document.getElementById('rf_title').value = d.title;
+  document.getElementById('rf_slug').value = d.slug;
+  document.getElementById('rf_slug').dataset.manual = 'true';
+  document.getElementById('rf_date').value = d.dateRaw || '';
+  document.getElementById('rf_tags').value = d.tags;
+  document.getElementById('rf_steamlink').value = d.steamlink || '';
+  document.getElementById('rf_storelink').value = d.storelink || '';
+  document.getElementById('rf_ytlink').value = d.ytlink || '';
+  document.getElementById('rf_bgimg').value = d.bgImg || '';
+  document.getElementById('rf_recommended').checked = d.recommended;
+  document.getElementById('rf_playtime').value = d.playtime || '';
+  fullBlocks = JSON.parse(JSON.stringify(d.blocks));
+  editingFullIndex = i;
+  document.getElementById('fullAddBtn').textContent = '💾 Guardar cambios';
+  document.getElementById('fullEditBanner').style.display = 'flex';
+  renderBlockEditor();
+  updateFullPreview();
+  document.getElementById('rf_title').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function moveFullItem(i, dir) {
+  const j = i + dir;
+  if (j < 0 || j >= fullQueue.length) return;
+  [fullQueue[i], fullQueue[j]] = [fullQueue[j], fullQueue[i]];
+  if (editingFullIndex === i) editingFullIndex = j;
+  else if (editingFullIndex === j) editingFullIndex = i;
+  renderFullQueue();
+}
+
+function buildFullDataEntry(d) {
+  return `    {
+        title: "${esc(d.title)}",
+        date: "${esc(d.date)}",
+        tags: "${esc(d.tags)}",
+        excerpt: "${esc(d.excerpt)}",
+        slug: "${esc(d.slug)}",
+        img: "${esc(d.bgImg)}"
+    },`;
+}
+
+function buildFullPageHtml(d) {
+  const tagList = d.tags ? d.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+  const tagsHtml = tagList.map(t => `          <span>${t}</span>`).join('\n');
+  const bodyHtml = d.blocks.map(renderBlockHtml).map(h => '      ' + h.trim()).join('\n\n');
+  const buttonsList = [];
+  if (d.steamlink) buttonsList.push(`<a href="${d.steamlink}" target="_blank" class="btn-cap-gaming">Read on Steam</a>`);
+  if (d.storelink) buttonsList.push(`<a href="${d.storelink}" target="_blank" class="btn-cap-gaming">Game Store Page</a>`);
+  if (d.ytlink) buttonsList.push(`<a href="${d.ytlink}" target="_blank" class="btn-cap-gaming btn-youtube">Watch on YouTube</a>`);
+  buttonsList.push(`<button type="button" class="btn-cap-gaming btn-x" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(window.location.href)+'&text='+encodeURIComponent(document.title), '_blank')">Share on 𝕏</button>`);
+  const refBtn = `\n      <hr>\n      <div class="review-buttons">\n        ${buttonsList.join('\n        ')}\n      </div>`;
+  const headerBgHtml = d.bgImg
+    ? `\n        <div class="review-article-header-bg"><img src="${d.bgImg}" alt=""></div>`
+    : '';
+  const verdictClass = d.recommended ? 'recommended' : 'not-recommended';
+  const verdictIcon = d.recommended ? '👍' : '👎';
+  const verdictLabel = d.recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED';
+  const verdictHtml = `
+      <div class="review-verdict ${verdictClass}">
+        <span class="review-verdict-icon">${verdictIcon}</span>
+        <div class="review-verdict-text">
+          <span class="review-verdict-label">${verdictLabel}</span>
+          <span class="review-verdict-playtime">${escHtml(d.playtime || '')}</span>
+        </div>
+      </div>`;
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${d.title} - Hardcore Reviews</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <a href="../index.html"><img src="../img/hrlogo.png" alt="Hardcore Reviews Logo" class="logo"></a>
+      <a href="https://x.com/Cerberus814" target="_blank" class="x-follow-card">
+        <span class="x-follow-icon">𝕏</span>
+        <span class="x-follow-text">
+          <span class="x-follow-label">FOLLOW ME ON X</span>
+          <span class="x-follow-handle">@Cerberus814</span>
+        </span>
+      </a>
+    </div>
+  </header>
+
+  <nav class="integrated-nav">
+    <a href="../index.html">HOME</a>
+    <span class="nav-separator">|</span>
+    <a href="../index.html#curated-reviews">CURATED REVIEWS</a>
+    <span class="nav-separator">|</span>
+    <a href="../fullreviews.html">FULL REVIEWS</a>
+    <span class="nav-separator">|</span>
+    <a href="../index.html#youtube-latest">LATEST VIDEOS</a>
+    <span class="nav-separator">|</span>
+    <a href="../index.html#keymailer">KEYMAILER!</a>
+    <span class="nav-separator">|</span>
+    <a href="mailto:cerberus814@gmail.com">CONTACT ME</a>
+    <span class="nav-separator">|</span>
+    <div class="dropdown">
+      <a href="#" class="dropbtn">STEAM ▾</a>
+      <div class="dropdown-content">
+        <a href="https://steamcommunity.com/id/cerberus814/recommended/" target="_blank">Full Steam Reviews</a>
+        <a href="https://store.steampowered.com/curator/28519188" target="_blank">Steam Curator</a>
+        <a href="https://store.steampowered.com/curator/45890035" target="_blank">Spanish Curator</a>
+        <a href="https://store.steampowered.com/curator/45488676" target="_blank">NSFW Curator +18</a>
+        <a href="https://steamcommunity.com/id/cerberus814/" target="_blank">My Steam Profile</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="review-article" style="width: 90%; max-width: 800px; margin: 0 auto;">
+      <a href="../fullreviews.html" class="review-back-link">← BACK TO FULL REVIEWS</a>
+
+      <div class="review-article-header${d.bgImg ? ' has-bg' : ''}">${headerBgHtml}
+        <div class="review-article-header-inner">
+        <h1>${d.title}</h1>
+        <div class="review-meta"><span>📅 ${d.date}</span><span>👤 BY CERBERUS814</span></div>
+        <div class="review-tags">
+${tagsHtml}
+        </div>
+        </div>
+      </div>
+${verdictHtml}
+
+      <hr>
+
+${bodyHtml}
+${refBtn}
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 Hardcore Reviews. All rights reserved.
+  </footer>
+</body>
+</html>`;
+}
+
+function renderFullQueue() {
+  const list = document.getElementById('fullQueueList');
+  document.getElementById('fullQueueCount').textContent = fullQueue.length;
+  const last = fullQueue.length - 1;
+  list.innerHTML = fullQueue.length
+    ? fullQueue.map((d, i) => `<div class="queue-item">
+        <span>📄 <strong>${d.title}</strong> — ${d.date}</span>
+        <span class="queue-item-actions">
+          <button class="q-move" onclick="moveFullItem(${i}, -1)" ${i === 0 ? 'disabled' : ''} title="Subir">▲</button>
+          <button class="q-move" onclick="moveFullItem(${i}, 1)" ${i === last ? 'disabled' : ''} title="Bajar">▼</button>
+          <button class="q-edit" onclick="editFullItem(${i})" title="Editar">✎</button>
+          <button class="q-remove" onclick="removeFullFromQueue(${i})" title="Quitar">✕</button>
+        </span>
+      </div>`).join('')
+    : '<p class="empty-state">Todavía no añadiste ninguna.</p>';
+
+  document.getElementById('fullDataOutput').textContent = fullQueue.length
+    ? fullQueue.map(buildFullDataEntry).join('\n')
+    : '// Añadí reseñas a la cola para ver el código acá';
+
+  const pagesOut = document.getElementById('fullPagesOutput');
+  pagesOut.innerHTML = fullQueue.length ? fullQueue.map(d => {
+    const html = buildFullPageHtml(d);
+    return `
+      <p class="hint">Archivo: <strong>fullreviews/${d.slug}.html</strong></p>
+      <div class="actions">
+        <button class="btn-secondary" onclick='copyText(document.getElementById("page_${d.slug}").textContent)'>📋 Copiar HTML</button>
+      </div>
+      <pre id="page_${d.slug}">${escHtml(html)}</pre>
+    `;
+  }).join('<hr style="border-color:#333; margin: 1.5rem 0;">') : '<p class="empty-state">Sin páginas generadas todavía.</p>';
+}
+
+// init
+document.getElementById('tabIntro').innerHTML = intros.capsula;
+updateCapsulaPreview();
+renderBlockEditor();
+updateFullPreview();
+</script>
+
+</body>
+</html>

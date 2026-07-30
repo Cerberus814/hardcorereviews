@@ -1,20 +1,70 @@
 // --- Config ---
 const fullReviewsPerPage = 6; // adjust between 5 and 10 as you prefer
 let fullReviewsCurrentPage = 1;
+let activeTag = "ALL";
+let searchQuery = "";
+
+function renderTagFilters() {
+    const tagsContainer = document.getElementById('tagsFilter');
+    if (!tagsContainer) return;
+
+    const allTags = ["ALL"];
+    fullReviews.forEach(r => {
+        if (r.tags) {
+            r.tags.split(',').forEach(tag => {
+                const cleanTag = tag.trim();
+                if (!allTags.includes(cleanTag)) allTags.push(cleanTag);
+            });
+        }
+    });
+
+    tagsContainer.innerHTML = allTags.map(tag => `
+    <span class="tag-pill ${tag === activeTag ? 'active' : ''}"
+    onclick="setTagFilter('${tag}')">${tag}</span>
+    `).join('');
+}
+
+function setTagFilter(tag) {
+    activeTag = tag;
+    fullReviewsCurrentPage = 1;
+    renderTagFilters();
+    renderFullReviews();
+}
+
+function filterReviews() {
+    const searchInput = document.getElementById('reviewSearch');
+    searchQuery = searchInput ? searchInput.value.toLowerCase() : "";
+    fullReviewsCurrentPage = 1;
+    renderFullReviews();
+}
 
 function renderFullReviews() {
     const container = document.getElementById('fullreviews-container');
     if (!container) return;
     container.innerHTML = '';
 
-    const start = (fullReviewsCurrentPage - 1) * fullReviewsPerPage;
-    const end = start + fullReviewsPerPage;
-    const visible = fullReviews.slice(start, end);
+    renderTagFilters();
+
+    const filtered = fullReviews.filter(r => {
+        const matchesSearch = r.title.toLowerCase().includes(searchQuery);
+        const matchesTag = activeTag === "ALL" || (r.tags && r.tags.includes(activeTag));
+        return matchesSearch && matchesTag;
+    });
 
     if (fullReviews.length === 0) {
         container.innerHTML = '<p style="text-align:center; color:#888;">No full reviews published yet. Check back soon!</p>';
+        renderFullReviewsPagination(0);
         return;
     }
+    if (filtered.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:#888;">No reviews match your search.</p>';
+        renderFullReviewsPagination(0);
+        return;
+    }
+
+    const start = (fullReviewsCurrentPage - 1) * fullReviewsPerPage;
+    const end = start + fullReviewsPerPage;
+    const visible = filtered.slice(start, end);
 
     visible.forEach(r => {
         const card = document.createElement('div');
@@ -41,11 +91,11 @@ function renderFullReviews() {
         container.appendChild(card);
     });
 
-    renderFullReviewsPagination();
+    renderFullReviewsPagination(filtered.length);
 }
 
-function renderFullReviewsPagination() {
-    const totalPages = Math.ceil(fullReviews.length / fullReviewsPerPage);
+function renderFullReviewsPagination(totalItems) {
+    const totalPages = Math.ceil(totalItems / fullReviewsPerPage);
     const pagination = document.getElementById('pagination');
     if (!pagination) return;
     pagination.innerHTML = '';

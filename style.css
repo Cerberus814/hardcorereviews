@@ -86,95 +86,46 @@ header {
   50% { transform: translateY(-5px); }
 }
 
-/* --- PLAYING NOW (VERSIÓN DEFINITIVA) En caso de fallo eliminar position relative --- */
-.playing-now-header {
-  position:relative;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 10px;
-  overflow: hidden;
-  flex: 0 1 450px;
-  min-width: 300px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
-
-@media (max-width: 768px) {
-  .playing-now-header {
-    height: 140px;
-    max-height: 140px;
-  }
-}
-
-.status-overlay {
-  background: rgba(0, 0, 0, 0.7);
-  padding: 0.8rem 1.2rem;
-  display: flex;
-  align-items: center; /* ESTO ARREGLA EL DESCENTRADO */
-  gap: 1rem;
-  backdrop-filter: blur(5px);
-  min-height: 60px;
-}
-
-.status-label {
-  display: block;
-  font-size: 0.7rem; /* Tamaño original */
-  color: var(--color-cyan);
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 2px;
-}
-
-.status-wrapper {
-  position: relative;
+/* --- Tarjeta "seguime en X" del header (reemplaza el widget de jugando ahora) --- */
+.x-follow-card {
   display: flex;
   align-items: center;
+  gap: 14px;
+  flex: 0 1 320px;
+  min-width: 260px;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 0.9rem 1.3rem;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+.x-follow-card:hover {
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 20px rgba(40,167,231,0.4);
+}
+.x-follow-icon {
+  font-size: 1.8rem;
+  color: white;
+  font-weight: 700;
   flex-shrink: 0;
 }
-
-.avatar-small {
-  width: 52px;
-  height: 52px;
-  border-radius: 5px;
-  border: 2px solid var(--color-cyan);
-  object-fit: cover;
-  display: block;
+.x-follow-text { display: flex; flex-direction: column; gap: 2px; }
+.x-follow-label {
+  font-size: 0.7rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
-
-.live-indicator {
-  height: 12px; width: 12px;
-  background-color: #66c14c;
-  border-radius: 50%;
-  position: absolute;
-  bottom: -3px; right: -3px;
-  border: 2px solid #000;
-  box-shadow: 0 0 5px #66c14c;
-  animation: blink 2s infinite;
-}
-
-/* IMPORTANTE: Añade estas dos reglas para el texto */
-.status-text {
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.game-title {
-  margin: 0;
-  font-size: 1rem;
+.x-follow-handle {
+  font-size: 1.1rem;
   color: white;
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 280px;
+  font-weight: 700;
 }
 
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
 
 /* --- NAV & DROPDOWN --- */
 .integrated-nav {
@@ -622,7 +573,7 @@ main {
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {
   .header-container { flex-direction: column; text-align: center; }
-  .playing-now-header { width: 100%; }
+  .x-follow-card { width: 100%; }
   .capsula { flex-direction: column; }
   .capsula img { width: 100%; height: 200px; }
   .integrated-nav { flex-wrap: wrap; padding: 1rem; }
@@ -652,7 +603,7 @@ section > h2 {
 }
 
 /* Ajuste opcional: centrar títulos de sección si lo deseas */
-.highlight-section, .youtube-section {
+.highlight-section, .youtube-section, #curated-reviews, #full-reviews {
   text-align: center;
 }
 
@@ -896,8 +847,7 @@ section > h2 {
 /* Update filtros buscador y tags */
 
 .filter-section {
-   width: 90%;
-   max-width: 1000px;
+   width: 100%;
    margin: 20px 0;
    display: flex;
    flex-direction: column;
@@ -944,6 +894,7 @@ section > h2 {
  /* FIN Update filtros buscador y tags */
  /* BOTÓN FILTRO TAGS */
  .tags-toggle {
+   align-self: flex-start;
    margin-top: 10px;
    margin-bottom: 10px;
    padding: 8px 14px;
@@ -1228,7 +1179,7 @@ section > h2 {
 }
 
 /* --- Load more / paginación del listado (reutiliza #pagination ya existente) --- */
-#fullreviews-container { max-width: 800px; margin: 0 auto; }
+#fullreviews-container { width: 100%; }
 
 /* --- Botones de acción al final de la reseña (Steam / tienda / YouTube / compartir) --- */
 .review-buttons {
@@ -1240,10 +1191,19 @@ section > h2 {
 .btn-cap-gaming.btn-youtube {
   background: #cc2b2b;
   border-color: #ff4d4d;
+  box-shadow: 0 0 10px rgba(204, 43, 43, 0.4);
 }
-.btn-cap-gaming.btn-youtube:hover { background: #ff3b3b; }
+.btn-cap-gaming.btn-youtube:hover {
+  background: #ff3b3b;
+  box-shadow: 0 0 14px rgba(255, 59, 59, 0.6);
+}
 .btn-cap-gaming.btn-x {
   background: #000;
   border-color: #444;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-.btn-cap-gaming.btn-x:hover { background: #222; border-color: #888; }
+.btn-cap-gaming.btn-x:hover {
+  background: #222;
+  border-color: #888;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.25);
+}
