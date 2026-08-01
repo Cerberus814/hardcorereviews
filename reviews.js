@@ -1,6 +1,15 @@
     const reviews = [
         // Reseñas del 2026
         {
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3731020/5ccf1a9cbd09cff29e03856469b346a74278f376/header.jpg?t=1785319088",
+            title: "Five Hearts Under One Roof season2",
+            text: "Mal-sook, Gran Dong and Min-Jung are back in this romantic FMV dating sim accompanied by 3 new beautiful roommates. Great chemistry, fun story, multiple endings and high production value. A must have!",
+            link: "https://steamcommunity.com/id/cerberus814/recommended/3731020/",
+            date: "Aug 1, 2026",
+            tags: "Live Action,FMV,Dating Sim",
+            recommended: true
+        },
+        {
             img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2096020/276aa18bac8e0c6f3476ac59645790b0e20a86f4/header_alt_assets_1.jpg?t=1785183457",
             title: "Viral Reload EX",
             text: "Viral Reload EX is a simple and accessible vertical scroller cute ‘em up with anime style and dash mechanics. Fun, easy to get into. Up to 2 players co-op. Good pick for casual shmup players.",

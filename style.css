@@ -928,6 +928,118 @@ section > h2 {
    opacity: 1;
  }
 
+/* --- Página de contacto --- */
+.contact-hero {
+  width: 90%;
+  max-width: 700px;
+  margin: 2.5rem auto;
+  text-align: left;
+}
+.contact-profile {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  margin-bottom: 1.8rem;
+}
+.contact-avatar {
+  width: 180px;
+  height: 180px;
+  min-width: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 3px solid var(--color-cyan);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+.contact-identity { display: flex; flex-direction: column; }
+.contact-nick {
+  font-size: 2.2rem;
+  color: var(--color-purple);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.contact-flag { font-size: 1.6rem; }
+.contact-realname {
+  font-size: 1.1rem;
+  color: #999;
+  margin: 4px 0 0;
+  letter-spacing: 1px;
+}
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 1.2rem;
+}
+.contact-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+.contact-link:hover { color: var(--color-cyan); }
+.read-more-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+.read-more-content.open {
+  max-height: 1200px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+.contact-subtitle {
+  color: var(--color-cyan);
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 1.4rem 0 0.7rem;
+}
+.fav-games-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fav-games-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #2a2a2e;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 1rem;
+}
+.fav-rank {
+  background: var(--color-purple);
+  color: white;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.about-me-text {
+  line-height: 1.7;
+  color: #ccc;
+}
+@media (max-width: 600px) {
+  .contact-profile { flex-direction: column; text-align: center; }
+  .contact-nick { justify-content: center; font-size: 1.7rem; }
+}
+
  footer {
    width: 100%;
    text-align: center;

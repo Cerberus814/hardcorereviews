@@ -6,6 +6,14 @@
 
 const fullReviews = [
     {
+        title: "The most beautiful roommates are back! Five Hearts Under One Roof season2.",
+        date: "Aug 1, 2026",
+        tags: "Live Action,FMV,Dating Sim",
+        excerpt: "Five Hearts Under One Roof Season 2 keeps the FMV dating sim formula, but with some important changes. Sadly, part of the original cast is gone. Not all the gir...",
+        slug: "5hearts2",
+        img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3731020/5ccf1a9cbd09cff29e03856469b346a74278f376/header.jpg?t=1785319088"
+    },
+    {
         title: "A fun, easy 2p co-op cute ‘em up! Viral Reload Ex.",
         date: "Jul 27, 2026",
         tags: "Anime,2D,Shoot'Em Up,Pixelart",
