@@ -6,6 +6,14 @@
 
 const fullReviews = [
     {
+        title: "*Most Wanted* drifting game on steam! CarX Drift Racing Online.",
+        date: "Aug 3, 2026",
+        tags: "Racing,Drift,Multiplayer",
+        excerpt: "CarX Drift Racing Online is a racing game focused on drifting, with a mix of arcade feel and realistic physics. It’s easy to get into, but it takes time to real...",
+        slug: "carx",
+        img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/635260/7f8fd0c0df1572fa14c9505abe70e2a599cae8e7/header.jpg?t=1782415005"
+    },
+    {
         title: "The most beautiful roommates are back! Five Hearts Under One Roof season2.",
         date: "Aug 1, 2026",
         tags: "Live Action,FMV,Dating Sim",
