@@ -1,5 +1,14 @@
     const reviews = [
         // Reseñas del 2026
+		{
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/635260/7f8fd0c0df1572fa14c9505abe70e2a599cae8e7/header.jpg?t=1782415005",
+            title: "CarX Drift Racing Online",
+            text: "Great drifting game with solid physics, tons of tuning options, and strong workshop support. Easy to enjoy, hard to master. A perfect pick for players who grew up with PS2 racing games. A must have!",
+            link: "https://steamcommunity.com/id/cerberus814/recommended/635260?snr=1_5_9__402",
+            date: "Aug 3, 2026",
+            tags: "Drifting,Racing,Multiplayer",
+            recommended: true
+        },
         {
             img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3731020/5ccf1a9cbd09cff29e03856469b346a74278f376/header.jpg?t=1785319088",
             title: "Five Hearts Under One Roof season2",
