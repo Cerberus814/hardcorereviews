@@ -1,6 +1,15 @@
     const reviews = [
         // Reseñas del 2026
 		{
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2000970/b685f92322fc507583f1e3d0aecb59f9044548da/header.jpg?t=1779136540",
+            title: "Beacon of Neyda",
+            text: "Cyberpunk tower defense with beautiful pixel art and active gameplay. Mix of base defense, shooting, and resource management. Challenging and very unique. Highly recommended, great indie gem.",
+            link: "https://steamcommunity.com/id/cerberus814/recommended/2000970?snr=1_5_9__402",
+            date: "Aug 4, 2026",
+            tags: "Pixelart,TD,Tower Defense",
+            recommended: true
+        },
+		{
             img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/635260/7f8fd0c0df1572fa14c9505abe70e2a599cae8e7/header.jpg?t=1782415005",
             title: "CarX Drift Racing Online",
             text: "Great drifting game with solid physics, tons of tuning options, and strong workshop support. Easy to enjoy, hard to master. A perfect pick for players who grew up with PS2 racing games. A must have!",
