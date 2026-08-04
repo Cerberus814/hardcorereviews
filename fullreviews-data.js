@@ -5,6 +5,14 @@
 // builds both the entry here and the HTML page.
 
 const fullReviews = [
+   {
+        title: "Beautiful Cyberpunk Tower Defense! Beacon of Neyda.",
+        date: "Aug 4, 2026",
+        tags: "Tower Defense,TD,Pixelart",
+        excerpt: "Beacon of Neyda is a cyberpunk tower defense with a strong identity. Set in a post apocalyptic world where machines rebel against humanity, the story feels very...",
+        slug: "beacon-of-neyda",
+        img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2000970/b685f92322fc507583f1e3d0aecb59f9044548da/header.jpg?t=1779136540"
+    },
     {
         title: "*Most Wanted* drifting game on steam! CarX Drift Racing Online.",
         date: "Aug 3, 2026",
