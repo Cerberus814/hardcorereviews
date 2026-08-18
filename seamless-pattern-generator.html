@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Placa — Generador de Patrones Seamless</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+  :root{
+    --bg: #14161c;
+    --surface: #1b1e26;
+    --surface-2: #242833;
+    --border: #323747;
+    --text: #e8e6df;
+    --text-dim: #8b8f9c;
+    --accent: #c9a24b;
+    --accent-soft: rgba(201,162,75,0.14);
+    --accent-2: #6b86d6;
+    --danger: #d9705b;
+    --radius: 3px;
+    --mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+    --sans: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:var(--sans); font-size:13px;
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  ::selection{ background:var(--accent-soft); color:var(--accent); }
+
+  /* ---------- top bar ---------- */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 18px; border-bottom:1px solid var(--border);
+    background:var(--surface); flex:0 0 auto;
+  }
+  .brand{ display:flex; align-items:baseline; gap:10px; }
+  .brand .mark{
+    font-family:var(--serif); font-style:italic; font-size:19px; color:var(--accent);
+    letter-spacing:0.02em;
+  }
+  .brand .sub{ font-size:10.5px; color:var(--text-dim); letter-spacing:0.14em; text-transform:uppercase; }
+  .export-bar{ display:flex; gap:8px; align-items:center; }
+
+  button{
+    font-family:var(--sans); font-size:12px; cursor:pointer;
+    border-radius:var(--radius); border:1px solid var(--border);
+    background:var(--surface-2); color:var(--text);
+    padding:7px 12px; transition:border-color .12s, color .12s, background .12s;
+  }
+  button:hover{ border-color:var(--accent); }
+  button:disabled{ opacity:.35; cursor:not-allowed; }
+  button:disabled:hover{ border-color:var(--border); }
+  button.primary{ background:var(--accent); border-color:var(--accent); color:#1a1206; font-weight:600; }
+  button.primary:hover{ background:#dcb35d; }
+  button.ghost{ background:transparent; }
+
+  /* ---------- layout ---------- */
+  .layout{ flex:1; display:flex; min-height:0; }
+  aside{
+    width:308px; flex:0 0 auto; border-right:1px solid var(--border);
+    background:var(--surface); overflow-y:auto; padding:4px 0 40px;
+  }
+  main{
+    flex:1; display:flex; align-items:center; justify-content:center;
+    position:relative; padding:24px;
+    background-image:
+      linear-gradient(45deg, #1a1d24 25%, transparent 25%),
+      linear-gradient(-45deg, #1a1d24 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #1a1d24 75%),
+      linear-gradient(-45deg, transparent 75%, #1a1d24 75%);
+    background-size:22px 22px;
+    background-position:0 0, 0 11px, 11px -11px, -11px 0px;
+    background-color:#101216;
+  }
+  .canvas-frame{ position:relative; box-shadow:0 0 0 1px var(--border), 0 24px 60px -20px rgba(0,0,0,.7); }
+  .canvas-frame canvas{ display:block; max-width:74vw; max-height:74vh; width:auto; height:auto; background:transparent; }
+  .reg-mark{ position:absolute; width:13px; height:13px; }
+  .reg-mark::before, .reg-mark::after{ content:""; position:absolute; background:var(--accent); opacity:.55; }
+  .reg-mark::before{ width:100%; height:1px; top:50%; }
+  .reg-mark::after{ height:100%; width:1px; left:50%; }
+  .reg-mark.tl{ top:-6px; left:-6px; } .reg-mark.tr{ top:-6px; right:-6px; }
+  .reg-mark.bl{ bottom:-6px; left:-6px; } .reg-mark.br{ bottom:-6px; right:-6px; }
+  .dims-readout{
+    position:absolute; bottom:-26px; left:0; font-family:var(--mono); font-size:10.5px;
+    color:var(--text-dim); letter-spacing:0.03em;
+  }
+
+  .empty-state{
+    text-align:center; color:var(--text-dim); max-width:280px;
+  }
+  .empty-state .glyph{ font-family:var(--serif); font-style:italic; font-size:34px; color:var(--accent); margin-bottom:10px; }
+  .empty-state p{ line-height:1.5; font-size:12.5px; }
+
+  /* ---------- sidebar sections ---------- */
+  section.panel{ padding:16px 18px; border-bottom:1px solid var(--border); }
+  section.panel:last-child{ border-bottom:none; }
+  .panel h2{
+    margin:0 0 12px; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--text-dim); font-weight:600;
+  }
+  .panel h2 .n{ color:var(--accent); margin-right:6px; }
+
+  .dropzone{
+    border:1px dashed var(--border); border-radius:var(--radius); padding:16px;
+    text-align:center; cursor:pointer; transition:border-color .12s, background .12s;
+    color:var(--text-dim); font-size:12px;
+  }
+  .dropzone:hover, .dropzone.drag{ border-color:var(--accent); background:var(--accent-soft); color:var(--text); }
+  .dropzone.has-image{ padding:10px; display:flex; align-items:center; gap:10px; text-align:left; }
+  .dropzone img.thumb{ width:40px; height:40px; object-fit:cover; border-radius:2px; border:1px solid var(--border); }
+  .dropzone .meta{ flex:1; min-width:0; }
+  .dropzone .fname{ font-size:12px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .dropzone .fdims{ font-family:var(--mono); font-size:10.5px; color:var(--text-dim); }
+  input[type=file]{ display:none; }
+
+  .seg{ display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+  .seg button{ padding:9px 6px; display:flex; flex-direction:column; align-items:center; gap:5px; }
+  .seg button.active{ border-color:var(--accent); background:var(--accent-soft); color:var(--accent); }
+  .seg svg{ width:26px; height:20px; }
+  .seg span{ font-size:10.5px; }
+
+  .preset-row{ display:flex; flex-direction:column; gap:6px; margin-bottom:10px; }
+  .preset-row button{ text-align:left; display:flex; justify-content:space-between; width:100%; }
+  .preset-row button .dim{ color:var(--text-dim); font-family:var(--mono); font-size:10.5px; }
+  .preset-row button.active{ border-color:var(--accent); color:var(--accent); }
+  .custom-dims{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .custom-dims label{ font-size:10px; color:var(--text-dim); display:block; margin-bottom:3px; }
+  .custom-dims input[type=number]{
+    width:100%; background:var(--surface-2); border:1px solid var(--border); color:var(--text);
+    border-radius:var(--radius); padding:6px 7px; font-family:var(--mono); font-size:12px;
+  }
+  .custom-dims input:focus{ outline:none; border-color:var(--accent); }
+
+  .field{ margin-bottom:14px; }
+  .field:last-child{ margin-bottom:0; }
+  .field-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .field-head label{ font-size:12px; color:var(--text); }
+  .field-head .val{ font-family:var(--mono); font-size:11.5px; color:var(--accent); }
+  input[type=range]{
+    width:100%; -webkit-appearance:none; appearance:none; height:2px;
+    background:var(--border); border-radius:2px; outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:12px; height:12px; border-radius:50%;
+    background:var(--accent); cursor:pointer; border:2px solid #14161c;
+  }
+  input[type=range]::-moz-range-thumb{
+    width:10px; height:10px; border-radius:50%; background:var(--accent); border:2px solid #14161c; cursor:pointer;
+  }
+
+  .bg-row{ display:flex; align-items:center; gap:10px; }
+  .bg-row input[type=color]{
+    width:30px; height:30px; border:1px solid var(--border); border-radius:var(--radius);
+    background:none; padding:0; cursor:pointer;
+  }
+  .checkline{ display:flex; align-items:center; gap:7px; font-size:12px; color:var(--text-dim); cursor:pointer; }
+  .checkline input{ accent-color:var(--accent); }
+
+  .export-note{ font-size:11px; color:var(--text-dim); line-height:1.5; margin-top:8px; }
+  .export-note b{ color:var(--accent); font-weight:600; }
+  .export-block{ margin-bottom:14px; }
+  .export-block:last-child{ margin-bottom:0; }
+  .export-block button{ width:100%; margin-bottom:6px; }
+  .frame-controls{ display:flex; gap:6px; margin-bottom:8px; }
+  .frame-controls select, .frame-controls input{
+    background:var(--surface-2); border:1px solid var(--border); color:var(--text);
+    border-radius:var(--radius); padding:6px 7px; font-size:11.5px; font-family:var(--mono);
+  }
+  .frame-controls select{ flex:1.4; }
+  .frame-controls input{ flex:1; width:56px; }
+
+  .toast{
+    position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(12px);
+    background:var(--surface-2); border:1px solid var(--accent); color:var(--text);
+    padding:9px 16px; border-radius:var(--radius); font-size:12px; opacity:0; pointer-events:none;
+    transition:opacity .18s, transform .18s; z-index:50;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  aside::-webkit-scrollbar{ width:8px; }
+  aside::-webkit-scrollbar-thumb{ background:var(--border); border-radius:4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="mark">Placa</span>
+    <span class="sub">Generador de patrones seamless</span>
+  </div>
+  <div class="export-bar">
+    <button id="btnReset" class="ghost">Restablecer</button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside>
+
+    <section class="panel">
+      <h2><span class="n">01</span>Imagen fuente</h2>
+      <div class="dropzone" id="dropzone">
+        <span id="dzEmptyLabel">Arrastrá una imagen acá, o hacé clic para elegir un archivo (PNG con transparencia recomendado)</span>
+      </div>
+      <input type="file" id="fileInput" accept="image/*">
+    </section>
+
+    <section class="panel">
+      <h2><span class="n">02</span>Lienzo</h2>
+      <div class="preset-row" id="presetRow">
+        <button data-preset="video" class="active">Video YouTube <span class="dim">1920×1080</span></button>
+        <button data-preset="short">Short YouTube <span class="dim">1080×1920</span></button>
+        <button data-preset="custom">Personalizado</span></button>
+      </div>
+      <div class="custom-dims" id="customDims" style="display:none">
+        <div><label>Ancho (px)</label><input type="number" id="customW" value="1920" min="16" max="8000"></div>
+        <div><label>Alto (px)</label><input type="number" id="customH" value="1080" min="16" max="8000"></div>
+      </div>
+      <div class="bg-row" style="margin-top:12px">
+        <input type="color" id="bgColor" value="#14161c">
+        <label class="checkline"><input type="checkbox" id="bgTransparent" checked> Fondo transparente</label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2><span class="n">03</span>Mosaico (tiling)</h2>
+      <div class="seg" id="tilingSeg">
+        <button data-mode="default" class="active">
+          <svg viewBox="0 0 26 20"><rect x="1" y="1" width="6" height="6" fill="#c9a24b"/><rect x="10" y="1" width="6" height="6" fill="#c9a24b"/><rect x="19" y="1" width="6" height="6" fill="#c9a24b"/><rect x="1" y="9" width="6" height="6" fill="#c9a24b"/><rect x="10" y="9" width="6" height="6" fill="#c9a24b"/><rect x="19" y="9" width="6" height="6" fill="#c9a24b"/></svg>
+          <span>Default</span>
+        </button>
+        <button data-mode="shifted">
+          <svg viewBox="0 0 26 20"><rect x="1" y="1" width="6" height="6" fill="#c9a24b"/><rect x="10" y="1" width="6" height="6" fill="#c9a24b"/><rect x="19" y="1" width="6" height="6" fill="#c9a24b"/><rect x="5.5" y="9" width="6" height="6" fill="#c9a24b"/><rect x="14.5" y="9" width="6" height="6" fill="#c9a24b"/></svg>
+          <span>Shifted</span>
+        </button>
+        <button data-mode="diagonal">
+          <svg viewBox="0 0 26 20"><rect x="1" y="1" width="6" height="6" fill="#c9a24b"/><rect x="10" y="1" width="6" height="6" fill="#c9a24b"/><rect x="4" y="9" width="6" height="6" fill="#c9a24b"/><rect x="13" y="9" width="6" height="6" fill="#c9a24b"/><rect x="19" y="1" width="6" height="6" fill="#c9a24b"/></svg>
+          <span>Diagonal</span>
+        </button>
+        <button data-mode="mirror">
+          <svg viewBox="0 0 26 20"><rect x="1" y="1" width="6" height="6" fill="#c9a24b"/><rect x="10" y="1" width="6" height="6" fill="#c9a24b" transform="scale(-1,1) translate(-26,0)"/><rect x="1" y="9" width="6" height="6" fill="#c9a24b" transform="scale(1,-1) translate(0,-20)"/><rect x="10" y="9" width="6" height="6" fill="#c9a24b" transform="scale(-1,-1) translate(-26,-20)"/></svg>
+          <span>Mirror</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2><span class="n">04</span>Personalizar</h2>
+      <div class="field">
+        <div class="field-head"><label>Espaciado</label><span class="val" id="valSpacing">20px</span></div>
+        <input type="range" id="spacing" min="0" max="400" value="20">
+      </div>
+      <div class="field">
+        <div class="field-head"><label>Escala</label><span class="val" id="valScale">100%</span></div>
+        <input type="range" id="scale" min="10" max="400" value="100">
+      </div>
+      <div class="field">
+        <div class="field-head"><label>Rotación</label><span class="val" id="valRotation">0°</span></div>
+        <input type="range" id="rotation" min="-180" max="180" value="0">
+      </div>
+      <div class="field">
+        <div class="field-head"><label>Inclinación (skew)</label><span class="val" id="valSkew">0°</span></div>
+        <input type="range" id="skew" min="-60" max="60" value="0">
+      </div>
+      <div class="field">
+        <div class="field-head"><label>Opacidad</label><span class="val" id="valOpacity">100%</span></div>
+        <input type="range" id="opacity" min="0" max="100" value="100">
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2><span class="n">05</span>Exportar</h2>
+
+      <div class="export-block">
+        <button class="primary" id="btnExportPng" disabled>Descargar PNG del lienzo</button>
+        <div class="export-note">El diseño completo, al tamaño exacto del lienzo elegido.</div>
+      </div>
+
+      <div class="export-block">
+        <button id="btnExportTile" disabled>Descargar tile sin costura</button>
+        <div class="export-note">La unidad mínima que repite el patrón — <span id="tileDimsNote">—</span>. Ideal para tilear en After Effects / Premiere / Photoshop.</div>
+      </div>
+
+      <div class="export-block">
+        <div class="frame-controls">
+          <select id="loopDirection">
+            <option value="x">Scroll horizontal</option>
+            <option value="y">Scroll vertical</option>
+          </select>
+          <input type="number" id="frameCount" value="30" min="4" max="240" title="Cantidad de frames">
+        </div>
+        <button id="btnExportFrames" disabled>Descargar secuencia (.zip) para loop</button>
+        <div class="export-note">Genera <b>N</b> imágenes PNG desplazadas exactamente un período del patrón. Importalas como secuencia de imágenes en tu editor de video: al reproducirlas en loop, el scroll se ve infinito sin corte.</div>
+      </div>
+    </section>
+
+  </aside>
+
+  <main>
+    <div class="canvas-frame" id="canvasFrame">
+      <span class="reg-mark tl"></span><span class="reg-mark tr"></span>
+      <span class="reg-mark bl"></span><span class="reg-mark br"></span>
+      <canvas id="mainCanvas" width="1920" height="1080"></canvas>
+      <div class="dims-readout" id="dimsReadout">1920 × 1080 px</div>
+    </div>
+    <div class="empty-state" id="emptyState">
+      <div class="glyph">✻</div>
+      <p>Cargá una imagen para empezar a componer el patrón. El lienzo ya está listo en 1920×1080.</p>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  const state = {
+    img: null, imgName: "",
+    canvasW: 1920, canvasH: 1080, preset: "video",
+    bgTransparent: true, bgColor: "#14161c",
+    mode: "default",
+    spacing: 20, scale: 100, rotation: 0, skew: 0, opacity: 100,
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const canvas = $("mainCanvas");
+  const ctx = canvas.getContext("2d");
+
+  function mod(n, m){ return ((n % m) + m) % m; }
+
+  function getStepAndTile(){
+    if(!state.img) return null;
+    const tileW = state.img.naturalWidth * (state.scale/100);
+    const tileH = state.img.naturalHeight * (state.scale/100);
+    const stepX = Math.max(1, tileW + state.spacing);
+    const stepY = Math.max(1, tileH + state.spacing);
+    return { tileW, tileH, stepX, stepY };
+  }
+
+  function getLoopPeriod(){
+    const g = getStepAndTile();
+    if(!g) return null;
+    const periodX = state.mode === "mirror" ? g.stepX * 2 : g.stepX;
+    const periodY =
+      state.mode === "shifted" ? g.stepY * 2 :
+      state.mode === "diagonal" ? g.stepY * 4 :
+      state.mode === "mirror" ? g.stepY * 2 : g.stepY;
+    return { periodX: Math.round(periodX), periodY: Math.round(periodY) };
+  }
+
+  function drawPattern(targetCtx, w, h, offsetX, offsetY){
+    targetCtx.clearRect(0, 0, w, h);
+    if(!state.bgTransparent){
+      targetCtx.fillStyle = state.bgColor;
+      targetCtx.fillRect(0, 0, w, h);
+    }
+    if(!state.img) return;
+
+    const { tileW, tileH, stepX, stepY } = getStepAndTile();
+    const rotRad = state.rotation * Math.PI / 180;
+    const skewRad = state.skew * Math.PI / 180;
+    const diag = Math.sqrt(tileW*tileW + tileH*tileH);
+    const extraCols = Math.ceil(diag / stepX) + 4;
+    const extraRows = Math.ceil(diag / stepY) + 4;
+
+    const colStart = -extraCols;
+    const colEnd = Math.ceil(w / stepX) + extraCols;
+    const rowStart = -extraRows;
+    const rowEnd = Math.ceil(h / stepY) + extraRows;
+
+    for(let r = rowStart; r <= rowEnd; r++){
+      for(let c = colStart; c <= colEnd; c++){
+        let baseX = c * stepX;
+        let baseY = r * stepY;
+        let flipX = false, flipY = false;
+
+        if(state.mode === "shifted"){
+          if(mod(r, 2) === 1) baseX += stepX / 2;
+        } else if(state.mode === "diagonal"){
+          baseX += mod(r, 4) * (stepX / 4);
+        } else if(state.mode === "mirror"){
+          flipX = mod(c, 2) === 1;
+          flipY = mod(r, 2) === 1;
+        }
+
+        const x = baseX - offsetX;
+        const y = baseY - offsetY;
+
+        targetCtx.save();
+        targetCtx.globalAlpha = state.opacity / 100;
+        targetCtx.translate(x + tileW/2, y + tileH/2);
+        if(flipX) targetCtx.scale(-1, 1);
+        if(flipY) targetCtx.scale(1, -1);
+        targetCtx.rotate(rotRad);
+        targetCtx.transform(1, 0, Math.tan(skewRad), 1, 0, 0);
+        targetCtx.drawImage(state.img, -tileW/2, -tileH/2, tileW, tileH);
+        targetCtx.restore();
+      }
+    }
+  }
+
+  function render(){
+    canvas.width = state.canvasW;
+    canvas.height = state.canvasH;
+    drawPattern(ctx, state.canvasW, state.canvasH, 0, 0);
+    $("dimsReadout").textContent = `${state.canvasW} × ${state.canvasH} px`;
+
+    const ar = state.canvasW / state.canvasH;
+    canvas.style.aspectRatio = ar;
+
+    const period = getLoopPeriod();
+    $("tileDimsNote").textContent = period ? `${period.periodX} × ${period.periodY} px` : "—";
+
+    const hasImg = !!state.img;
+    $("btnExportPng").disabled = !hasImg;
+    $("btnExportTile").disabled = !hasImg;
+    $("btnExportFrames").disabled = !hasImg;
+    $("emptyState").style.display = hasImg ? "none" : "flex";
+    $("canvasFrame").style.display = hasImg ? "block" : "none";
+  }
+
+  // ---------- image loading ----------
+  function loadImageFile(file){
+    if(!file || !file.type.startsWith("image/")) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        state.img = img;
+        state.imgName = file.name;
+        const dz = $("dropzone");
+        dz.classList.add("has-image");
+        dz.innerHTML = `<img class="thumb" src="${e.target.result}"><div class="meta"><div class="fname">${file.name}</div><div class="fdims">${img.naturalWidth} × ${img.naturalHeight}px — clic para cambiar</div></div>`;
+        render();
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  const dropzone = $("dropzone");
+  const fileInput = $("fileInput");
+  dropzone.addEventListener("click", () => fileInput.click());
+  fileInput.addEventListener("change", (e) => loadImageFile(e.target.files[0]));
+  ["dragover","dragenter"].forEach(evt => dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.add("drag"); }));
+  ["dragleave","drop"].forEach(evt => dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.remove("drag"); }));
+  dropzone.addEventListener("drop", (e) => loadImageFile(e.dataTransfer.files[0]));
+
+  // ---------- canvas presets ----------
+  $("presetRow").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-preset]");
+    if(!btn) return;
+    document.querySelectorAll("#presetRow button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    state.preset = btn.dataset.preset;
+    if(state.preset === "video"){ state.canvasW = 1920; state.canvasH = 1080; $("customDims").style.display = "none"; }
+    else if(state.preset === "short"){ state.canvasW = 1080; state.canvasH = 1920; $("customDims").style.display = "none"; }
+    else { $("customDims").style.display = "grid"; state.canvasW = parseInt($("customW").value)||1920; state.canvasH = parseInt($("customH").value)||1080; }
+    render();
+  });
+  $("customW").addEventListener("input", () => { state.canvasW = Math.max(16, parseInt($("customW").value)||1920); render(); });
+  $("customH").addEventListener("input", () => { state.canvasH = Math.max(16, parseInt($("customH").value)||1080); render(); });
+
+  // ---------- background ----------
+  $("bgTransparent").addEventListener("change", (e) => { state.bgTransparent = e.target.checked; render(); });
+  $("bgColor").addEventListener("input", (e) => { state.bgColor = e.target.value; if(!state.bgTransparent) render(); });
+
+  // ---------- tiling mode ----------
+  $("tilingSeg").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-mode]");
+    if(!btn) return;
+    document.querySelectorAll("#tilingSeg button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    state.mode = btn.dataset.mode;
+    render();
+  });
+
+  // ---------- sliders ----------
+  function bindSlider(id, key, suffix, out){
+    $(id).addEventListener("input", (e) => {
+      state[key] = parseFloat(e.target.value);
+      $(out).textContent = `${e.target.value}${suffix}`;
+      render();
+    });
+  }
+  bindSlider("spacing", "spacing", "px", "valSpacing");
+  bindSlider("scale", "scale", "%", "valScale");
+  bindSlider("rotation", "rotation", "°", "valRotation");
+  bindSlider("skew", "skew", "°", "valSkew");
+  bindSlider("opacity", "opacity", "%", "valOpacity");
+
+  // ---------- reset ----------
+  $("btnReset").addEventListener("click", () => {
+    state.spacing = 20; state.scale = 100; state.rotation = 0; state.skew = 0; state.opacity = 100;
+    $("spacing").value = 20; $("valSpacing").textContent = "20px";
+    $("scale").value = 100; $("valScale").textContent = "100%";
+    $("rotation").value = 0; $("valRotation").textContent = "0°";
+    $("skew").value = 0; $("valSkew").textContent = "0°";
+    $("opacity").value = 100; $("valOpacity").textContent = "100%";
+    state.mode = "default";
+    document.querySelectorAll("#tilingSeg button").forEach(b => b.classList.remove("active"));
+    document.querySelector('#tilingSeg button[data-mode="default"]').classList.add("active");
+    render();
+  });
+
+  // ---------- toast ----------
+  let toastTimer;
+  function toast(msg){
+    const t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove("show"), 2600);
+  }
+
+  function downloadBlob(blob, filename){
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+  }
+
+  function canvasToBlob(cv){
+    return new Promise((resolve) => cv.toBlob(resolve, "image/png"));
+  }
+
+  // ---------- export: full canvas PNG ----------
+  $("btnExportPng").addEventListener("click", async () => {
+    const blob = await canvasToBlob(canvas);
+    downloadBlob(blob, "patron-lienzo.png");
+    toast("PNG del lienzo descargado");
+  });
+
+  // ---------- export: seamless tile ----------
+  $("btnExportTile").addEventListener("click", async () => {
+    const period = getLoopPeriod();
+    if(!period) return;
+    const off = document.createElement("canvas");
+    off.width = period.periodX; off.height = period.periodY;
+    const offCtx = off.getContext("2d");
+    drawPattern(offCtx, period.periodX, period.periodY, 0, 0);
+    const blob = await canvasToBlob(off);
+    downloadBlob(blob, `patron-tile-${period.periodX}x${period.periodY}.png`);
+    toast("Tile sin costura descargado");
+  });
+
+  // ---------- export: loop frame sequence (zip) ----------
+  $("btnExportFrames").addEventListener("click", async () => {
+    const period = getLoopPeriod();
+    if(!period) return;
+    const direction = $("loopDirection").value;
+    let n = parseInt($("frameCount").value) || 30;
+    n = Math.min(240, Math.max(4, n));
+
+    const btn = $("btnExportFrames");
+    const originalLabel = btn.textContent;
+    btn.disabled = true;
+
+    const off = document.createElement("canvas");
+    off.width = state.canvasW; off.height = state.canvasH;
+    const offCtx = off.getContext("2d");
+
+    const zip = new JSZip();
+    const pad = String(n).length;
+
+    for(let i = 0; i < n; i++){
+      const t = i / n;
+      const offsetX = direction === "x" ? t * period.periodX : 0;
+      const offsetY = direction === "y" ? t * period.periodY : 0;
+      drawPattern(offCtx, state.canvasW, state.canvasH, offsetX, offsetY);
+      const blob = await canvasToBlob(off);
+      const arrayBuffer = await blob.arrayBuffer();
+      const name = `frame_${String(i+1).padStart(pad, "0")}.png`;
+      zip.file(name, arrayBuffer);
+      btn.textContent = `Generando ${i+1}/${n}…`;
+    }
+
+    btn.textContent = "Comprimiendo…";
+    const zipBlob = await zip.generateAsync({ type: "blob" });
+    downloadBlob(zipBlob, `secuencia-loop-${direction}-${n}frames.zip`);
+
+    btn.textContent = originalLabel;
+    btn.disabled = false;
+    toast(`Secuencia de ${n} frames descargada`);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
