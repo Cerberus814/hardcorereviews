@@ -400,11 +400,15 @@
         <div class="field" style="margin-top:18px; padding-top:16px; border-top:1px solid var(--border)">
           <div class="field-head"><label>Máxima calidad real (recomendado)</label></div>
           <div class="export-note">Esto codifica <b>una sola vez, en frío</b>, a partir de los PNG exactos de la secuencia (sin pérdida) — muchísima mejor calidad que grabar en vivo, sin importar los artifacts que veas arriba. Tres pasos: 1) descargá la secuencia PNG (.zip) más arriba, 2) descomprimila en una carpeta, 3) corré este comando ahí adentro:</div>
-          <div class="code-box">
+
+          <div class="field-head" style="margin-top:12px"><label>Velocidad del scroll</label><span class="val" id="valSeqDuration">6s</span></div>
+          <input type="range" id="seqDuration" min="1" max="30" step="0.5" value="6">
+
+          <div class="code-box" style="margin-top:10px">
             <input type="text" id="ffmpegSeqCmd" readonly value="ffmpeg -framerate 30 -i frame_%02d.png -c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p -movflags +faststart patron-loop.mp4">
             <button id="btnCopySeqFfmpeg">Copiar</button>
           </div>
-          <div class="export-note">El comando se actualiza solo según la cantidad de frames y los fps que tengas elegidos arriba — el resultado dura exactamente frames÷fps segundos, en loop perfecto.</div>
+          <div class="export-note" id="seqDurationHint">—</div>
         </div>
 
         <div class="field" style="margin-top:16px">
@@ -742,14 +746,19 @@
   function updateSeqFfmpegCommand(){
     let n = parseInt($("frameCount").value) || 30;
     n = Math.min(240, Math.max(4, n));
-    const fps = parseInt($("loopFps").value) || 30;
+    const duration = Math.min(30, Math.max(1, parseFloat($("seqDuration").value) || 6));
+    const playbackFps = Math.max(1, Math.round(n / duration));
     const pad = String(n).length;
     const pattern = `frame_%0${pad}d.png`;
-    const cmd = `ffmpeg -framerate ${fps} -i ${pattern} -c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p -movflags +faststart patron-loop.mp4`;
+    const cmd = `ffmpeg -framerate ${playbackFps} -i ${pattern} -c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p -movflags +faststart patron-loop.mp4`;
     $("ffmpegSeqCmd").value = cmd;
+    $("seqDurationHint").textContent = `El video final dura ${duration}s reproduciendo los ${n} frames a ${playbackFps} fps. ¿Se ve entrecortado a baja velocidad? Subí la "Cantidad de frames" de arriba para más fluidez (más frames = movimiento más suave, .zip más pesado).`;
   }
   $("frameCount").addEventListener("input", updateSeqFfmpegCommand);
-  $("loopFps").addEventListener("change", updateSeqFfmpegCommand);
+  $("seqDuration").addEventListener("input", (e) => {
+    $("valSeqDuration").textContent = `${e.target.value}s`;
+    updateSeqFfmpegCommand();
+  });
 
   async function copyInputText(inputId, btnId){
     const input = $(inputId);
