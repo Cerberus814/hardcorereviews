@@ -52,8 +52,10 @@
     border:1px solid var(--border); flex:0 0 auto;
   }
   .accent-picker input[type=range]{
-    width:110px; height:6px; border-radius:3px;
-    background:linear-gradient(to right, hsl(0,72%,56%), hsl(60,72%,56%));
+    width:170px; height:6px; border-radius:3px;
+    background:linear-gradient(to right,
+      hsl(0,72%,56%), hsl(60,72%,56%), hsl(120,72%,56%), hsl(180,72%,56%),
+      hsl(240,72%,56%), hsl(300,72%,56%), hsl(360,72%,56%));
   }
   .accent-picker input[type=range]::-webkit-slider-thumb{ border:2px solid var(--surface); }
 
@@ -248,7 +250,7 @@
   <div class="export-bar">
     <div class="accent-picker">
       <span class="swatch" id="accentSwatch"></span>
-      <input type="range" id="accentHue" min="0" max="60" value="42" title="Color de acento">
+      <input type="range" id="accentHue" min="0" max="360" value="42" title="Color de acento">
     </div>
     <button id="btnReset" class="ghost">Restablecer</button>
   </div>
@@ -392,12 +394,22 @@
           <div class="export-note" id="bitrateHint">—</div>
           <button id="btnUseRecommendedBitrate" class="ghost" style="width:100%; margin-top:8px">Usar bitrate recomendado</button>
         </div>
-        <button class="primary" id="btnExportVideo" disabled>Descargar video (loop infinito)</button>
-        <div class="export-note" id="videoFormatNote">Graba directo en <b>MP4</b> si tu navegador lo soporta (la mayoría basados en Chromium); si no, en <b>WebM</b> — igual de compatible con cualquier editor. La duración es la velocidad: subila para un scroll lento, bajala para uno rápido. El loop cierra perfecto en cualquier duración, porque siempre avanza exactamente un período completo del patrón — nunca vas a notar el corte.</div>
+        <button class="primary" id="btnExportVideo" disabled>Descargar video rápido (grabado en vivo)</button>
+        <div class="export-note" id="videoFormatNote">Graba directo en <b>MP4</b> si tu navegador lo soporta (mayoría Chromium) o <b>WebM</b> si no. Es rápido y cómodo, pero la calidad depende del codificador en tiempo real de tu navegador — el bitrate ayuda, pero sobre todo en Firefox puede seguir viéndose comprimido de más. Para calidad real, usá la opción de abajo.</div>
+
+        <div class="field" style="margin-top:18px; padding-top:16px; border-top:1px solid var(--border)">
+          <div class="field-head"><label>Máxima calidad real (recomendado)</label></div>
+          <div class="export-note">Esto codifica <b>una sola vez, en frío</b>, a partir de los PNG exactos de la secuencia (sin pérdida) — muchísima mejor calidad que grabar en vivo, sin importar los artifacts que veas arriba. Tres pasos: 1) descargá la secuencia PNG (.zip) más arriba, 2) descomprimila en una carpeta, 3) corré este comando ahí adentro:</div>
+          <div class="code-box">
+            <input type="text" id="ffmpegSeqCmd" readonly value="ffmpeg -framerate 30 -i frame_%02d.png -c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p -movflags +faststart patron-loop.mp4">
+            <button id="btnCopySeqFfmpeg">Copiar</button>
+          </div>
+          <div class="export-note">El comando se actualiza solo según la cantidad de frames y los fps que tengas elegidos arriba — el resultado dura exactamente frames÷fps segundos, en loop perfecto.</div>
+        </div>
 
         <div class="field" style="margin-top:16px">
-          <div class="field-head"><label>¿Te tocó .webm y necesitás .mp4?</label></div>
-          <div class="export-note">Corré este comando en la terminal de tu Linux (necesita <code>ffmpeg</code>, viene preinstalado o es un solo paquete):</div>
+          <div class="field-head"><label>¿Grabaste en vivo y te tocó .webm?</label></div>
+          <div class="export-note">Si necesitás sí o sí un .mp4 a partir de ese .webm (calidad igual de limitada que el original, solo cambia el contenedor):</div>
           <div class="code-box">
             <input type="text" id="ffmpegCmd" readonly value="ffmpeg -i loop.webm -c:v libx264 -pix_fmt yuv420p -movflags +faststart loop.mp4">
             <button id="btnCopyFfmpeg">Copiar</button>
@@ -720,6 +732,60 @@
   });
   $("accentHue").dispatchEvent(new Event("input"));
 
+  // ---------- ffmpeg command boxes (webm->mp4, and png sequence -> mp4) ----------
+  function updateFfmpegCommand(baseName, ext){
+    const input = ext === "webm" ? `${baseName}.webm` : `${baseName}.${ext}`;
+    const cmd = `ffmpeg -i ${input} -c:v libx264 -pix_fmt yuv420p -movflags +faststart ${baseName}.mp4`;
+    $("ffmpegCmd").value = cmd;
+  }
+
+  function updateSeqFfmpegCommand(){
+    let n = parseInt($("frameCount").value) || 30;
+    n = Math.min(240, Math.max(4, n));
+    const fps = parseInt($("loopFps").value) || 30;
+    const pad = String(n).length;
+    const pattern = `frame_%0${pad}d.png`;
+    const cmd = `ffmpeg -framerate ${fps} -i ${pattern} -c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p -movflags +faststart patron-loop.mp4`;
+    $("ffmpegSeqCmd").value = cmd;
+  }
+  $("frameCount").addEventListener("input", updateSeqFfmpegCommand);
+  $("loopFps").addEventListener("change", updateSeqFfmpegCommand);
+
+  async function copyInputText(inputId, btnId){
+    const input = $(inputId);
+    const btn = $(btnId);
+    const text = input.value;
+    let ok = false;
+
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      try{ await navigator.clipboard.writeText(text); ok = true; } catch(err){ ok = false; }
+    }
+    if(!ok){
+      try{
+        input.removeAttribute("readonly");
+        input.focus();
+        input.select();
+        input.setSelectionRange(0, 99999);
+        ok = document.execCommand("copy");
+        input.setAttribute("readonly", "");
+      } catch(err){ ok = false; }
+    }
+
+    if(ok){
+      toast("Comando copiado al portapapeles");
+      const orig = btn.textContent;
+      btn.textContent = "¡Copiado!";
+      setTimeout(() => { btn.textContent = orig; }, 1600);
+    } else {
+      input.removeAttribute("readonly");
+      input.focus();
+      input.select();
+      toast("No se pudo copiar automático — quedó seleccionado, usá Ctrl+C");
+    }
+  }
+  $("btnCopyFfmpeg").addEventListener("click", () => copyInputText("ffmpegCmd", "btnCopyFfmpeg"));
+  $("btnCopySeqFfmpeg").addEventListener("click", () => copyInputText("ffmpegSeqCmd", "btnCopySeqFfmpeg"));
+
   // ---------- bitrate: manual control with a dynamic recommendation ----------
   function recommendedBitrateMbps(){
     const fps = parseInt($("loopFps").value) || 30;
@@ -738,27 +804,6 @@
     updateBitrateHint();
   });
 
-  // ---------- ffmpeg command box ----------
-  function updateFfmpegCommand(baseName, ext){
-    const input = ext === "webm" ? `${baseName}.webm` : `${baseName}.${ext}`;
-    const cmd = `ffmpeg -i ${input} -c:v libx264 -pix_fmt yuv420p -movflags +faststart ${baseName}.mp4`;
-    $("ffmpegCmd").value = cmd;
-  }
-  $("btnCopyFfmpeg").addEventListener("click", () => {
-    const input = $("ffmpegCmd");
-    input.select();
-    input.setSelectionRange(0, 99999);
-    let copied = false;
-    try{ copied = document.execCommand("copy"); } catch(err){ copied = false; }
-    if(copied){ toast("Comando copiado al portapapeles"); return; }
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(input.value)
-        .then(() => toast("Comando copiado al portapapeles"))
-        .catch(() => toast("No se pudo copiar automático — el texto ya está seleccionado, usá Ctrl+C"));
-    } else {
-      toast("El texto ya está seleccionado — usá Ctrl+C para copiarlo");
-    }
-  });
   function computeOffset(t, direction, period){
     switch(direction){
       case "y": return { offsetX: 0, offsetY: t * period.periodY };
@@ -959,6 +1004,7 @@
     rafId = requestAnimationFrame(tick);
   });
 
+  updateSeqFfmpegCommand();
   render();
 })();
 </script>
