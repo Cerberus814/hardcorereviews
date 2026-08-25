@@ -44,6 +44,11 @@
     letter-spacing:0.02em;
   }
   .brand .sub{ font-size:10.5px; color:var(--text-dim); letter-spacing:0.14em; text-transform:uppercase; }
+  .brand .version{
+    font-family:var(--mono); font-size:10px; color:var(--accent);
+    background:var(--accent-soft); border:1px solid var(--border);
+    padding:2px 6px; border-radius:8px; letter-spacing:0.02em;
+  }
   .export-bar{ display:flex; gap:14px; align-items:center; }
 
   .accent-picker{ display:flex; align-items:center; gap:8px; }
@@ -217,9 +222,22 @@
 
   .export-note{ font-size:11px; color:var(--text-dim); line-height:1.5; margin-top:8px; }
   .export-note b{ color:var(--accent); font-weight:600; }
-  .export-block{ margin-bottom:14px; }
-  .export-block:last-child{ margin-bottom:0; }
-  .export-block button{ width:100%; margin-bottom:6px; }
+  .export-card{
+    background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius);
+    padding:14px; margin-bottom:12px;
+  }
+  .export-card:last-child{ margin-bottom:0; }
+  .export-card-title{
+    display:flex; align-items:center; gap:7px;
+    font-size:12px; font-weight:600; color:var(--text); margin-bottom:8px;
+  }
+  .export-card-title::before{
+    content:""; width:6px; height:6px; background:var(--accent); flex:0 0 auto;
+  }
+  .export-card button{ width:100%; }
+  .export-card .field{ margin-bottom:12px; }
+  .export-card .field:last-child{ margin-bottom:0; }
+  .export-card .divider{ height:1px; background:var(--border); margin:14px 0; }
   .frame-controls{ display:flex; gap:6px; margin-bottom:8px; }
   .frame-controls select, .frame-controls input{
     background:var(--surface-2); border:1px solid var(--border); color:var(--text);
@@ -246,6 +264,7 @@
   <div class="brand">
     <span class="mark">Placa</span>
     <span class="sub">Generador de patrones seamless</span>
+    <span class="version" id="appVersion">v0.4</span>
   </div>
   <div class="export-bar">
     <div class="accent-picker">
@@ -348,18 +367,23 @@
     <section class="panel">
       <h2><span class="n">05</span>Exportar</h2>
 
-      <div class="export-block">
-        <button class="primary" id="btnExportPng" disabled>Descargar PNG del lienzo</button>
-        <div class="export-note">El diseño completo, al tamaño exacto del lienzo elegido.</div>
+      <div class="export-card">
+        <div class="export-card-title">PNG del lienzo</div>
+        <div class="export-note" style="margin-top:0; margin-bottom:10px">El diseño completo, al tamaño exacto del lienzo elegido.</div>
+        <button class="primary" id="btnExportPng" disabled>Descargar PNG</button>
       </div>
 
-      <div class="export-block">
-        <button id="btnExportTile" disabled>Descargar tile sin costura</button>
-        <div class="export-note">La unidad mínima que repite el patrón — <span id="tileDimsNote">—</span>. Ideal para tilear en After Effects / Premiere / Photoshop.</div>
+      <div class="export-card">
+        <div class="export-card-title">Tile sin costura</div>
+        <div class="export-note" style="margin-top:0; margin-bottom:10px">La unidad mínima que repite el patrón — <span id="tileDimsNote">—</span>. Ideal para tilear en After Effects / Premiere / Photoshop.</div>
+        <button id="btnExportTile" disabled>Descargar tile</button>
       </div>
 
-      <div class="export-block">
-        <div class="field">
+      <div class="export-card">
+        <div class="export-card-title">Secuencia PNG + video de loop</div>
+        <div class="export-note" style="margin-top:0">Descargá los frames del patrón y armá el video vos mismo con un comando — la vía de mejor calidad, sin artifacts de compresión en vivo.</div>
+
+        <div class="field" style="margin-top:12px">
           <div class="field-head"><label>Dirección del scroll</label></div>
           <select id="loopDirection">
             <option value="x">Horizontal →</option>
@@ -371,54 +395,24 @@
 
         <div class="field">
           <div class="field-head"><label>Cantidad de frames</label></div>
-          <input type="number" id="frameCount" value="30" min="4" max="240" style="width:100%; background:var(--surface-2); border:1px solid var(--border); color:var(--text); border-radius:var(--radius); padding:7px 8px; font-family:var(--mono); font-size:12px;">
+          <input type="number" id="frameCount" value="30" min="4" max="240" style="width:100%; background:var(--surface); border:1px solid var(--border); color:var(--text); border-radius:var(--radius); padding:7px 8px; font-family:var(--mono); font-size:12px;">
         </div>
-        <button id="btnExportFrames" disabled style="margin-bottom:16px">Descargar secuencia PNG (.zip)</button>
-        <div class="export-note" style="margin-top:-10px; margin-bottom:16px">Cada frame está desplazado exactamente 1/N de período. Sirve para tilear vos mismo el loop en After Effects/Premiere con control total.</div>
+
+        <button id="btnExportFrames" disabled>Descargar secuencia PNG (.zip)</button>
+
+        <div class="divider"></div>
 
         <div class="field">
-          <div class="field-head"><label>Duración del loop</label><span class="val" id="valLoopDuration">6s</span></div>
-          <input type="range" id="loopDuration" min="1" max="20" step="0.5" value="6">
-        </div>
-        <div class="field">
-          <div class="field-head"><label>Cuadros por segundo</label></div>
-          <select id="loopFps">
-            <option value="24">24 fps</option>
-            <option value="30" selected>30 fps</option>
-            <option value="60">60 fps</option>
-          </select>
-        </div>
-        <div class="field">
-          <div class="field-head"><label>Bitrate del video</label><span class="val" id="valBitrate">18 Mbps</span></div>
-          <input type="range" id="videoBitrate" min="2" max="60" step="1" value="18">
-          <div class="export-note" id="bitrateHint">—</div>
-          <button id="btnUseRecommendedBitrate" class="ghost" style="width:100%; margin-top:8px">Usar bitrate recomendado</button>
-        </div>
-        <button class="primary" id="btnExportVideo" disabled>Descargar video rápido (grabado en vivo)</button>
-        <div class="export-note" id="videoFormatNote">Graba directo en <b>MP4</b> si tu navegador lo soporta (mayoría Chromium) o <b>WebM</b> si no. Es rápido y cómodo, pero la calidad depende del codificador en tiempo real de tu navegador — el bitrate ayuda, pero sobre todo en Firefox puede seguir viéndose comprimido de más. Para calidad real, usá la opción de abajo.</div>
-
-        <div class="field" style="margin-top:18px; padding-top:16px; border-top:1px solid var(--border)">
-          <div class="field-head"><label>Máxima calidad real (recomendado)</label></div>
-          <div class="export-note">Esto codifica <b>una sola vez, en frío</b>, a partir de los PNG exactos de la secuencia (sin pérdida) — muchísima mejor calidad que grabar en vivo, sin importar los artifacts que veas arriba. Tres pasos: 1) descargá la secuencia PNG (.zip) más arriba, 2) descomprimila en una carpeta, 3) corré este comando ahí adentro:</div>
-
-          <div class="field-head" style="margin-top:12px"><label>Velocidad del scroll</label><span class="val" id="valSeqDuration">6s</span></div>
+          <div class="field-head"><label>Velocidad del scroll</label><span class="val" id="valSeqDuration">6s</span></div>
           <input type="range" id="seqDuration" min="1" max="30" step="0.5" value="6">
-
-          <div class="code-box" style="margin-top:10px">
-            <input type="text" id="ffmpegSeqCmd" readonly value="ffmpeg -framerate 20 -pattern_type glob -i 'frame_*.png' -c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p -movflags +faststart patron-loop.mp4">
-            <button id="btnCopySeqFfmpeg">Copiar</button>
-          </div>
-          <div class="export-note" id="seqDurationHint">—</div>
         </div>
 
-        <div class="field" style="margin-top:16px">
-          <div class="field-head"><label>¿Grabaste en vivo y te tocó .webm?</label></div>
-          <div class="export-note">Si necesitás sí o sí un .mp4 a partir de ese .webm (calidad igual de limitada que el original, solo cambia el contenedor):</div>
-          <div class="code-box">
-            <input type="text" id="ffmpegCmd" readonly value="ffmpeg -i loop.webm -c:v libx264 -pix_fmt yuv420p -movflags +faststart loop.mp4">
-            <button id="btnCopyFfmpeg">Copiar</button>
-          </div>
+        <div class="export-note" style="margin-top:0; margin-bottom:8px">Corré esto (necesita <code>ffmpeg</code>) adentro de la carpeta descomprimida del .zip:</div>
+        <div class="code-box">
+          <input type="text" id="ffmpegSeqCmd" readonly value="ffmpeg -framerate 20 -pattern_type glob -i 'frame_*.png' -c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p -movflags +faststart patron-loop.mp4">
+          <button id="btnCopySeqFfmpeg">Copiar</button>
         </div>
+        <div class="export-note" id="seqDurationHint">—</div>
       </div>
     </section>
 
@@ -443,6 +437,8 @@
 <script>
 (function(){
   "use strict";
+
+  const APP_VERSION = "0.4";
 
   const state = {
     images: [], // {img, name}
@@ -604,11 +600,9 @@
     $("btnExportPng").disabled = !hasImgs;
     $("btnExportTile").disabled = !hasImgs;
     $("btnExportFrames").disabled = !hasImgs;
-    $("btnExportVideo").disabled = !hasImgs;
     $("emptyState").style.display = hasImgs ? "none" : "flex";
     $("canvasFrame").style.display = hasImgs ? "block" : "none";
     $("distributionBlock").style.display = state.images.length > 1 ? "block" : "none";
-    updateBitrateHint();
   }
 
   // ---------- image list UI ----------
@@ -723,7 +717,6 @@
   bindSlider("rotation", "rotation", "°", "valRotation");
   bindSlider("skew", "skew", "°", "valSkew");
   bindSlider("opacity", "opacity", "%", "valOpacity");
-  $("loopDuration").addEventListener("input", (e) => { $("valLoopDuration").textContent = `${e.target.value}s`; });
 
   // ---------- accent color picker (red -> yellow) ----------
   $("accentHue").addEventListener("input", (e) => {
@@ -736,13 +729,7 @@
   });
   $("accentHue").dispatchEvent(new Event("input"));
 
-  // ---------- ffmpeg command boxes (webm->mp4, and png sequence -> mp4) ----------
-  function updateFfmpegCommand(baseName, ext){
-    const input = ext === "webm" ? `${baseName}.webm` : `${baseName}.${ext}`;
-    const cmd = `ffmpeg -i ${input} -c:v libx264 -pix_fmt yuv420p -movflags +faststart ${baseName}.mp4`;
-    $("ffmpegCmd").value = cmd;
-  }
-
+  // ---------- ffmpeg command box (png sequence -> mp4) ----------
   function updateSeqFfmpegCommand(){
     let n = parseInt($("frameCount").value) || 30;
     n = Math.min(240, Math.max(4, n));
@@ -790,26 +777,7 @@
       toast("No se pudo copiar automático — quedó seleccionado, usá Ctrl+C");
     }
   }
-  $("btnCopyFfmpeg").addEventListener("click", () => copyInputText("ffmpegCmd", "btnCopyFfmpeg"));
   $("btnCopySeqFfmpeg").addEventListener("click", () => copyInputText("ffmpegSeqCmd", "btnCopySeqFfmpeg"));
-
-  // ---------- bitrate: manual control with a dynamic recommendation ----------
-  function recommendedBitrateMbps(){
-    const fps = parseInt($("loopFps").value) || 30;
-    return Math.min(60, Math.max(2, Math.round((state.canvasW * state.canvasH * fps * 0.30) / 1e6)));
-  }
-  function updateBitrateHint(){
-    const rec = recommendedBitrateMbps();
-    $("bitrateHint").textContent = `Recomendado para ${state.canvasW}×${state.canvasH} @ ${$("loopFps").value}fps: ~${rec} Mbps. Más bitrate = menos "estela" en los bordes, pero un archivo más pesado.`;
-  }
-  $("videoBitrate").addEventListener("input", (e) => { $("valBitrate").textContent = `${e.target.value} Mbps`; });
-  $("loopFps").addEventListener("change", updateBitrateHint);
-  $("btnUseRecommendedBitrate").addEventListener("click", () => {
-    const rec = recommendedBitrateMbps();
-    $("videoBitrate").value = rec;
-    $("valBitrate").textContent = `${rec} Mbps`;
-    updateBitrateHint();
-  });
 
   function computeOffset(t, direction, period){
     switch(direction){
@@ -915,103 +883,8 @@
     toast(`Secuencia de ${n} frames descargada`);
   });
 
-  // ---------- export: video (MP4 if the browser supports it, otherwise WebM) ----------
-  function pickSupportedVideoMime(){
-    if(!window.MediaRecorder || !MediaRecorder.isTypeSupported) return null;
-    const candidates = [
-      "video/mp4;codecs=avc1.640028", // H.264 High profile — mejor calidad por bit
-      "video/mp4;codecs=avc1.4D401F", // H.264 Main profile
-      "video/mp4;codecs=avc1.42E01E", // H.264 Baseline (fallback, menos eficiente)
-      "video/mp4;codecs=h264",
-      "video/mp4",
-      "video/webm;codecs=vp9",
-      "video/webm;codecs=vp8",
-      "video/webm",
-    ];
-    for(const c of candidates){ if(MediaRecorder.isTypeSupported(c)) return c; }
-    return null;
-  }
-
-  $("btnExportVideo").addEventListener("click", () => {
-    const period = getLoopPeriod();
-    if(!period) return;
-
-    const mime = pickSupportedVideoMime();
-    if(!mime){
-      toast("Tu navegador no puede grabar video. Probá la secuencia PNG (.zip) en su lugar.");
-      return;
-    }
-
-    const direction = $("loopDirection").value;
-    const durationSec = Math.min(20, Math.max(1, parseFloat($("loopDuration").value) || 6));
-    const fps = parseInt($("loopFps").value) || 30;
-
-    const recCanvas = document.createElement("canvas");
-    recCanvas.width = state.canvasW; recCanvas.height = state.canvasH;
-    recCanvas.style.position = "fixed"; recCanvas.style.left = "-99999px"; recCanvas.style.top = "0";
-    document.body.appendChild(recCanvas);
-    const recCtx = recCanvas.getContext("2d");
-    drawPattern(recCtx, state.canvasW, state.canvasH, 0, 0);
-
-    let stream, recorder;
-    try{
-      stream = recCanvas.captureStream(fps);
-      const bitrate = Math.min(60000000, Math.max(1000000, parseInt($("videoBitrate").value) * 1000000));
-      recorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: bitrate });
-    } catch(err){
-      document.body.removeChild(recCanvas);
-      toast("No se pudo iniciar la grabación en este navegador.");
-      return;
-    }
-
-    const chunks = [];
-    recorder.ondataavailable = (e) => { if(e.data && e.data.size) chunks.push(e.data); };
-
-    const btn = $("btnExportVideo");
-    const originalLabel = btn.textContent;
-    btn.disabled = true;
-    $("btnExportPng").disabled = true;
-    $("btnExportTile").disabled = true;
-    $("btnExportFrames").disabled = true;
-
-    const durationMs = durationSec * 1000;
-    const startTime = performance.now();
-    let rafId;
-
-    function tick(now){
-      const elapsed = now - startTime;
-      const t = elapsed / durationMs;
-      if(t >= 1){
-        recorder.stop();
-        return;
-      }
-      const { offsetX, offsetY } = computeOffset(t, direction, period);
-      drawPattern(recCtx, state.canvasW, state.canvasH, offsetX, offsetY);
-      btn.textContent = `Grabando… ${(elapsed/1000).toFixed(1)}s / ${durationSec}s`;
-      rafId = requestAnimationFrame(tick);
-    }
-
-    recorder.onstop = () => {
-      cancelAnimationFrame(rafId);
-      document.body.removeChild(recCanvas);
-      const ext = mime.startsWith("video/mp4") ? "mp4" : "webm";
-      const blob = new Blob(chunks, { type: mime.split(";")[0] });
-      const baseName = `loop-${direction}-${durationSec}s`;
-      downloadBlob(blob, `${baseName}.${ext}`);
-      updateFfmpegCommand(baseName, ext);
-      btn.textContent = originalLabel;
-      btn.disabled = false;
-      $("btnExportPng").disabled = false;
-      $("btnExportTile").disabled = false;
-      $("btnExportFrames").disabled = false;
-      toast(`Video .${ext} descargado (${ext === "webm" ? "tu navegador no soporta MP4 nativo — .webm se importa igual en cualquier editor" : "MP4 nativo"})`);
-    };
-
-    recorder.start(200);
-    rafId = requestAnimationFrame(tick);
-  });
-
   updateSeqFfmpegCommand();
+  $("appVersion").textContent = `v${APP_VERSION}`;
   render();
 })();
 </script>
