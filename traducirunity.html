@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Traducir juegos de Unity</title>
+<style>
+:root{--bg:#0d0f1a;--card:#161a2b;--line:#2a3050;--tx:#e8eaf6;--mut:#8b92b8;--ac:#7c6cff;--ac2:#34d3c1;--code:#0a0c16;--ok:#34d3c1;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f3f4fb;--card:#fff;--line:#d6d9ee;--tx:#171a2e;--mut:#5d6491;--code:#eef0fa}}
+:root[data-theme="dark"]{--bg:#0d0f1a}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 18px 64px}
+h1{font-size:clamp(26px,5vw,38px);margin:0 0 6px;letter-spacing:-.02em;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mut);margin:0 0 24px}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.tab{background:var(--card);border:1.5px solid var(--line);color:var(--tx);border-radius:14px;padding:14px 10px;cursor:pointer;text-align:center;font:inherit;transition:.2s}
+.tab b{display:block;font-size:15px}.tab small{color:var(--mut);font-size:12px}
+.tab:hover{border-color:var(--ac)}
+.tab.on{border-color:var(--ac);background:linear-gradient(160deg,color-mix(in srgb,var(--ac) 22%,var(--card)),var(--card));box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 25%,transparent)}
+.how{margin:18px 0 8px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.how h3{margin:0 0 6px;font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--ac2)}
+.how p{margin:4px 0;font-size:14.5px}
+.bar{height:6px;background:var(--line);border-radius:9px;margin:22px 0 6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .35s}
+.cnt{font-size:13px;color:var(--mut);margin-bottom:14px}
+ol{list-style:none;margin:0;padding:0}
+.step{position:relative;display:flex;gap:16px;padding-bottom:22px}
+.step::before{content:"";position:absolute;left:15px;top:34px;bottom:2px;border-left:3px dotted var(--line);transition:.3s}
+.step:last-child::before{display:none}
+.step.done::before{border-left:3px solid var(--ok)}
+.dot{flex:none;width:32px;height:32px;border-radius:50%;border:2px solid var(--line);background:var(--bg);color:var(--mut);display:grid;place-items:center;font-weight:700;font-size:14px;cursor:pointer;transition:.2s;padding:0}
+.dot:hover{border-color:var(--ac)}
+.step.done .dot{background:var(--ok);border-color:var(--ok);color:#06231f}
+.body{flex:1;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;transition:.2s}
+.step.done .body{opacity:.55}
+.step.done .body h4{text-decoration:line-through}
+.body h4{margin:0 0 4px;font-size:16px}
+.body p{margin:4px 0;font-size:14.5px;color:var(--mut)}
+.body a{color:var(--ac2);font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;background:var(--code);padding:2px 6px;border-radius:6px;color:var(--ac2)}
+.cb{position:relative;margin:8px 0}
+.cb pre{margin:0;overflow-x:auto;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:11px 70px 11px 12px;font:13px ui-monospace,Menlo,Consolas,monospace;color:var(--ac2)}
+.cb button{position:absolute;right:7px;top:7px;background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:7px;font-size:12px;padding:3px 9px;cursor:pointer}
+.tip{margin-top:8px;font-size:13.5px;border-left:3px solid var(--ac);padding:4px 10px;color:var(--tx);background:color-mix(in srgb,var(--ac) 10%,transparent);border-radius:0 8px 8px 0}
+.reset{margin-top:6px;background:none;border:1px solid var(--line);color:var(--mut);border-radius:9px;padding:6px 14px;cursor:pointer;font:inherit;font-size:13px}
+@media(max-width:520px){.tabs{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>Traduce juegos de Unity</h1>
+<p class="sub">Con XUnity.AutoTranslator · elige tu tipo de juego y sigue los pasos.</p>
+
+<div class="tabs" id="tabs"></div>
+<div class="how" id="how"></div>
+
+<div class="bar"><i id="fill"></i></div>
+<div class="cnt" id="cnt"></div>
+<ol id="steps"></ol>
+<button class="reset" id="reset">Reiniciar pasos</button>
+</main>
+
+<script>
+const REL="https://github.com/bbepis/XUnity.AutoTranslator/releases/latest";
+const CFG=[
+ "[Service]","Endpoint=GoogleTranslateV2","","[General]","Language=es","FromLanguage=ja"
+].join("\n");
+const T={
+ mono:{
+  name:"BepInEx Mono",sub:"Lo más común",
+  how:["Abre la carpeta del juego: dentro de <code>NombreJuego_Data</code> hay una carpeta <code>Managed</code> con <code>Assembly-CSharp.dll</code>.","No existe <code>GameAssembly.dll</code> junto al .exe."],
+  steps:[
+   {t:"Abre la carpeta del juego",d:"En Steam: clic derecho en el juego → Administrar → Explorar archivos locales. Es la carpeta donde está el .exe.",tip:"Haz una copia de seguridad de la carpeta antes de modificar nada. No mezcles loaders distintos (BepInEx, ReiPatcher, MelonLoader)."},
+   {t:"Descarga BepInEx 5",d:'Baja <code>BepInEx_win_x64_5.4.x.zip</code> (o <code>win_x86</code> si el .exe es de 32 bits) desde <a href="https://github.com/BepInEx/BepInEx/releases" target="_blank" rel="noopener">BepInEx Releases</a> (versión 5.4.x).'},
+   {t:"Extrae BepInEx en la carpeta del juego",d:"El contenido debe quedar junto al .exe (<code>winhttp.dll</code> y la carpeta <code>BepInEx</code> al lado del ejecutable)."},
+   {t:"Descarga XUnity.AutoTranslator",d:'Baja <code>XUnity.AutoTranslator-BepInEx-x.x.x.zip</code> desde <a href="'+REL+'" target="_blank" rel="noopener">Releases</a> y extráelo también en la carpeta del juego (mezcla las carpetas).'},
+   {t:"Steam en Linux / Proton: opciones de lanzamiento",d:"Propiedades → General → Opciones de lanzamiento. En Windows no hace falta.",code:'WINEDLLOVERRIDES="winhttp.dll=n,b" %command%'},
+   {t:"Abre el juego una vez y ciérralo",d:"Se genera la configuración en <code>BepInEx/config/AutoTranslatorConfig.ini</code>."},
+   {t:"Configura idioma y traductor",d:"Edita el .ini (cambia <code>FromLanguage</code> al idioma original del juego):",code:CFG},
+   {t:"Juega",d:"Pulsa <code>ALT + 0</code> para abrir el panel del traductor en pantalla.",tip:"Las traducciones se guardan en BepInEx/Translation/es/Text/_AutoGeneratedTranslations.txt."}
+  ]},
+ il2cpp:{
+  name:"BepInEx IL2CPP",sub:"Juegos IL2CPP",
+  how:["Junto al .exe hay un <code>GameAssembly.dll</code>.","Dentro de <code>NombreJuego_Data</code> existe la carpeta <code>il2cpp_data</code> (con <code>Metadata/global-metadata.dat</code>)."],
+  steps:[
+   {t:"Abre la carpeta del juego",d:"En Steam: clic derecho → Administrar → Explorar archivos locales."},
+   {t:"Descarga BepInEx 6 (IL2CPP)",d:'Baja <code>Unity.IL2CPP-win-x64</code> desde <a href="https://builds.bepinex.dev/projects/bepinex_be" target="_blank" rel="noopener">BepInEx Bleeding Edge</a> (usa x86 solo si el juego es de 32 bits).'},
+   {t:"Extrae BepInEx en la carpeta del juego",d:"Debe quedar junto al .exe, con <code>winhttp.dll</code> y la carpeta <code>BepInEx</code>."},
+   {t:"Steam en Linux / Proton: opciones de lanzamiento",d:"Propiedades → General → Opciones de lanzamiento. En Windows no hace falta.",code:'WINEDLLOVERRIDES="winhttp.dll=n,b" %command%'},
+   {t:"Abre el juego y espera",d:"Primer arranque solo con BepInEx: tarda varios minutos porque genera los archivos de interop. Espera al menú principal y cierra el juego. Comprueba que existan <code>BepInEx/config</code> y <code>BepInEx/LogOutput.log</code>."},
+   {t:"Descarga XUnity IL2CPP y fusiónalo",d:'Baja <code>XUnity.AutoTranslator-BepInEx-IL2CPP-x.x.x.zip</code> desde <a href="'+REL+'" target="_blank" rel="noopener">Releases</a> y copia su contenido dentro de la carpeta <code>BepInEx</code> existente (fusionar y conservar archivos).',tip:"Nunca debe quedar BepInEx/BepInEx/plugins."},
+   {t:"Abre el juego otra vez",d:"Se crea el archivo de configuración de XUnity. Revisa el log si algo falla."},
+   {t:"Configura idioma y traductor",d:"Cierra el juego y edita <code>BepInEx/config/AutoTranslatorConfig.ini</code>:",code:CFG},
+   {t:"Juega",d:"Pulsa <code>ALT + 0</code> para abrir el panel del traductor.",tip:"En IL2CPP el hook de texto es menos completo que en Mono: algunos textos pueden no traducirse aunque la instalación esté bien. Si el juego se cierra al iniciar, prueba otra build de BepInEx 6."}
+  ]},
+ rei:{
+  name:"ReiPatcher",sub:"Mono sin BepInEx",
+  how:["Es un juego Mono (tiene <code>Managed/Assembly-CSharp.dll</code>).","Úsalo si BepInEx no funciona o el juego es antiguo. No lo combines con BepInEx ni otro loader."],
+  steps:[
+   {t:"Abre la carpeta del juego",d:"En Steam: clic derecho → Administrar → Explorar archivos locales."},
+   {t:"Descarga XUnity.AutoTranslator ReiPatcher",d:'Baja <code>XUnity.AutoTranslator-ReiPatcher-x.x.x.zip</code> (no el de BepInEx ni IL2CPP) desde <a href="'+REL+'" target="_blank" rel="noopener">Releases</a>.'},
+   {t:"Extráelo en la raíz del juego",d:"Junto al .exe del juego debe quedar <code>SetupReiPatcherAndAutoTranslator.exe</code>."},
+   {t:"Ejecuta el instalador",d:"En Windows: doble clic en <code>SetupReiPatcherAndAutoTranslator.exe</code>. En Linux debe correr dentro del prefijo de Proton del juego (abre el juego desde Steam al menos una vez para que exista). Con <a href=\"https://github.com/Matoking/protontricks\" target=\"_blank\" rel=\"noopener\">protontricks</a>:",code:'protontricks-launch --appid APPID "/ruta/al/juego/SetupReiPatcherAndAutoTranslator.exe"',tip:"APPID es el número de la URL de la tienda de Steam del juego (store.steampowered.com/app/NÚMERO). Si usas Steam en Flatpak, reemplaza protontricks-launch por: flatpak run --command=protontricks-launch com.github.Matoking.protontricks"},
+   {t:"Ejecuta “Patch and Run” una vez",d:"El instalador genera <code>[Nombre del juego] (Patch and Run).lnk</code> en la carpeta del juego. En Windows: doble clic. En Linux, ábrelo igual, dentro del prefijo de Proton. No necesitas opciones de lanzamiento en Steam.",code:'protontricks-launch --appid APPID "/ruta/al/juego/Nombre del juego (Patch and Run).lnk"',tip:"Si el .lnk no abre en Linux, prueba: protontricks -c 'wine start /unix \"Nombre del juego (Patch and Run).lnk\"' APPID. Si el acceso directo no aparece, no sigas: revisa el log y la compatibilidad del juego."},
+   {t:"Cierra y abre el juego normalmente",d:"Ya parcheado, inícialo desde su ejecutable de siempre. Comprueba que se hayan creado la configuración y la carpeta <code>AutoTranslator</code>."},
+   {t:"Configura idioma y traductor",d:"Edita el <code>.ini</code> dentro de la carpeta <code>AutoTranslator</code> (suele ser <code>Config.ini</code>):",code:CFG},
+   {t:"Juega",d:"Pulsa <code>ALT + 0</code> para abrir el panel del traductor."}
+  ]},
+ linux:{
+  name:"Linux nativo",sub:"Sin Proton",
+  how:["El ejecutable no tiene .exe: es <code>NombreJuego.x86_64</code> (o similar) y junto a él hay <code>UnityPlayer.so</code> y la carpeta <code>NombreJuego_Data</code>.","Mono: existe <code>Managed/Assembly-CSharp.dll</code>. IL2CPP: existe <code>GameAssembly.so</code> (cambian las descargas, ver paso 2).","ReiPatcher no sirve aquí: es un programa de Windows."],
+  steps:[
+   {t:"Abre la carpeta del juego",d:"En Steam: clic derecho en el juego → Administrar → Explorar archivos locales. Es la carpeta donde está el ejecutable.",tip:"Haz una copia de seguridad de la carpeta antes de modificar nada."},
+   {t:"Descarga BepInEx para Linux",d:'Mono: <code>BepInEx_linux_x64_5.4.x.zip</code> desde <a href="https://github.com/BepInEx/BepInEx/releases" target="_blank" rel="noopener">BepInEx Releases</a>. IL2CPP: <code>Unity.IL2CPP-linux-x64</code> desde <a href="https://builds.bepinex.dev/projects/bepinex_be" target="_blank" rel="noopener">Bleeding Edge</a>.'},
+   {t:"Extráelo en la carpeta del juego",d:"Junto al ejecutable deben quedar <code>run_bepinex.sh</code> y la carpeta <code>BepInEx</code>."},
+   {t:"Descarga XUnity.AutoTranslator",d:'Mono: <code>XUnity.AutoTranslator-BepInEx-x.x.x.zip</code>. IL2CPP: <code>XUnity.AutoTranslator-BepInEx-IL2CPP-x.x.x.zip</code>. Descárgalo de <a href="'+REL+'" target="_blank" rel="noopener">Releases</a> y fusiónalo dentro de la carpeta <code>BepInEx</code> existente.',tip:"En IL2CPP, abre el juego una vez solo con BepInEx (tarda varios minutos) y recién después añade XUnity."},
+   {t:"Da permisos y configura el ejecutable",d:"Desde una terminal en la carpeta del juego: hace el script ejecutable y le indica el nombre del ejecutable (cámbialo por el tuyo).",code:`chmod +x run_bepinex.sh && sed -i 's|^executable_name=.*|executable_name="NombreJuego.x86_64"|' run_bepinex.sh`},
+   {t:"Opciones de lanzamiento de Steam",d:"Propiedades → General → Opciones de lanzamiento. No uses WINEDLLOVERRIDES ni Proton: en Propiedades → Compatibilidad no fuerces ninguna herramienta.",code:'./run_bepinex.sh %command%',tip:"Si Steam no lanza el juego, ejecuta ./run_bepinex.sh desde la terminal para ver el error."},
+   {t:"Abre el juego una vez y ciérralo",d:"Se genera la configuración en <code>BepInEx/config/AutoTranslatorConfig.ini</code>."},
+   {t:"Configura idioma y traductor",d:"Edita el .ini (cambia <code>FromLanguage</code> al idioma original del juego):",code:CFG},
+   {t:"Juega",d:"Pulsa <code>ALT + 0</code> para abrir el panel del traductor."}
+  ]}
+};
+let cur="mono";const done={mono:{},il2cpp:{},rei:{},linux:{}};
+const $=s=>document.querySelector(s);
+function render(){
+ const t=T[cur];
+ $("#tabs").innerHTML=Object.entries(T).map(([k,v])=>`<button class="tab ${k===cur?"on":""}" data-k="${k}"><b>${v.name}</b><small>${v.sub}</small></button>`).join("");
+ $("#how").innerHTML=`<h3>¿Cómo saber si es este?</h3><p>• Primero confirma que es Unity: junto al .exe hay <code>UnityPlayer.dll</code> y una carpeta <code>NombreJuego_Data</code>. Si el ejecutable no tiene .exe (es un .x86_64), usa la pestaña Linux nativo.</p>`+t.how.map(x=>`<p>• ${x}</p>`).join("");
+ $("#steps").innerHTML=t.steps.map((s,i)=>`<li class="step ${done[cur][i]?"done":""}" data-i="${i}"><button class="dot" aria-label="Marcar paso ${i+1}">${done[cur][i]?"✓":i+1}</button><div class="body"><h4>${s.t}</h4><p>${s.d}</p>${s.code?`<div class="cb"><pre>${s.code}</pre><button class="copy">Copiar</button></div>`:""}${s.tip?`<div class="tip">${s.tip}</div>`:""}</div></li>`).join("");
+ prog();
+}
+function prog(){
+ const n=T[cur].steps.length,d=Object.values(done[cur]).filter(Boolean).length;
+ $("#fill").style.width=(d/n*100)+"%";$("#cnt").textContent=d+" de "+n+" pasos completados";
+}
+document.addEventListener("click",e=>{
+ const tab=e.target.closest(".tab");if(tab){cur=tab.dataset.k;render();return}
+ const cp=e.target.closest(".copy");
+ if(cp){const txt=cp.previousElementSibling.textContent;
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).catch(()=>{const a=document.createElement("textarea");a.value=txt;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(_){}a.remove()});
+  cp.textContent="¡Listo!";setTimeout(()=>cp.textContent="Copiar",1200);return}
+ const dot=e.target.closest(".dot");
+ if(dot){const li=dot.closest(".step"),i=li.dataset.i;done[cur][i]=!done[cur][i];li.classList.toggle("done",!!done[cur][i]);dot.textContent=done[cur][i]?"✓":(+i+1);prog()}
+});
+$("#reset").onclick=()=>{done[cur]={};render()};
+render();
+</script>
+</body>
+</html>
